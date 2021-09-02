@@ -1,0 +1,13 @@
+app-wp {
+    display:grid;
+
+    grid-template-areas:
+        "l ";
+    grid-template-rows: 80px ;
+
+}
+
+.login {
+    grid-area: l;
+    background-color:darkgray;
+}
