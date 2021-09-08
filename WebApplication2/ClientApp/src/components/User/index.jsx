@@ -1,8 +1,10 @@
-﻿import React, { useState, useCallback } from "react";
+﻿
+import React, { useState, useCallback } from "react";
 import { Redirect } from "react-router-dom";
 
 
-const Register = () => {
+const User = () =>
+{
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -34,7 +36,7 @@ const Register = () => {
     if (redirect) {
         return <Redirect to="/Login" />
     }
-   
+
 
     return (
         <form onSubmit={submit}>
@@ -57,4 +59,4 @@ const Register = () => {
     );
 
 }
-export default Register;
+export default User;

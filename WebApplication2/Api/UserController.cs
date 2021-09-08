@@ -1,13 +1,15 @@
 ﻿using BusLay.Services;
 using BusLay.DTOs;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using BusLay.Authorize;
+using DAL.Models;
 
 namespace WebApplication2.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class UserController : Controller
     {
         private readonly JWTService jWTService;
@@ -17,50 +19,26 @@ namespace WebApplication2.Controllers
             service = user;
             jWTService = jWT;
         }
-        [HttpPost("register")]
-        public IActionResult Register(RegisterDto dto)
-        {
-            return Created("Success",service.CreateUser(dto));
-        }
-        [HttpPost("login")]
-        public IActionResult Login(LoginDto dto)
-        {
-           
-            var user = service.LoginUser(dto);
 
-            if (user == null) return BadRequest(new { message = "Invalid Credentials" }); 
-            if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password)) return BadRequest(new { message = "Invalid Credentials" });
-
-            var jwt = jWTService.Generate(user.Id);
-            Response.Cookies.Append("jwt", jwt, new CookieOptions { HttpOnly = true });
-
-            return Ok(new
-            {
-                message = "success"
-            });
-        }
-        [HttpGet("getuser")]
-        public IActionResult GetUser() 
+        [Authorize(Role.Admin)]
+        [HttpGet("user")]
+        public IActionResult GetUser(UserDto userDto)
         {
             try
             {
-                var jwt = Request.Cookies["jwt"];
-                var token = jWTService.Verify(jwt);
-                int userId = int.Parse(token.Issuer);
-                var user = service.GetById(userId);
+                var token = Request.Cookies["token"];
+                var user = service.GetById(userDto);
+                if (user == null)
+                    return NotFound();
                 return Ok(user);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return Unauthorized(ex);
+                return Unauthorized();
+                
             }
-           
+
         }
-        [HttpPost("logout")]
-        public IActionResult Logout() 
-        {
-            Response.Cookies.Delete("jwt");
-            return Ok(new {message  = "Success logout" });
-        }
+
     }
 }

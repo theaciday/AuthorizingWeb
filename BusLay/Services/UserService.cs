@@ -21,27 +21,32 @@ namespace BusLay.Services
              _repos=repos;
            
         }
+
         public User CreateUser(RegisterDto dto) 
         {
             var user = new User
             {
-                Name = dto.Name,
+                UserName = dto.UserName,
                 Email = dto.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
+                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                Role = dto.Roles
             };
             _repos.Create(user);
             return user;
         }
 
-        public User LoginUser(LoginDto dto)
+        public User LoginUser(LoginDto user)
         {
-            var user = _repos.GetByEmail(dto.Email);
-            return user;
-           
+            var _user = _repos.GetUser(user.UserName);
+            return _user;
         }
-        public User GetById(int id) 
+        public User GetById(UserDto dto)
         {
-            return _repos.GetById(id);
+            return _repos.GetUserById(dto.Id);
+        }
+        public string DeletedUser(UserDto dto) 
+        {
+            return _repos.DeleteUserById(dto.Id);
         }
     }
 }

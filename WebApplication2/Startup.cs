@@ -13,6 +13,13 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.AspNetCore.Http;
 using JavaScriptEngineSwitcher.V8;
 using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System;
+using BusLay.Settings;
+using System.Text.Json.Serialization;
+using BusLay.Helpers;
 
 namespace WebApplication2
 {
@@ -28,13 +35,37 @@ namespace WebApplication2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllersWithViews();
-            //services.AddCors(); 
-            services.AddControllers();
+            services.AddCors();
+            services.AddControllers().AddJsonOptions(x =>
+            {
+                x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            }); 
             services.AddDbContext<UserContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<UserService>();
             services.AddScoped<JWTService>();
+
+            var key = Encoding.ASCII.GetBytes(Setting.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName)
                 .AddV8();
@@ -54,17 +85,17 @@ namespace WebApplication2
                 app.UseHsts();
             }
 
+            app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseCors(op =>
+            op.AllowCredentials()
+            .WithOrigins("https://localhost:3000/")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-            
-            //app.UseCors(opt => opt
-            //    .AllowAnyMethod()
-            //    .AllowAnyHeader()
-            //    .AllowCredentials()
-            //    //.WithOrigins("http://localhost:3000")
-            //);
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseCookiePolicy();
             app.UseEndpoints(endpoints =>
@@ -81,5 +112,5 @@ namespace WebApplication2
                 }
             });
         }
-    } 
+    }
 }

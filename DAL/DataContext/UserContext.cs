@@ -16,7 +16,8 @@ namespace BusLay.DataContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Email).IsUnique(); });
+            modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Password).IsUnique(); });
+            modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.UserName).IsUnique(); });
         }
 
 

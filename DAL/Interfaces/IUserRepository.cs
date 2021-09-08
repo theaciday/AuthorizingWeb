@@ -10,7 +10,8 @@ namespace BusLay.Interfaces
     public interface IUserRepository
     {
         User Create(User user);
-        User GetByEmail(string email);
-        User GetById(int id);
+        User GetUser(string username);
+        User GetUserById(int id);
+        string DeleteUserById(int id);
     }
 }

@@ -5,9 +5,10 @@ import Home from './components/Home';
 import { FetchData } from './components/FetchData';
 import Counter from './components/Counter';
 import Login from './components/Login';
-import Register  from './components/Register'
-
+import Register from './components/Register';
+import User from './components/User';
 import './custom.css'
+
 
 
 
@@ -22,6 +23,7 @@ export default class App extends Component {
                 <Route path='/fetch-data' component={FetchData} />
                 <Route path='/Login' component={Login} />
                 <Route path='/Register' component={Register} />
+                <Route path='/User' component={User} />
             </Layout>
             );
     }

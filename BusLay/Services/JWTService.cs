@@ -1,42 +1,33 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using BusLay.Models;
+using BusLay.Settings;
+using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BusLay.Services
 {
     public class JWTService
     {
-        private readonly string  secureKey = "this is a very secure key";
-        public string Generate(int id)  
+        private const double EXPIRE_HOURS = 1.0;
+        public string Generate(User user)  
         {
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secureKey));
-            var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
-            var header = new JwtHeader(credentials);
-
-            var payload = new JwtPayload(id.ToString(), null, null, null, DateTime.Today.AddDays(2));
-            var securityToken = new JwtSecurityToken(header, payload);
-
-            return new JwtSecurityTokenHandler().WriteToken(securityToken).ToString();
-
-        }
-        public JwtSecurityToken Verify(string jwt) 
-        {
+            var key = Encoding.ASCII.GetBytes(Setting.Secret);
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(secureKey);
-
-            tokenHandler.ValidateToken(jwt, new TokenValidationParameters()
+            var descriptor = new SecurityTokenDescriptor
             {
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuerSigningKey=true,
-                ValidateIssuer = false,
-                ValidateAudience = false
-            }, out SecurityToken validatedToken) ;
-
-            return (JwtSecurityToken) validatedToken;
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.UserName.ToString() ),
+                    new Claim(ClaimTypes.Role, user.Role.ToString() )
+                }),
+                Expires = DateTime.UtcNow.AddHours(EXPIRE_HOURS),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(descriptor);
+            return tokenHandler.WriteToken(token);
         }
+        
     }
 }

@@ -26,20 +26,30 @@ namespace BusLay.Repository
             }
             catch (Exception)
             {
-                user.Name = "a user with the same name already exists";
-                user.Email = "a user with the same name already exists";
-                return user;   
+                user.UserName = "a user with the same name already exists";
+                user.Email = "a user with the same email already exists";
+                return user;
             }
-            
+
             return user;
         }
-        public User GetByEmail(string email)
+        public User GetUser(string username)
         {
-            return context.Users.FirstOrDefault(u => u.Email == email);
+            return context.Users.Where(x => x.UserName.ToLower() == username.ToLower()).FirstOrDefault();
         }
-        public User GetById(int id)
+        public User GetUserById(int id)
         {
             return context.Users.FirstOrDefault(u => u.Id == id);
         }
+        
+
+        public string DeleteUserById(int id)
+        {
+            var user = context.Users.First(u => u.Id == id);
+            context.Remove(user);
+            return  ($"User with id:{id} is deleted ");
+        }
+
+        
     }
 }

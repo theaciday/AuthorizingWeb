@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace BusLay.DTOs
 {
-    public class LoginDto
+   public class UserDto
     {
         [Required]
-        public string UserName { get; set; }
-        [Required]
-        public string Password { get; set; }
-
+        public int Id { get; set; }
     }
 }
