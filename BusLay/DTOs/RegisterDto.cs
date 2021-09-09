@@ -1,10 +1,6 @@
-﻿using DAL.Models;
-using System;
-using System.Collections.Generic;
+﻿using DAL.Entities;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace BusLay.DTOs
 {
@@ -12,10 +8,22 @@ namespace BusLay.DTOs
     {
         [Required]
         public string UserName { get; set; }
+
         [Required]
-        public string Email { get; set; }
+        public string FirstName { get; set; }
+        
         [Required]
+        [JsonIgnore]
         public string Password { get; set; }
+
+        public string LastName { get; set; }
+
+        [Required]
+        public string Username { get; set; }
+
+        [Required]
         public Role Roles { get; set; }
+       
+      
     }
 }

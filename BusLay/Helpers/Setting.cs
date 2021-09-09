@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BusLay.Settings
 {
-    public static class Setting
+    public  class Setting
     {
-        public static string Secret = "marcy9d8534b48w951b9287d492b256x";
+        public  string Secret = "marcy9d8534b48w951b9287d492b256x";
     }
 }

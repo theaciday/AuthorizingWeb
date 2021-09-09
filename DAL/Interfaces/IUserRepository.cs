@@ -1,10 +1,4 @@
-﻿using BusLay.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using BusLay.Entities;
 namespace BusLay.Interfaces
 {
     public interface IUserRepository

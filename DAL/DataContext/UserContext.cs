@@ -1,10 +1,5 @@
-﻿using BusLay.Models;
+﻿using BusLay.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusLay.DataContext
 {
@@ -17,7 +12,7 @@ namespace BusLay.DataContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Password).IsUnique(); });
-            modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.UserName).IsUnique(); });
+            modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Username).IsUnique(); });
         }
 
 

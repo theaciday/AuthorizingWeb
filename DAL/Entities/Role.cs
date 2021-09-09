@@ -1,4 +1,4 @@
-﻿namespace DAL.Models
+﻿namespace DAL.Entities
 {
     public enum Role
     {

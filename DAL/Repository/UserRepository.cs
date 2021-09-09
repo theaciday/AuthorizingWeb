@@ -1,11 +1,9 @@
 ﻿using BusLay.DataContext;
+using BusLay.Entities;
 using BusLay.Interfaces;
-using BusLay.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusLay.Repository
 {
@@ -22,24 +20,26 @@ namespace BusLay.Repository
             try
             {
                 var count = context.SaveChanges();
-                user.Id = count++;
+                //user.Id = count++;
             }
             catch (Exception)
             {
-                user.UserName = "a user with the same name already exists";
-                user.Email = "a user with the same email already exists";
+                user.Username = "a user with the same name already exists";
+                user.FirstName = "a user with the same firstName already exists";
                 return user;
             }
 
             return user;
         }
-        public User GetUser(string username)
+
+        public  User GetUser(string username)
         {
-            return context.Users.Where(x => x.UserName.ToLower() == username.ToLower()).FirstOrDefault();
+            return context.Users.Where(x => x.Username.ToLower() == username.ToLower()).FirstOrDefault();
         }
-        public User GetUserById(int id)
+
+        public  User GetUserById(int id)
         {
-            return context.Users.FirstOrDefault(u => u.Id == id);
+            return context.Users.Where(u => u.Id == id).FirstOrDefault();
         }
         
 
@@ -49,6 +49,7 @@ namespace BusLay.Repository
             context.Remove(user);
             return  ($"User with id:{id} is deleted ");
         }
+
 
         
     }

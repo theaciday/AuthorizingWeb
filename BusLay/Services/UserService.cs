@@ -1,33 +1,35 @@
 ﻿using BusLay.DTOs;
 using BusLay.Interfaces;
-using BusLay.Models;
-using System;
+using BusLay.Entities;
+using BusLay.Settings;
+using Microsoft.Extensions.Options;
+using DAL.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System.Collections;
+using BusLay.Helpers;
 
 namespace BusLay.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _repos;
-        
-        public UserService(IUserRepository repos)
+        private IJwtUtils jwtUtils;
+        private readonly Setting appSettings;
+
+        public UserService(IUserRepository repos, IJwtUtils _jwtUtils, IOptions<Setting> _appSettings)
         {
-             _repos=repos;
-           
+            jwtUtils = _jwtUtils;
+            appSettings = _appSettings.Value;
+            _repos = repos;
+
         }
 
-        public User CreateUser(RegisterDto dto) 
+        public User CreateUser(RegisterDto dto)
         {
             var user = new User
             {
-                UserName = dto.UserName,
-                Email = dto.Email,
+                Username = dto.UserName,
+                FirstName = dto.FirstName,
+                LastName=dto.LastName,
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 Role = dto.Roles
             };
@@ -35,18 +37,32 @@ namespace BusLay.Services
             return user;
         }
 
-        public User LoginUser(LoginDto user)
+        public AuthenticateResponse LoginUser(AuthenticateRequest model)
         {
-            var _user = _repos.GetUser(user.UserName);
-            return _user;
+            var _user = _repos.GetUser(model.Username);
+            if (!BCrypt.Net.BCrypt.Verify(model.Password,_user.Password))
+                throw new AppException("Username or password is incorrect");
+            var jwtToken = jwtUtils.GenerateJwtToken(_user);
+
+            return new AuthenticateResponse(_user, jwtToken);
         }
-        public User GetById(UserDto dto)
+        public User GetById(int id)
         {
-            return _repos.GetUserById(dto.Id);
+            var user = _repos.GetUserById(id);
+            if (user==null) throw new KeyNotFoundException("User not found");
+            return user;
         }
-        public string DeletedUser(UserDto dto) 
+
+        public string DeletedUser(int id)
         {
-            return _repos.DeleteUserById(dto.Id);
+            var user = _repos.DeleteUserById(id);
+            if (user == null) throw new KeyNotFoundException("User not found");
+            return user;
         }
+
+        //public IEnumerable<User> GetAll()
+        //{
+        //    return; 
+        //}
     }
 }

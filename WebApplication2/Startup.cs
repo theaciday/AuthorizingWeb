@@ -20,6 +20,7 @@ using BusLay.Settings;
 using System.Text.Json.Serialization;
 using BusLay.Helpers;
 using Microsoft.AspNetCore.CookiePolicy;
+using BusLay.Authorize;
 
 namespace WebApplication2
 {
@@ -39,33 +40,16 @@ namespace WebApplication2
             services.AddControllersWithViews();
             services.AddCors();
             services.AddControllers().AddJsonOptions(x =>
-            {
+            {// serialize enums as strings in api responses (e.g. Role)
                 x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-            }); 
+            });
+            services.Configure<Setting>(Configuration.GetSection("Setting"));
             services.AddDbContext<UserContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<UserService>();
-            services.AddScoped<JWTService>();
+            services.AddScoped<IUserService,UserService>();
+            services.AddScoped<IJwtUtils,JwtUtils>();
 
-            var key = Encoding.ASCII.GetBytes(Setting.Secret);
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, x =>
-                {
-                    x.RequireHttpsMetadata = true;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
+           
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName)
@@ -85,25 +69,31 @@ namespace WebApplication2
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-            app.UseMiddleware<ErrorHandlerMiddleware>();
-            app.UseHttpsRedirection();
+
+
             app.UseRouting();
-            app.UseCors(op =>
-            op.AllowCredentials()
-            .WithOrigins("https://localhost:3000/")
-            .AllowAnyHeader()
-            .AllowCredentials()
-            .AllowAnyMethod());
+
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            
+            app.UseStatusCodePages();
+            app.UseHttpsRedirection();
             app.UseCookiePolicy(new CookiePolicyOptions
             {
                 MinimumSameSitePolicy = SameSiteMode.Strict,
                 HttpOnly = HttpOnlyPolicy.Always,
                 Secure = CookieSecurePolicy.Always
-            }) ;
+            });
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseMiddleware<JwtMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -111,7 +101,6 @@ namespace WebApplication2
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
-
                 if (env.IsDevelopment())
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");

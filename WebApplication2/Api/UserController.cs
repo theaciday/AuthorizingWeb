@@ -1,41 +1,33 @@
-﻿using BusLay.Services;
-using BusLay.DTOs;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using BusLay.Authorize;
-using DAL.Models;
+using BusLay.Entities;
+using DAL.Entities;
+using BusLay.Interfaces;
 
 namespace WebApplication2.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private readonly JWTService jWTService;
-        private readonly UserService service;
-        public UserController(UserService user, JWTService jWT)
+        private readonly IUserService service;
+        public UserController(IUserService user)
         {
             service = user;
-            jWTService = jWT;
         }
 
-        //[Authorize(Role.Admin)]
-        [HttpGet("user/userId")]
-        public IActionResult GetUser(UserDto userDto)
+        [Authorize(Role.Admin)]
+        [HttpGet("{id:int}")]
+        public IActionResult UserById(int id)
         {
-            try
-            {
-                var token = Request.Cookies["token"];
-                var user = service.GetById(userDto);
-                if (user == null)
-                    return NotFound();
-                return Ok(user);
-            }
-            catch (Exception)
-            {
-                return Unauthorized();
-            }
+
+            var currentUser = (User)HttpContext.Items["User"];
+            if (id != currentUser.Id && currentUser.Role != Role.Admin)
+                return Unauthorized(new { message = "Unauthorized" });
+
+            var user = service.GetById(id);
+            return Ok(user);
         }
     }
 }

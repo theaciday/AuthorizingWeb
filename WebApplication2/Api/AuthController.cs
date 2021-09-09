@@ -1,8 +1,10 @@
 ﻿using BusLay.Authorize;
 using BusLay.DTOs;
-using BusLay.Services;
+using BusLay.Interfaces;
 using DAL.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebApplication2.Api
 {
@@ -11,9 +13,9 @@ namespace WebApplication2.Api
     [Authorize]
     public class AuthController : ControllerBase
     {
-        private readonly JWTService jWTService;
-        private readonly UserService service;
-        public AuthController(UserService user, JWTService jWT)
+        private readonly IJwtUtils jWTService;
+        private readonly IUserService service;
+        public AuthController(IUserService user, IJwtUtils jWT)
         {
             service = user;
             jWTService = jWT;
@@ -26,29 +28,17 @@ namespace WebApplication2.Api
         }
         [HttpPost("login")]
         [AllowAnonymous]
-        public IActionResult Login(LoginDto user)
+        public IActionResult Login(AuthenticateRequest model)
         {
-            var _user = service.LoginUser(user);
-
-            if (_user == null) return BadRequest(new { message = "User or password invalid" });
-            if (!BCrypt.Net.BCrypt.Verify(user.Password, _user.Password)) return BadRequest(new { message = "wrong password" });
-
-            var token = jWTService.Generate(_user);
-            Response.Cookies.Append("token", token);
-
-            return Ok(new
-            {
-                message = "success",
-                token = token,
-            });
+            var user = service.LoginUser(model);
+            if (user == null) return BadRequest(new { message = "User or password invalid" });
+            return Ok(user);
         }
-
         [HttpPost("logout")]
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("jwt");
+            Response.Cookies.Delete(".AspNetCore.Application.Id");
             return Ok(new { message = "Success logout" });
         }
     }
-
 }
