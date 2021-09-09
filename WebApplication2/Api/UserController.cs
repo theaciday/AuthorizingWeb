@@ -7,7 +7,7 @@ using DAL.Models;
 
 namespace WebApplication2.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : Controller
@@ -20,8 +20,8 @@ namespace WebApplication2.Controllers
             jWTService = jWT;
         }
 
-        [Authorize(Role.Admin)]
-        [HttpGet("user")]
+        //[Authorize(Role.Admin)]
+        [HttpGet("user/userId")]
         public IActionResult GetUser(UserDto userDto)
         {
             try
@@ -35,10 +35,7 @@ namespace WebApplication2.Controllers
             catch (Exception)
             {
                 return Unauthorized();
-                
             }
-
         }
-
     }
 }

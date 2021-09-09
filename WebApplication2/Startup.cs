@@ -16,10 +16,10 @@ using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using System;
 using BusLay.Settings;
 using System.Text.Json.Serialization;
 using BusLay.Helpers;
+using Microsoft.AspNetCore.CookiePolicy;
 
 namespace WebApplication2
 {
@@ -48,14 +48,15 @@ namespace WebApplication2
             services.AddScoped<JWTService>();
 
             var key = Encoding.ASCII.GetBytes(Setting.Secret);
-            services.AddAuthentication(x =>
+            services.AddAuthentication(options =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                .AddJwtBearer(x =>
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, x =>
                 {
-                    x.RequireHttpsMetadata = false;
+                    x.RequireHttpsMetadata = true;
                     x.SaveToken = true;
                     x.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -84,7 +85,6 @@ namespace WebApplication2
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
             app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseHttpsRedirection();
             app.UseRouting();
@@ -92,12 +92,18 @@ namespace WebApplication2
             op.AllowCredentials()
             .WithOrigins("https://localhost:3000/")
             .AllowAnyHeader()
+            .AllowCredentials()
             .AllowAnyMethod());
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCookiePolicy();
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                HttpOnly = HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.Always
+            }) ;
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

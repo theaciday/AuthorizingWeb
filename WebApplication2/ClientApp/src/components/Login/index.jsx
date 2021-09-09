@@ -22,7 +22,7 @@ const Login = () => {
     const history = useHistory();
     const submit = async (e) => {
         e.preventDefault();
-        await fetch('https://localhost:5001/api/auth/login', {
+        const loginResult = await fetch('https://localhost:5001/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -31,6 +31,8 @@ const Login = () => {
                 password
             })
         });
+        const { token } = await loginResult.json()
+        localStorage.setItem('token', token)
         setRedirect (true);
     }
     if (redirect) {

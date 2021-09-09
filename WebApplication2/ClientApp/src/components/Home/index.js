@@ -27,10 +27,8 @@ const Home = () => {
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                     credentials: 'include',
                 });
-                
                 const context = await response.json();
                 setUserName(context.name);
-                
             }
 
         )();

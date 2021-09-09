@@ -1,7 +1,7 @@
-﻿using BusLay.DTOs;
+﻿using BusLay.Authorize;
+using BusLay.DTOs;
 using BusLay.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication2.Api
@@ -28,24 +28,21 @@ namespace WebApplication2.Api
         [AllowAnonymous]
         public IActionResult Login(LoginDto user)
         {
-
             var _user = service.LoginUser(user);
 
             if (_user == null) return BadRequest(new { message = "User or password invalid" });
             if (!BCrypt.Net.BCrypt.Verify(user.Password, _user.Password)) return BadRequest(new { message = "wrong password" });
 
             var token = jWTService.Generate(_user);
-            Response.Cookies.Append("token", token );
-            
-            return Ok(new {
-           message="success "
+            Response.Cookies.Append("token", token);
+
+            return Ok(new
+            {
+                message = "success",
+                token = token,
             });
-
-
-            //Response.Cookies.Append("token", token, new CookieOptions { HttpOnly = true });
-                
         }
-        
+
         [HttpPost("logout")]
         public IActionResult Logout()
         {
