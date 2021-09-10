@@ -18,10 +18,9 @@ namespace WebApplication2.Controllers
         }
 
         [Authorize(Role.Admin)]
-        [HttpGet("{id:int}")]
+        [HttpGet("user/{id:int}")]
         public IActionResult UserById(int id)
         {
-
             var currentUser = (User)HttpContext.Items["User"];
             if (id != currentUser.Id && currentUser.Role != Role.Admin)
                 return Unauthorized(new { message = "Unauthorized" });

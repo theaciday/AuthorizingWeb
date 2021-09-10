@@ -13,15 +13,13 @@ namespace BusLay.DTOs
         public string FirstName { get; set; }
         
         [Required]
-        [JsonIgnore]
         public string Password { get; set; }
 
         public string LastName { get; set; }
 
         [Required]
-        public string Username { get; set; }
+        public string Email { get; set; }
 
-        [Required]
         public Role Roles { get; set; }
        
       

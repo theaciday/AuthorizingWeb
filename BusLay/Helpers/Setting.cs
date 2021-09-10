@@ -8,6 +8,6 @@ namespace BusLay.Settings
 {
     public  class Setting
     {
-        public  string Secret = "marcy9d8534b48w951b9287d492b256x";
+        public string Secret { get; set; } = "marcy9d8534b48w951b9287d492b256x";
     }
 }

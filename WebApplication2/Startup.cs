@@ -10,17 +10,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using React.AspNet;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using Microsoft.AspNetCore.Http;
 using JavaScriptEngineSwitcher.V8;
 using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using BusLay.Settings;
 using System.Text.Json.Serialization;
 using BusLay.Helpers;
-using Microsoft.AspNetCore.CookiePolicy;
 using BusLay.Authorize;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApplication2
 {
@@ -38,20 +34,23 @@ namespace WebApplication2
         {
 
             services.AddControllersWithViews();
+            services.AddDbContext<UserContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddCors();
+            services.AddSession();
+
             services.AddControllers().AddJsonOptions(x =>
             {// serialize enums as strings in api responses (e.g. Role)
                 x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
             services.Configure<Setting>(Configuration.GetSection("Setting"));
-            services.AddDbContext<UserContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
+          
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService,UserService>();
-            services.AddScoped<IJwtUtils,JwtUtils>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IJwtUtils, JwtUtils>();
 
-           
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName)
                 .AddV8();
             services.AddReact();
@@ -69,7 +68,7 @@ namespace WebApplication2
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
+            app.UseSession();
 
             app.UseRouting();
 
@@ -79,19 +78,19 @@ namespace WebApplication2
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+                  .AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader());
 
-            
-            app.UseStatusCodePages();
-            app.UseHttpsRedirection();
-            app.UseCookiePolicy(new CookiePolicyOptions
-            {
-                MinimumSameSitePolicy = SameSiteMode.Strict,
-                HttpOnly = HttpOnlyPolicy.Always,
-                Secure = CookieSecurePolicy.Always
-            });
+
+            //app.UseStatusCodePages();
+            //app.UseHttpsRedirection();
+            //app.UseCookiePolicy(new CookiePolicyOptions
+            //{
+            //    MinimumSameSitePolicy = SameSiteMode.Strict,
+            //    HttpOnly = HttpOnlyPolicy.Always,
+            //    Secure = CookieSecurePolicy.Always
+            //});
             app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseMiddleware<JwtMiddleware>();
             app.UseEndpoints(endpoints =>

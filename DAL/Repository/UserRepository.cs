@@ -1,13 +1,14 @@
 ﻿using BusLay.DataContext;
 using BusLay.Entities;
 using BusLay.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BusLay.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : DbContext, IUserRepository
     {
         private readonly UserContext context;
         public UserRepository(UserContext _context)

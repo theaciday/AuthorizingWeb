@@ -13,6 +13,7 @@ namespace DAL.Models
         public string Username { get; set; }
         public Role Role { get; set; }
         public string Token { get; set; }
+        public string Session { get; set; }
 
         public AuthenticateResponse(User user, string token)
         {

@@ -1,34 +1,48 @@
 ﻿import React, { useState, useCallback } from "react";
+import request from "../../Utils/Request";
+import { createStore } from "redux";
 
-const User = () =>
+const defaultState = {
+
+}
+
+/*action = { type:"",payload:"" }*/
+const reducer = (state,action) =>
 {
+    switch (action.type) {
+
+        default:
+            return state
+    }
+
+}
+
+const store = createStore(reducer)
+
+const User = () => {
     const [id, setId] = useState("");
     const [userName, setUserName] = useState("");
     const handleChangeName = useCallback(e => {
         setId(e.target.value);
     }, [setId]);
 
-    const submit = async (e) => {
-        e.preventDefault();
-        const token = localStorage.getItem('token')
-        await fetch('https://localhost:5001/api/user/user', {
-            headers: { 'Content-type': 'application/json', 'Authorization': `Bearer ${token}` },
-            
-        });
-       
-    }
-   
+    const onSubmit = async (e) => {
+        e.preventDefault()
+        const result = await request(`user/user/${id}`)
+        setUserName(result.firstName)
+    };
+    
 
 
     return (
         <div>
-        <form onSubmit={submit}>
-            <h1>Get User</h1>
+            <form onSubmit={onSubmit}>  
+                <h1>Get User</h1>
 
-            <input value={id} placeholder="Id" type="text"
-                onChange={handleChangeName} required
-            />
-            <button onSubmit={submit}>submit</button>
+                <input value={id} placeholder="Id" type="text"
+                    onChange={handleChangeName} required
+                />
+                <button type="submit">submit</button>
             </form>
             {userName}
         </div>
