@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
+import Logout from './Logout';
+
 
 
 export class NavMenu extends Component {
@@ -40,6 +42,9 @@ export class NavMenu extends Component {
                                 <NavItem>
                                     <NavLink tag={Link} className="text-dark" to="/user">User</NavLink>
                                 </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} onClick={Logout} className="text-dark" to="/">Logout</NavLink>
+                             </NavItem>
                             </ul>
                         </Collapse>
                     </Container>
