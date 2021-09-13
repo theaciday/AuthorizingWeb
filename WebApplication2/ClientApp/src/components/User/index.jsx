@@ -30,6 +30,7 @@ const User = () => {
         e.preventDefault()
         const result = await request(`user/user/${id}`)
         setUserName(result.firstName)
+
     };
     
 

@@ -3,7 +3,7 @@ import React from 'react';
 
 const Logout = () => {
 
-    const logout= localStorage.clear("token");
+    localStorage.clear("token");
         return <Redirect to="/" />
     
 }

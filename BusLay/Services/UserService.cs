@@ -57,7 +57,8 @@ namespace BusLay.Services
         public User GetById(int id)
         {
             var user = _repos.GetUserById(id);
-            if (user == null) throw new KeyNotFoundException("User not found");
+            if (user == null) 
+                return null;
             return user;
         }
 

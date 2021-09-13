@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
+import { Provider } from "react-redux";
 import { Layout } from './components/Layout';
 import Home from './components/Home';
 import { FetchData } from './components/FetchData';
@@ -8,15 +9,18 @@ import Login from './components/Login';
 import Register from './components/Register';
 import User from './components/User';
 import './custom.css'
+import { store } from "./_helpers/store"
 
 
 
 
 export default class App extends Component {
     static displayName = App.name;
+    
 
     render() {
         return (
+            <Provider store={store}>
             <Layout className='app-wp'>
                 <Route exact path='/' component={Home} />
                 <Route path='/counter' component={Counter} />
@@ -24,7 +28,8 @@ export default class App extends Component {
                 <Route path='/login' component={Login} />
                 <Route path='/register' component={Register} />
                 <Route path='/user' component={User} />
-            </Layout>
+                </Layout>
+            </Provider>
             );
     }
 }
