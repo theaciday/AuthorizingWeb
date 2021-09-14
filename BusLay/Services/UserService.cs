@@ -10,6 +10,8 @@ using BusLay.DataContext;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using DAL.Entities;
+using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BusLay.Services
 {
@@ -49,10 +51,20 @@ namespace BusLay.Services
             if (!BCrypt.Net.BCrypt.Verify(model.Password, _user.Password))
                 throw new AppException("Username or password is incorrect");
             var jwtToken = jwtUtils.GenerateJwtToken(_user);
-
-
-
             return new AuthenticateResponse(_user, jwtToken);
+        }
+        public int GetCurrent(string token)
+        {
+            try
+            {
+                var userId = jwtUtils.ValidateJwtToken(token);
+                return (int)userId;
+            }
+            catch (Exception )
+            {
+                return 0;
+            }
+           
         }
         public User GetById(int id)
         {

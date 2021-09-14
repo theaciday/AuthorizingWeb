@@ -1,35 +1,43 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router';
-import { Provider } from "react-redux";
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Provider, connect } from "react-redux";
 import { Layout } from './components/Layout';
 import Home from './components/Home';
-import { FetchData } from './components/FetchData';
-import Counter from './components/Counter';
 import Login from './components/Login';
 import Register from './components/Register';
 import User from './components/User';
+import { history } from './helpers/history';
+import { store } from './helpers/store';
 import './custom.css'
-import { store } from "./_helpers/store"
+import AlertWrapper from './wrappers/AlertWrapper';
+
 
 
 
 
 export default class App extends Component {
-    static displayName = App.name;
-    
+    constructor(props) {
+        super(props);
+    }
 
-    render() {
+    render() {  
         return (
             <Provider store={store}>
-            <Layout className='app-wp'>
-                <Route exact path='/' component={Home} />
-                <Route path='/counter' component={Counter} />
-                <Route path='/fetch-data' component={FetchData} />
-                <Route path='/login' component={Login} />
-                <Route path='/register' component={Register} />
-                <Route path='/user' component={User} />
-                </Layout>
+                <AlertWrapper />
+                <Router history={history}>
+                    <Switch>
+                        <Layout className='app-wp'>
+                            <Route exact path='/' component={Home} />
+                            <Route path='/login' component={Login} />
+                            <Route path='/register' component={Register} />
+                            <Route path='/user' component={User} />
+                        </Layout>
+                        <Redirect from="*" to="/" />
+                    </Switch>
+                </Router>
             </Provider>
-            );
+        );
     }
 }
+
+

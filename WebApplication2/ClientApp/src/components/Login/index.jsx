@@ -1,8 +1,8 @@
 ﻿import React, { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux'
 import { useHistory } from "react-router-dom";
-import { Redirect } from "react-router-dom";
 import './Login.module.css';
-import request from '../../Utils/Request';
+import userActions from '../../actions/user.actions'
 
 
 
@@ -11,7 +11,7 @@ const Login = () => {
     const history = useHistory();
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [redirect, setRedirect] = useState(false);
+    const dispatch = useDispatch()
     const handleChangeUserName = useCallback(e => {
         e.preventDefault()
         setUserName(e.target.value);
@@ -26,13 +26,7 @@ const Login = () => {
     }
     const submit = async (e) => {
         e.preventDefault()
-        const { token } = await request(url, { method: 'Post' }, { userName, password })
-        localStorage.setItem('token', token)
-        setRedirect(true);
-    }
-
-    if (redirect) {
-        return <Redirect to="/" />
+        dispatch(userActions.login(userName, password))
     }
 
     return (

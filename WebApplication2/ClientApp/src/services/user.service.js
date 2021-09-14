@@ -1,20 +1,16 @@
-﻿import config from 'config';
-import { authHeader } from '../';
+﻿import { authHeader } from '../';
 import request from '../Utils/Request';
 
 export const userService = {
 
     login,
     logout,
-    register,
-    getAll,
+    getCurrentUser,
     getById,
-    update,
-    delete: _delete
 };
 const url = 'auth/login';
 const urlForId = 'user/user';
-//const url = 'auth/login';
+const urlcurrent = 'user/currentuser';
 
 
 function login(username, password) {
@@ -25,11 +21,17 @@ function logout() {
     localStorage.removeItem('token');
 }
 function getAll() {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem(token)
     return request(url, { 'Authorization': `${token}` });
 }
 function getById(id) {
+    const token = localStorage.getItem(token)
     return request(urlForId, { 'Authorization': `${token}` });
 }
+function getCurrentUser() {
+    const token = localStorage.getItem(token)
+    return request(urlcurrent, { 'Authorization': `${token}` });
+    
+}
 
-
+  

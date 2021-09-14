@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import userActions from '../../actions/user.actions';
+import request from '../../Utils/Request';
 //import cookies from 'browser-cookies';
 //cookies.get('firstName');
 
 const Home = () => {
-   
-    
-    const [userName, setUserName] = useState('');
     useEffect(() => {
-        (
-            async () => {
-                const token = localStorage.getItem('token')
-                const response = await fetch('https://localhost:5001/api/user/user', {
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `${token}` },
-                    credentials: 'include',
-                });
-                const context = await response.json();
-                setUserName(context.name);
-            }
+        localStorage.getItem("token")
+        if ("token")
+            dispatch(userActions)
 
-        )();
-    });
+            
+    }, []);
 
     return (
         <div>

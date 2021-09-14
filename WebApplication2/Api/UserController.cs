@@ -28,5 +28,16 @@ namespace WebApplication2.Controllers
             var user = service.GetById(id);
             return Ok(user);
         }
+
+        [Authorize(Role.Admin)]
+        [HttpGet("currentuser")]
+        public IActionResult CurrentUser()
+        {
+            var token = Request.Headers["Authorization"];
+            var userId = service.GetCurrent(token);
+            var user = service.GetById(userId);
+            return Ok(user);
+        }
+
     }
 }
