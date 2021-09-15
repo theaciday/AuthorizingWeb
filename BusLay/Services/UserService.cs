@@ -6,23 +6,23 @@ using Microsoft.Extensions.Options;
 using DAL.Models;
 using System.Collections.Generic;
 using BusLay.Helpers;
-using BusLay.DataContext;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using BusLay.Context;
 
 namespace BusLay.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _repos;
-        private readonly UserContext context;
+        private readonly DataContext context;
         private IJwtUtils jwtUtils;
         private readonly Setting appSettings;
 
-        public UserService(IUserRepository repos, IJwtUtils _jwtUtils, IOptions<Setting> _appSettings, UserContext _context)
+        public UserService(IUserRepository repos, IJwtUtils _jwtUtils, IOptions<Setting> _appSettings, DataContext _context)
         {
             context = _context;
             jwtUtils = _jwtUtils;
@@ -79,7 +79,7 @@ namespace BusLay.Services
 
         public string DeletedUser(int id)
         {
-            var user = _repos.DeleteUserById(id);
+            var user = _repos.DeleteUser(id);
             if (user == null) throw new KeyNotFoundException("User not found");
             return user;
         }

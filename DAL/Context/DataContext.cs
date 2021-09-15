@@ -1,13 +1,19 @@
 ﻿using BusLay.Entities;
+using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BusLay.DataContext
+namespace BusLay.Context
 {
-    public class UserContext : DbContext
+    public class DataContext : DbContext
     {
-        public UserContext(DbContextOptions<UserContext> options) : base(options) { }
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Category> CartItems { get; set; }
+        public DbSet<CartItem> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

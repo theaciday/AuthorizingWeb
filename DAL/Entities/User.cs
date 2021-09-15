@@ -10,6 +10,7 @@ namespace BusLay.Entities
         public string LastName { get; set; }
         public string Username { get; set; }
         public Role Role { get; set; }
+        public CartItem User_Cart { get; set; }
 
         [JsonIgnore]
         public string Password { get; set; }

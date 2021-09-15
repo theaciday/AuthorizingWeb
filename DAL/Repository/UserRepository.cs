@@ -1,17 +1,15 @@
-﻿using BusLay.DataContext;
+﻿using BusLay.Context;
 using BusLay.Entities;
 using BusLay.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
-namespace BusLay.Repository
+namespace DAL.Repository
 {
-    public class UserRepository : DbContext, IUserRepository
+    public class UserRepository : IUserRepository
     {
-        private readonly UserContext context;
-        public UserRepository(UserContext _context)
+        private readonly DataContext context;
+        public UserRepository(DataContext _context)
         {
             context = _context;
         }
@@ -44,7 +42,7 @@ namespace BusLay.Repository
         }
         
 
-        public string DeleteUserById(int id)
+        public string DeleteUser(int id)
         {
             var user = context.Users.First(u => u.Id == id);
             context.Remove(user);

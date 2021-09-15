@@ -1,7 +1,5 @@
 using BusLay.Services;
-using BusLay.DataContext;
 using BusLay.Interfaces;
-using BusLay.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +14,9 @@ using BusLay.Settings;
 using System.Text.Json.Serialization;
 using BusLay.Helpers;
 using BusLay.Authorize;
-using Microsoft.AspNetCore.Http;
+using BusLay.Context;
+using DAL.Interfaces;
+using DAL.Repository;
 
 namespace WebApplication2
 {
@@ -34,7 +34,7 @@ namespace WebApplication2
         {
 
             services.AddControllersWithViews();
-            services.AddDbContext<UserContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddCors();
             services.AddSession();
 
@@ -45,6 +45,8 @@ namespace WebApplication2
             services.Configure<Setting>(Configuration.GetSection("Setting"));
           
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IJwtUtils, JwtUtils>();
 
