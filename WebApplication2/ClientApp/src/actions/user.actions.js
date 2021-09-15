@@ -108,6 +108,7 @@ function _delete(id) {
 
 export default {
 
+    getCurrentUser,
     login,
     logout,
     register,

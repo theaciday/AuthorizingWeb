@@ -17,7 +17,6 @@ const reducer = (state,action) =>
 
 }
 
-const store = createStore(reducer)
 
 const User = () => {
     const [id, setId] = useState("");

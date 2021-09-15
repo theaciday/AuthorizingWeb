@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import userActions from '../../actions/user.actions';
-import request from '../../Utils/Request';
+import { useDispatch, useSelector } from 'react-redux';
 //import cookies from 'browser-cookies';
 //cookies.get('firstName');
 
 const Home = () => {
+    const dispatch = useDispatch();
     useEffect(() => {
-        localStorage.getItem("token")
-        if ("token")
-            dispatch(userActions)
-
-            
+      const token = localStorage.getItem("token")
+        if (token)
+          dispatch(userActions.getCurrentUser())
     }, []);
+    const user = useSelector((state) => {
+        return state.authentication.user})
 
     return (
         <div>
-            {userName ? 'Welcome' + userName : 'Hello,stranger!'}
-            Please,login or register 
+            {user.firstName ? 'Welcome' + user.firstName : <div>'Hello,stranger!'
+                Please,login or register </div>}
            {/* {'Welcome' + userName}*/}
         </div>
     );

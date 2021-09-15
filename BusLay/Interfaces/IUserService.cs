@@ -12,6 +12,6 @@ namespace BusLay.Interfaces
         public User GetById(int id);
         //public IEnumerable<User> GetAll();
         public string DeletedUser(int id);
-        public int GetCurrent(string token);
+        public AuthenticateResponse GetCurrent(string token);
     }
 }

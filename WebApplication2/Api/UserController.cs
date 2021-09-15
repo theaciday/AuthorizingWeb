@@ -29,14 +29,13 @@ namespace WebApplication2.Controllers
             return Ok(user);
         }
 
-        [Authorize(Role.Admin)]
+        [Authorize]
         [HttpGet("currentuser")]
         public IActionResult CurrentUser()
         {
             var token = Request.Headers["Authorization"];
-            var userId = service.GetCurrent(token);
-            var user = service.GetById(userId);
-            return Ok(user);
+            var userServ = service.GetCurrent(token);
+            return Ok(userServ);
         }
 
     }

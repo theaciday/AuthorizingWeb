@@ -29,7 +29,7 @@ function getById(id) {
     return request(urlForId, { 'Authorization': `${token}` });
 }
 function getCurrentUser() {
-    const token = localStorage.getItem(token)
+    const token = localStorage.getItem("token")
     return request(urlcurrent, { 'Authorization': `${token}` });
     
 }

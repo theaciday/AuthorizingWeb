@@ -53,17 +53,20 @@ namespace BusLay.Services
             var jwtToken = jwtUtils.GenerateJwtToken(_user);
             return new AuthenticateResponse(_user, jwtToken);
         }
-        public int GetCurrent(string token)
+        public AuthenticateResponse GetCurrent(string token)
         {
             try
             {
                 var userId = jwtUtils.ValidateJwtToken(token);
-                return (int)userId;
+                var user = GetById((int)userId);
+                var jwtToken = jwtUtils.GenerateJwtToken(user);
+                return new AuthenticateResponse(user, jwtToken);
             }
-            catch (Exception )
-            {
-                return 0;
+            catch (Exception)
+            { 
+                return new AuthenticateResponse(new User(), "ERROR");
             }
+            
            
         }
         public User GetById(int id)
