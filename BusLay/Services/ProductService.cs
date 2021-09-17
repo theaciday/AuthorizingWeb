@@ -26,7 +26,6 @@ namespace BusLay.Services
             var product = new Product
             {
                 Description=dTO.Description,
-                ImagePath=dTO.ImagePath,
                 Name=dTO.ProductName,
                 UnitPrice=dTO.UnitPrice
             };

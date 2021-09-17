@@ -18,8 +18,7 @@ namespace DAL.Repository
             context.Users.Add(user);
             try
             {
-                var count = context.SaveChanges();
-                //user.Id = count++;
+                context.SaveChanges();
             }
             catch (Exception)
             {
@@ -31,25 +30,25 @@ namespace DAL.Repository
             return user;
         }
 
-        public  User GetUser(string username)
+        public User GetUser(string username)
         {
             return context.Users.Where(x => x.Username.ToLower() == username.ToLower()).FirstOrDefault();
         }
 
-        public  User GetUserById(int id)
+        public User GetUserById(int id)
         {
             return context.Users.Where(u => u.Id == id).FirstOrDefault();
         }
-        
+
 
         public string DeleteUser(int id)
         {
             var user = context.Users.First(u => u.Id == id);
             context.Remove(user);
-            return  ($"User with id:{id} has successeful deleted ");
+            return ($"User with id:{id} has successeful deleted ");
         }
 
 
-        
+
     }
 }
