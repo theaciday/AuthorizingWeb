@@ -40,11 +40,10 @@ const Register = () => {
                 password,
                 userName,
                 lastName,
-                password,
                 
             })
         });
-        const requestFetch= await request.JSON;
+        const requestFetch = await request.JSON;
        
       
         setRedirect(true);
@@ -78,7 +77,7 @@ const Register = () => {
             />
 
 
-            <button style={{ fontSize:"3rem" }} onSubmit={submit}>submit</button>
+            <button style={{ fontSize: "3rem", color: "black", backgroundColor: "rosybrown" }} onSubmit={submit}>submit</button>
         </form>
     );
 

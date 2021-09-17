@@ -1,6 +1,6 @@
 ﻿using BusLay.Context;
-using BusLay.Entities;
 using BusLay.Interfaces;
+using DAL.Entities;
 using System;
 using System.Linq;
 
@@ -46,7 +46,7 @@ namespace DAL.Repository
         {
             var user = context.Users.First(u => u.Id == id);
             context.Remove(user);
-            return  ($"User with id:{id} is deleted ");
+            return  ($"User with id:{id} has successeful deleted ");
         }
 
 

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DAL.Entities
 {
@@ -11,14 +9,17 @@ namespace DAL.Entities
     {
         [Key]
         public int ItemId { get; set; }
+        [MaybeNull]
+        public int Quantity { get; set; }
 
-        public string CartId { get; set; }
+        public DateTime DateCreated { get; set; }
 
-        public Product Product { get; set; }
+        public Product Products { get; set; }
 
         public int ProductId { get; set; }
 
-        public double Products_Price { get; set; }
+        public User User { get; set; }
 
+        public int UserId { get; set; }
     }
 }

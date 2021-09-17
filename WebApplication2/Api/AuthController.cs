@@ -1,10 +1,11 @@
 ﻿using BusLay.Authorize;
 using BusLay.DTOs;
 using BusLay.Interfaces;
+using DAL.Entities;
+using DAL.Interfaces;
 using DAL.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using System.Threading.Tasks;
 
 namespace WebApplication2.Api
 {
@@ -39,6 +40,12 @@ namespace WebApplication2.Api
         public IActionResult Logout()
         {
             return Ok(new { message = "Success logout" });
+        }
+        [HttpDelete]
+        public IActionResult DeletedUser(int id) 
+        {
+            service.DeletedUser(id);
+            return Ok($"user with id:");
         }
     }
 }

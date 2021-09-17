@@ -1,4 +1,5 @@
-﻿using BusLay.Entities;
+﻿using DAL.Entities;
+
 namespace BusLay.Interfaces
 {
     public interface IUserRepository

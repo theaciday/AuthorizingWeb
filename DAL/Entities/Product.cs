@@ -11,10 +11,10 @@ namespace DAL.Entities
     {
         [Key]
         [ScaffoldColumn(false)]
-        public int ProductID { get; set; }
+        public int ID { get; set; }
         
         [Required]
-        public string ProductName { get; set; }
+        public string Name { get; set; }
         
         public double? UnitPrice { get; set; }
 
@@ -23,9 +23,8 @@ namespace DAL.Entities
         [Required]
         public string Description { get; set; }
 
+        [Required]
+        public Category  Category {get; set; }
 
-        public int? CategoryID { get; set; }
-
-        public virtual Category Category { get; set; }
     }
 }

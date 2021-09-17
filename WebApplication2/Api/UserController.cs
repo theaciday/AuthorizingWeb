@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BusLay.Authorize;
-using BusLay.Entities;
 using DAL.Entities;
-using BusLay.Interfaces;
+using DAL.Interfaces;
 
 namespace WebApplication2.Controllers
 {
@@ -36,6 +35,12 @@ namespace WebApplication2.Controllers
             var token = Request.Headers["Authorization"];
             var userServ = service.GetCurrent(token);
             return Ok(userServ);
+        }
+        [HttpDelete("deleteuser")]
+        public IActionResult DeleteUser(int id)
+        {
+            var user = service.DeletedUser(id);
+            return Ok(user);
         }
 
     }

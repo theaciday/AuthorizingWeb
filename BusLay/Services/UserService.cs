@@ -1,17 +1,15 @@
 ﻿using BusLay.DTOs;
 using BusLay.Interfaces;
-using BusLay.Entities;
 using BusLay.Settings;
 using Microsoft.Extensions.Options;
 using DAL.Models;
 using System.Collections.Generic;
 using BusLay.Helpers;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using DAL.Entities;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using BusLay.Context;
+using DAL.Interfaces;
 
 namespace BusLay.Services
 {
@@ -37,9 +35,10 @@ namespace BusLay.Services
             {
                 Username = dto.UserName,
                 FirstName = dto.FirstName,
+                Email=dto.Email,
                 LastName = dto.LastName,
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-                Role = Role.User
+                Role = Role.Admin
             };
             _repos.Create(user);
             return user;

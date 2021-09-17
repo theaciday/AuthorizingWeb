@@ -1,9 +1,8 @@
 ﻿using BusLay.DTOs;
-using BusLay.Entities;
+using DAL.Entities;
 using DAL.Models;
-using System.Collections.Generic;
 
-namespace BusLay.Interfaces
+namespace DAL.Interfaces
 {
     public interface IUserService
     {

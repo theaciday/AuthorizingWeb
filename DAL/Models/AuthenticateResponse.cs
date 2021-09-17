@@ -1,6 +1,4 @@
-﻿
-using BusLay.Entities;
-using DAL.Entities;
+﻿using DAL.Entities;
 
 namespace DAL.Models
 {

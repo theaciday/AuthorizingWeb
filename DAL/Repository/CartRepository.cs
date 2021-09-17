@@ -1,4 +1,5 @@
-﻿using DAL.Interfaces;
+﻿using BusLay.Context;
+using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,15 @@ namespace DAL.Repository
 {
     public class CartRepository: ICartRepository
     {
+        private readonly DataContext context;
+        public CartRepository(DataContext _context)
+        {
+            context = _context;
+        }
+        
+
+
+
 
     }
 }

@@ -48,6 +48,7 @@ namespace WebApplication2
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IJwtUtils, JwtUtils>();
 
 
