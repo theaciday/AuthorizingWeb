@@ -47,6 +47,7 @@ namespace BusLay.Services
         public AuthenticateResponse LoginUser(AuthenticateRequest model)
         {
             var _user = context.Users.SingleOrDefault(x => x.Username == model.Username);
+
             if (!BCrypt.Net.BCrypt.Verify(model.Password, _user.Password))
                 throw new AppException("Username or password is incorrect");
             var jwtToken = jwtUtils.GenerateJwtToken(_user);

@@ -33,7 +33,6 @@ namespace WebApplication2.Api
         {
             var user = service.LoginUser(model);
             if (user == null) return BadRequest(new { message = "User or password invalid" });
-            
             return Ok(user);
         }
         [HttpPost("logout")]

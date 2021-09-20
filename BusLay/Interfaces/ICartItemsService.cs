@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Interfaces
+namespace BusLay.Interfaces
 {
-    public interface ICartRepository
+    public interface ICartItemsService
     {
         public List<CartItem> GetCartItems(int id);
         public void DeleteFromCart(int id);
-        public string AddToCart(CartItem item);
+        public string AddToCart(CartItem cartItem, int id);
     }
 }

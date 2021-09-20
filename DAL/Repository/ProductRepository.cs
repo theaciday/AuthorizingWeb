@@ -22,23 +22,25 @@ namespace DAL.Repository
             context.Products.Add(product);
             try
             {
-                 context.SaveChanges();
+                context.SaveChanges();
             }
             catch (Exception)
             {
                 throw;
             }
+            context.SaveChanges();
             return product;
-                
+
         }
 
         public string DeleteProduct(int id)
-        {  
-            if (id==0)
+        {
+            if (id == 0)
             {
                 return "user not found";
             }
             context.Remove(id);
+            context.SaveChanges();
             return $"product with id:{id} has successeful deleted";
         }
 
@@ -49,6 +51,7 @@ namespace DAL.Repository
             produc.ImagePath = product.ImagePath;
             produc.Description = product.Description;
             produc.UnitPrice = product.UnitPrice;
+            context.SaveChanges();
             return product;
         }
 
@@ -70,9 +73,18 @@ namespace DAL.Repository
             return products;
         }
 
-        public Product ProductByName(string productName)
+        public List<Product> ProductByName(string productName, double? maxprice)
         {
-            return context.Products.Where(x => x.Name.ToLower() == productName.ToLower()).FirstOrDefault();
+            return context.Products.Where(x => 
+                (productName == null || x.Name.ToLower() == productName.ToLower()) && 
+                (maxprice == null || x.UnitPrice <= maxprice)
+            ).ToList();
         }
+
+        //public List<Product> ProductByName(string productName, double maxprice)
+        //{CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS 
+        //    var users = context.Products.Where(x => x.Name.ToLower() == productName.ToLower() && x.UnitPrice <= maxprice).ToList();
+        //    return users;
+        //}
     }
 }

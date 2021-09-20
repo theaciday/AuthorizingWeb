@@ -17,14 +17,14 @@ namespace WebApplication2.Api
             this.service = service;
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         [Authorize(Role.Admin)]
         public IActionResult CreateProduct(ProductDTO dTO)
         {
             var product = service.CreateProduct(dTO);
             return Created("createproduct",product);
         }
-        [HttpPut("editproduct")]
+        [HttpPut]
         [Authorize(Role.Admin)]
         public IActionResult EditProduct(Product dTO)
         {
@@ -35,7 +35,7 @@ namespace WebApplication2.Api
             }
             return Ok(product);
         }
-        [HttpGet("product/{id:int}")]
+        [HttpGet("{id:int}")]
         [AllowAnonymous]
         public IActionResult FindProduct(int id)
         {
@@ -46,22 +46,22 @@ namespace WebApplication2.Api
             }
             return Ok(product);
         }
-        [HttpGet("allproducts")]
+        [HttpGet("all")]
         [AllowAnonymous]
         public IActionResult AllProducts() 
         {
             var products = service.GetAllProducts();
             return Ok(products);
         }
-        [HttpGet("productbyname")]
+        [HttpGet("search")]
         [AllowAnonymous]
-        public IActionResult ProductByName(string productName)
+        public IActionResult ProductByName(string name,double? max)
         {
-            var product = service.GetProduct(productName);
+            var product = service.GetProduct(name,max);
             return Ok(product);
         }
 
-        [HttpDelete("deleteproduct{id:int}")]
+        [HttpDelete("{id:int}")]
         [Authorize(Role.Admin)]
         public IActionResult DeleteProduct(int id) 
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repository
 {
-    class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly DataContext context;
         public CategoryRepository(DataContext context)
@@ -25,7 +25,16 @@ namespace DAL.Repository
 
         public string DeleteCategory(int id)
         {
-           context.Categories.
+            var category = GetCategory(id);
+            context.Categories.Remove(category);
+            context.SaveChanges();
+            return "successeful deleted";
+        }
+
+        public Category GetCategory(int categoryId)
+        {
+            var category = context.Categories.Where(w => w.CategoryID == categoryId).FirstOrDefault();
+            return category;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace DAL.Repository
                 user.FirstName = "a user with the same firstName already exists";
                 return user;
             }
-
+            context.SaveChanges();
             return user;
         }
 
@@ -45,6 +45,7 @@ namespace DAL.Repository
         {
             var user = context.Users.First(u => u.Id == id);
             context.Remove(user);
+            context.SaveChanges();
             return ($"User with id:{id} has successeful deleted ");
         }
 

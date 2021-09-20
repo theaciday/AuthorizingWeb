@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Interfaces
+namespace BusLay.Interfaces
 {
-    public interface ICategoryRepository
+    public interface ICategoryService
     {
         public Category AddCategory(Category category);
         public Category GetCategory(int categoryId);

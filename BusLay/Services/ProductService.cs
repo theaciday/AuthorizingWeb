@@ -63,10 +63,12 @@ namespace BusLay.Services
             return products;
         }
 
-        public Product GetProduct(string productName)
+        public List<Product>GetProduct(string productName,double? max)
         {
-            var product = repos.ProductByName(productName);
-            return product;
+            var products = repos.ProductByName(productName,max);
+            return products;
         }
+
+
     }
 }

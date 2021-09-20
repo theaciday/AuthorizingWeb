@@ -17,6 +17,7 @@ using BusLay.Authorize;
 using BusLay.Context;
 using DAL.Interfaces;
 using DAL.Repository;
+using DAL.Entities;
 
 namespace WebApplication2
 {
@@ -44,11 +45,14 @@ namespace WebApplication2
             });
             services.Configure<Setting>(Configuration.GetSection("Setting"));
           
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IUserRepository,UserRepository>();
+            services.AddScoped<IProductRepository,ProductRepository>();
+            services.AddScoped<ICategoryRepository,CategoryRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICartItemsService, CartItemsService>();
+            services.AddScoped<ICategoryService,CategoryService>();
             services.AddScoped<IJwtUtils, JwtUtils>();
 
 

@@ -17,7 +17,7 @@ namespace WebApplication2.Controllers
         }
 
         [Authorize(Role.Admin)]
-        [HttpGet("user/{id:int}")]
+        [HttpGet("{id:int}")]
         public IActionResult UserById(int id)
         {
             var currentUser = (User)HttpContext.Items["User"];
@@ -28,20 +28,21 @@ namespace WebApplication2.Controllers
             return Ok(user);
         }
 
-        [Authorize]
-        [HttpGet("currentuser")]
+        [HttpGet("current")]
         public IActionResult CurrentUser()
         {
             var token = Request.Headers["Authorization"];
             var userServ = service.GetCurrent(token);
             return Ok(userServ);
         }
-        [HttpDelete("deleteuser")]
+
+        
+        [HttpDelete("{id:int}")]
         public IActionResult DeleteUser(int id)
         {
             var user = service.DeletedUser(id);
             return Ok(user);
         }
-
+        
     }
 }
