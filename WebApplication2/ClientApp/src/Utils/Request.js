@@ -1,6 +1,6 @@
 ﻿const request = async (url, params = {}, body) => {
     const token = localStorage.getItem('token')
-    const response = await fetch(`https://localhost:5001/api/${url}`, {
+    const response = await fetch(`https://localhost:44317/api/${url}`, {
         headers: { 'Content-type': 'application/json', ...(token && { 'Authorization': token }) },
         ...params,
         ...(body && { body: JSON.stringify(body) })
