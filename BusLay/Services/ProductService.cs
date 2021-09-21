@@ -14,11 +14,9 @@ namespace BusLay.Services
     public class ProductService:IProductService
     {
         private readonly IProductRepository repos;
-        private readonly DataContext context;
-        public ProductService(IProductRepository product, DataContext context)
+        public ProductService(IProductRepository product)
         {
             repos = product;
-            this.context = context;
         }
 
         public Product CreateProduct(ProductDTO dTO)

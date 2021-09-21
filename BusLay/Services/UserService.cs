@@ -17,14 +17,13 @@ namespace BusLay.Services
     {
         private readonly IUserRepository _repos;
         private readonly DataContext context;
-        private IJwtUtils jwtUtils;
-        private readonly Setting appSettings;
+        private readonly IJwtUtils jwtUtils;
 
-        public UserService(IUserRepository repos, IJwtUtils _jwtUtils, IOptions<Setting> _appSettings, DataContext _context)
+
+        public UserService(IUserRepository repos, IJwtUtils _jwtUtils, DataContext _context)
         {
             context = _context;
             jwtUtils = _jwtUtils;
-            appSettings = _appSettings.Value;
             _repos = repos;
 
         }
@@ -35,10 +34,10 @@ namespace BusLay.Services
             {
                 Username = dto.UserName,
                 FirstName = dto.FirstName,
-                Email=dto.Email,
+                Email = dto.Email,
                 LastName = dto.LastName,
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-                Role = Role.Admin
+                Role = Role.User
             };
             _repos.Create(user);
             return user;
@@ -63,16 +62,14 @@ namespace BusLay.Services
                 return new AuthenticateResponse(user, jwtToken);
             }
             catch (Exception)
-            { 
+            {
                 return new AuthenticateResponse(new User(), "ERROR");
             }
-            
-           
         }
         public User GetById(int id)
         {
             var user = _repos.GetUserById(id);
-            if (user == null) 
+            if (user == null)  
                 return null;
             return user;
         }
@@ -84,6 +81,6 @@ namespace BusLay.Services
             return user;
         }
 
-       
+
     }
 }

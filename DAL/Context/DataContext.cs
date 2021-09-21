@@ -11,6 +11,7 @@ namespace BusLay.Context
         public DbSet<Category> Categories{ get; set; }
         public DbSet<CartItem> ShoppingCartItems { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
        
 
 
@@ -18,8 +19,6 @@ namespace BusLay.Context
         {
             modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Password).IsUnique(); });
             modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Username).IsUnique(); });
-            
-     
         }
 
 

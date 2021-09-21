@@ -46,6 +46,7 @@ namespace WebApplication2.Api
             }
             return Ok(product);
         }
+
         [HttpGet("all")]
         [AllowAnonymous]
         public IActionResult AllProducts() 
