@@ -44,13 +44,23 @@ namespace BusLay.Services
         }
 
         public AuthenticateResponse LoginUser(AuthenticateRequest model)
-        {
-            var _user = context.Users.SingleOrDefault(x => x.Username == model.Username);
+        { 
+            try
+            {
+                var _user = _repos.GetByName(model.Username);
+                if (!BCrypt.Net.BCrypt.Verify(model.Password, _user.Password))
+                {
+                    throw new AppException("Username or password is incorrect");
+                }
 
-            if (!BCrypt.Net.BCrypt.Verify(model.Password, _user.Password))
+                var jwtToken = jwtUtils.GenerateJwtToken(_user);
+                return new AuthenticateResponse(_user, jwtToken);
+            }
+            catch (Exception)
+            {
                 throw new AppException("Username or password is incorrect");
-            var jwtToken = jwtUtils.GenerateJwtToken(_user);
-            return new AuthenticateResponse(_user, jwtToken);
+            }
+               
         }
         public AuthenticateResponse GetCurrent(string token)
         {

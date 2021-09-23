@@ -2,15 +2,14 @@
 import request from '../Utils/Request';
 
 export const userService = {
-
     login,
     logout,
     getCurrentUser,
     getById,
 };
 const url = 'auth/login';
-const urlForId = 'user/user';
-const urlcurrent = 'user/currentuser';
+const urlForId = 'user/';
+const urlcurrent = 'user/current';
 
 
 function login(username, password) {

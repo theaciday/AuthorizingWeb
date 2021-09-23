@@ -33,7 +33,7 @@ namespace WebApplication2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            
             services.AddControllersWithViews();
             services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddCors();
@@ -55,7 +55,7 @@ namespace WebApplication2
             services.AddScoped<ICategoryService,CategoryService>();
             services.AddScoped<IJwtUtils, JwtUtils>();
 
-
+            
 
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName)

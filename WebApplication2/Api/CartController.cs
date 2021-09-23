@@ -36,11 +36,11 @@ namespace WebApplication2.Api
 
         [Authorize]
         [HttpDelete]
-        public IActionResult DeleteFromCart(int id)
+        public IActionResult DeleteFromCart(int? id)
         {
-            if (id!=null)
+            if (id != null)
             {
-                service.DeleteFromCart(id);
+                service.DeleteFromCart((int)id);
             }
             
             return BadRequest();

@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using System;
 
 namespace DAL.Models
 {
@@ -12,7 +13,7 @@ namespace DAL.Models
         public Role Role { get; set; }
         public string Token { get; set; }
         public string Session { get; set; }
-
+       
         public AuthenticateResponse(User user, string token)
         {
             Id = user.Id;

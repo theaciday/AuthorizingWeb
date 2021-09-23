@@ -9,20 +9,19 @@ export function authentication(state = initialState, action) {
     switch (action.type) {
         case userConstants.LOGIN_REQUEST:
             return {
-                ...state,
-                loggingIn: true
+                ...state
             };
         case userConstants.LOGIN_SUCCESS:
             return {
                 ...state,
-                loggedIn: true,
+                loggingIn: true,
                 user: action.user
             };
         case userConstants.LOGIN_FAILURE:
             return initialState;
         case userConstants.GET_CURRENT_USER_SUCCESS:
             return {
-                loggedIn: true,
+                loggingIn: true,
                 user: action.user,
             };
         case userConstants.LOGOUT:

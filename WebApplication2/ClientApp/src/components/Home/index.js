@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import userActions from '../../actions/user.actions';
 import { useDispatch, useSelector } from 'react-redux';
-//import cookies from 'browser-cookies';
-//cookies.get('firstName');
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -18,7 +16,6 @@ const Home = () => {
         <div>
             {user.firstName ? 'Welcome' + user.firstName : <div>'Hello,stranger!'
                 Please,login or register </div>}
-           {/* {'Welcome' + userName}*/}
         </div>
     );
 };

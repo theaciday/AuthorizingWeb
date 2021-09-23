@@ -39,7 +39,10 @@ namespace DAL.Repository
         {
             return context.Users.Where(u => u.Id == id).FirstOrDefault();
         }
-
+        public User GetByName(string name) 
+        {
+            return context.Users.Where(w => w.Username.ToLower() == name.ToLower()).FirstOrDefault();
+        }
 
         public string DeleteUser(int id)
         {

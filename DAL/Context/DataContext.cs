@@ -11,7 +11,7 @@ namespace BusLay.Context
         public DbSet<Category> Categories{ get; set; }
         public DbSet<CartItem> ShoppingCartItems { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Permission> Permissions { get; set; }
+        
        
 
 

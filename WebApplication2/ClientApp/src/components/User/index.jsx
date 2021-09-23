@@ -27,8 +27,12 @@ const User = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        const result = await request(`user/user/${id}`)
-        setUserName(result.firstName)
+        const token = localStorage.getItem('token');
+        if (token) {
+            const result = await request(`user/user/${id}`)
+            setUserName(result.firstName)
+        }
+        
 
     };
     

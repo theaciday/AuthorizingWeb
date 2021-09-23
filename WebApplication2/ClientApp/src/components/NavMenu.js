@@ -1,55 +1,52 @@
-import React, { Component } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import React from 'react';
+import { Collapse, Container, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
-import Logout from './Logout';
+import logout from './Logout';
+import { useSelector, useDispatch } from 'react-redux';
 
-
-
-export class NavMenu extends Component {
-    static displayName = NavMenu.name;
-
-    constructor(props) {
-        super(props);
-
-        this.toggleNavbar = this.toggleNavbar.bind(this);
-        this.state = {
-            collapsed: true
-        };
-    }
-
-    toggleNavbar() {
-        this.setState({
-            collapsed: !this.state.collapsed
-        });
-    }
-
-    render() {
+const NavMenu = () => {
+    const dispatch = useDispatch();
+    const logginIn = useSelector((state) => {
+        return state.authentication.loggingIn
+    })
+    const handleLogout = (e) => {
+        if (e) e.preventDefault();
+        dispatch(logout());
+    };
+    const userRole = useSelector((state) => {
+        return state.authentication.user.role
+    })
+    
+    const isUser = userRole === 'Admin';
         return (
             <header>
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
                     <Container>
-                        <NavbarBrand tag={Link} to="/">Home</NavbarBrand>
-                        <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-                        <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
+                        {logginIn &&
+                            (<NavbarBrand tag={Link} to="/">Home</NavbarBrand>)}
+                        <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen navbar>
                             <ul className="navbar-nav flex-grow">
-                                <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
-                                </NavItem>
                                 <NavItem>
                                     <NavLink tag={Link} className="text-dark" to="/login/login">Login</NavLink>
                                 </NavItem>
-                                <NavItem>
+                                {isUser &&
+                                    (< NavItem >
                                     <NavLink tag={Link} className="text-dark" to="/user">User</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={Link} onClick={Logout} className="text-dark" to="/">Logout</NavLink>
-                             </NavItem>
+                                    </NavItem>)}
+                                {logginIn && 
+                                (<NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+                                    </NavItem>)}
+                                {logginIn &&
+                                    (<NavItem>
+                                    <NavLink tag={Link} onClick={handleLogout} className="text-dark" to="/">Logout</NavLink>
+                             </NavItem>)}
                             </ul>
                         </Collapse>
                     </Container>
                 </Navbar>
             </header>
         );
-    }
 }
+export default NavMenu;

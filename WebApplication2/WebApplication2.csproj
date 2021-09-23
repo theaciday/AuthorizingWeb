@@ -27,4 +27,8 @@
     <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ClientApp\src\components\PrivateRoute\" />
+  </ItemGroup>
+
 </Project>

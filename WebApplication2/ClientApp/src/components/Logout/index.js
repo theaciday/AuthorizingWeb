@@ -1,10 +1,7 @@
-﻿import { Redirect } from "react-router-dom";
-import React from 'react';
+﻿import userActions from "../../actions/user.actions";
 
-const Logout = () => {
+export default function logout() {
 
-    localStorage.clear("token");
-        return <Redirect to="/" />
+    return userActions.logout()
     
 }
-export default Logout;
