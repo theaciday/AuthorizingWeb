@@ -1,18 +1,25 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Container } from 'reactstrap';
-import NavMenu  from './NavMenu';
+import NavMenu from './NavMenu';
+import { useDispatch } from 'react-redux';
+import userActions from '../actions/user.actions';
 
-export class Layout extends Component {
-  static displayName = Layout.name;
+const Layout = (props) => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const token = localStorage.getItem("token")
+        if (token)
+            dispatch(userActions.getCurrentUser())
+    }, []);
 
-  render () {
+ 
     return (
       <div>
         <NavMenu />
-        <Container>
-          {this.props.children}
+            <Container>
+                {props.children}
         </Container>
       </div>
     );
-  }
 }
+export default Layout;

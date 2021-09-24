@@ -32,7 +32,7 @@ namespace WebApplication2.Api
         public IActionResult Login(AuthenticateRequest model)
         {
             var user = service.LoginUser(model);
-            if (user == null) return BadRequest(new { message = "User or password invalid" });
+            if (user == null) return BadRequest(new { message = "User or Password invalid" });
             return Ok(user);
         }
         [HttpPost("logout")]

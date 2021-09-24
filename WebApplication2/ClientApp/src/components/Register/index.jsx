@@ -1,6 +1,6 @@
 ﻿import React, { useState, useCallback } from "react";
 import { Redirect } from "react-router-dom";
-import request from "../../Utils/Request";
+import request from "../../utils/Request";
 
 
 const Register = () => {

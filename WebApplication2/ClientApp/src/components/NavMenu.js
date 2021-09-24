@@ -18,7 +18,7 @@ const NavMenu = () => {
         return state.authentication.user.role
     })
     
-    const isUser = userRole === 'Admin';
+    const isAdmin = userRole === 'Admin';
         return (
             <header>
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
@@ -28,9 +28,9 @@ const NavMenu = () => {
                         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen navbar>
                             <ul className="navbar-nav flex-grow">
                                 <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/login/login">Login</NavLink>
+                                    <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
                                 </NavItem>
-                                {isUser &&
+                                {isAdmin &&
                                     (< NavItem >
                                     <NavLink tag={Link} className="text-dark" to="/user">User</NavLink>
                                     </NavItem>)}

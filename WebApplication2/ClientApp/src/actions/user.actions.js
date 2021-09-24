@@ -75,21 +75,20 @@ function register(user) {
     function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
-//function getAll() {
-//    return dispatch => {
-//        dispatch(request());
+function getById() {
+    return dispatch => {
+        dispatch(request());
+        userService.getById()
+            .then(
+                user => dispatch(success(user)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
 
-//        userService.getAll()
-//            .then(
-//                users => dispatch(success(users)),
-//                error => dispatch(failure(error.toString()))
-//            );
-//    };
-
-//    function request() { return { type: userConstants.GETALL_REQUEST } }
-//    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
-//    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
-//}
+    function request() { return { type: userConstants.GETALL_REQUEST } }
+    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
+    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
 function _delete(id) {
     return dispatch => {
         dispatch(request(id));
@@ -107,11 +106,9 @@ function _delete(id) {
 }
 
 export default {
-
     getCurrentUser,
     login,
     logout,
     register,
     delete: _delete
-
 };

@@ -23,4 +23,4 @@
 }
 export default request;
 
-/*request('adsfasfd', { method: 'POST' }, {bla: '123213'})*/
+/*request('adsfasfd', { method: 'POST' }, {bla: '123213'})*/ 

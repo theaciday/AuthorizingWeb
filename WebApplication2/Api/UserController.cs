@@ -2,6 +2,7 @@
 using BusLay.Authorize;
 using DAL.Entities;
 using DAL.Interfaces;
+using BusLay.Interfaces;
 
 namespace WebApplication2.Controllers
 {
@@ -11,6 +12,7 @@ namespace WebApplication2.Controllers
     public class UserController : Controller
     {
         private readonly IUserService service;
+        private readonly IJwtUtils jwtUtils;
         public UserController(IUserService user)
         {
             service = user;

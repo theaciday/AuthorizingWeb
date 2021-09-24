@@ -2,6 +2,7 @@
 
 const initialState = {
     loggingIn: false,
+    loading: false,
     user: {},
 };
 
@@ -9,7 +10,8 @@ export function authentication(state = initialState, action) {
     switch (action.type) {
         case userConstants.LOGIN_REQUEST:
             return {
-                ...state
+                ...state,
+                loading: true
             };
         case userConstants.LOGIN_SUCCESS:
             return {
@@ -23,6 +25,7 @@ export function authentication(state = initialState, action) {
             return {
                 loggingIn: true,
                 user: action.user,
+                loading: false
             };
         case userConstants.LOGOUT:
             return initialState;

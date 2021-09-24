@@ -1,5 +1,5 @@
 ﻿import { authHeader } from '../';
-import request from '../Utils/Request';
+import request from '../utils/Request';
 
 export const userService = {
     login,

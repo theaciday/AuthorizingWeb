@@ -1,21 +1,6 @@
 ﻿import React, { useState, useCallback } from "react";
-import request from "../../Utils/Request";
-import { createStore } from "redux";
+import request from "../../utils/Request.js";
 
-const defaultState = {
-
-}
-
-/*action = { type:"",payload:"" }*/
-const reducer = (state,action) =>
-{
-    switch (action.type) {
-
-        default:
-            return state
-    }
-
-}
 
 
 const User = () => {
@@ -29,11 +14,9 @@ const User = () => {
         e.preventDefault()
         const token = localStorage.getItem('token');
         if (token) {
-            const result = await request(`user/user/${id}`)
+            const result = await request(`user/${id}`)
             setUserName(result.firstName)
         }
-        
-
     };
     
 
