@@ -37,7 +37,7 @@ namespace DAL.Repository
 
         public User GetUserById(int id)
         {
-            return context.Users.Where(u => u.Id == id).FirstOrDefault();
+            return context.Users.Where(u => u.UserId == id).FirstOrDefault();
         }
         public User GetByName(string name) 
         {
@@ -46,7 +46,7 @@ namespace DAL.Repository
 
         public string DeleteUser(int id)
         {
-            var user = context.Users.First(u => u.Id == id);
+            var user = context.Users.First(u => u.UserId == id);
             context.Remove(user);
             context.SaveChanges();
             return ($"User with id:{id} has successeful deleted ");

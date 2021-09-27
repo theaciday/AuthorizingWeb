@@ -3,6 +3,8 @@ using BusLay.Authorize;
 using DAL.Entities;
 using DAL.Interfaces;
 using BusLay.Interfaces;
+using BusLay.DTOs;
+using System;
 
 namespace WebApplication2.Controllers
 {
@@ -12,7 +14,6 @@ namespace WebApplication2.Controllers
     public class UserController : Controller
     {
         private readonly IUserService service;
-        private readonly IJwtUtils jwtUtils;
         public UserController(IUserService user)
         {
             service = user;
@@ -23,7 +24,7 @@ namespace WebApplication2.Controllers
         public IActionResult UserById(int id)
         {
             var currentUser = (User)HttpContext.Items["User"];
-            if (id != currentUser.Id && currentUser.Role != Role.Admin)
+            if (id != currentUser.UserId && currentUser.Role != Role.Admin)
                 return Unauthorized(new { message = "Unauthorized" });
 
             var user = service.GetById(id);
@@ -36,6 +37,12 @@ namespace WebApplication2.Controllers
             var token = Request.Headers["Authorization"];
             var userServ = service.GetCurrent(token);
             return Ok(userServ);
+        }
+        [HttpPost]
+        [Authorize(Role.Admin)]
+        public IActionResult NewUser(RegisterDto dto)
+        {
+            return Created("Success", service.CreateUser(dto));
         }
 
         

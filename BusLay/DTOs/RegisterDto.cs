@@ -23,6 +23,5 @@ namespace BusLay.DTOs
 
         public Role Roles { get; set; }
        
-      
     }
 }

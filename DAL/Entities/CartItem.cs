@@ -8,7 +8,7 @@ namespace DAL.Entities
     public class CartItem
     {
         [Key]
-        public int ItemId { get; set; }
+        public int ItemID { get; set; }
         [MaybeNull]
         public int Quantity { get; set; }
 

@@ -11,7 +11,6 @@ namespace DAL.Repository
 {
     public class CartRepository : ICartRepository
     {
-        private readonly UserRepository repository;
         private readonly DataContext context;
         public CartRepository(DataContext _context)
         {
@@ -22,18 +21,19 @@ namespace DAL.Repository
         {
             context.ShoppingCartItems.Add(item);
             context.SaveChanges();
-            return $"item with id: {item.ItemId} was added to your cart";
+            return $"item with id: {item.ItemID} was added to your cart";
         }
-        public void DeleteFromCart(int id)
+        public string DeleteFromCart(int id)
         {
-            var item = context.ShoppingCartItems.Where(s => s.ItemId == id).FirstOrDefault();
+            var item = context.ShoppingCartItems.Where(s => s.ItemID == id).FirstOrDefault();
             context.ShoppingCartItems.Remove(item);
             context.SaveChanges();
+            return $"item with id:{id} was successefuly deleted from your cart";
         }
 
         public List<CartItem> GetCartItems(int id)
         {
-            return context.ShoppingCartItems.Where(c => c.ItemId == id).ToList();
+            return context.ShoppingCartItems.Where(c => c.ItemID == id).ToList();
         }
 
     }

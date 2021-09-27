@@ -16,13 +16,11 @@ namespace BusLay.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _repos;
-        private readonly DataContext context;
         private readonly IJwtUtils jwtUtils;
 
 
-        public UserService(IUserRepository repos, IJwtUtils _jwtUtils, DataContext _context)
+        public UserService(IUserRepository repos, IJwtUtils _jwtUtils)
         {
-            context = _context;
             jwtUtils = _jwtUtils;
             _repos = repos;
 
@@ -31,6 +29,20 @@ namespace BusLay.Services
         public User CreateUser(RegisterDto dto)
         {
             var user = new User
+            {
+                Username = dto.UserName,
+                FirstName = dto.FirstName,
+                Email = dto.Email,
+                LastName = dto.LastName,
+                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                Role = Role.User
+            };
+            _repos.Create(user);
+            return user;
+        }
+        public User NewUser(RegisterDto dto)
+        {
+            var user = new User 
             {
                 Username = dto.UserName,
                 FirstName = dto.FirstName,
@@ -91,6 +103,6 @@ namespace BusLay.Services
             return user;
         }
 
-
+       
     }
 }

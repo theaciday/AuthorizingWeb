@@ -2,7 +2,7 @@ import React from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
-import logout from './Logout';
+import logout from '../actions/user.actions';
 import { useSelector, useDispatch } from 'react-redux';
 
 const NavMenu = () => {

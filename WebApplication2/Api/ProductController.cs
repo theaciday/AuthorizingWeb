@@ -3,6 +3,7 @@ using BusLay.DTOs;
 using BusLay.Interfaces;
 using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebApplication2.Api
 {
@@ -49,7 +50,7 @@ namespace WebApplication2.Api
 
         [HttpGet("all")]
         [AllowAnonymous]
-        public IActionResult AllProducts() 
+        public IActionResult AllProducts()
         {
             var products = service.GetAllProducts();
             return Ok(products);

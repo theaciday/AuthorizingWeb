@@ -33,7 +33,7 @@ namespace DAL.Repository
 
         public Category GetCategory(int categoryId)
         {
-            var category = context.Categories.Where(w => w.CategoryID == categoryId).FirstOrDefault();
+            var category = context.Categories.Where(w => w.CategoryId == categoryId).FirstOrDefault();
             return category;
         }
     }

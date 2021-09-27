@@ -25,7 +25,9 @@ namespace BusLay.Services
             {
                 Description=dTO.Description,
                 Name=dTO.ProductName,
-                UnitPrice=dTO.UnitPrice
+                UnitPrice=dTO.UnitPrice,
+                CategoryId=dTO.CategoryID,
+
             };
             repos.CreateProduct(product);
             return product;

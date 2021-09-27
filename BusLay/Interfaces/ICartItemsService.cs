@@ -10,7 +10,7 @@ namespace BusLay.Interfaces
     public interface ICartItemsService
     {
         public List<CartItem> GetCartItems(int id);
-        public void DeleteFromCart(int id);
+        public string DeleteFromCart(int id);
         public string AddToCart(CartItem cartItem, int id);
     }
 }

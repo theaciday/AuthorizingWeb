@@ -33,9 +33,9 @@ namespace DAL.Repository
 
         }
 
-        public string DeleteProduct(int id)
+        public string DeleteProduct(int? id)
         {
-            if (id == 0)
+            if (id == null)
             {
                 return "user not found";
             }
@@ -46,7 +46,7 @@ namespace DAL.Repository
 
         public Product EditProduct(Product product)
         {
-            var produc = FindProduct(product.ID);
+            var produc = FindProduct(product.ProductId);
             produc.Name = product.Name;
             produc.ImagePath = product.ImagePath;
             produc.Description = product.Description;
@@ -55,14 +55,14 @@ namespace DAL.Repository
             return product;
         }
 
-        public Product FindProduct(int productId)
+        public Product FindProduct(int? productId)
         {
-            var product = context.Products.Where(p => p.ID == productId).FirstOrDefault();
+            var product = context.Products.Where(p => p.ProductId == productId).FirstOrDefault();
             return product;
         }
         public List<Product> ProductsByCategory(int categoryID)
         {
-            var products = context.Products.Where(p => p.Category.CategoryID == categoryID).ToList();
+            var products = context.Products.Where(p => p.Category.CategoryId == categoryID).ToList();
             return products;
         }
 

@@ -31,9 +31,10 @@ namespace BusLay.Services
             return repository.AddToCart(cartItem);
         }
 
-        public void DeleteFromCart(int id)
+        public string DeleteFromCart(int id)
         {
-            repository.DeleteFromCart(id);
+            var deleted = repository.DeleteFromCart(id);
+            return deleted;
         }
 
         public List<CartItem> GetCartItems(int id)

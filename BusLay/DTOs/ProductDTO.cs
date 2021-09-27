@@ -13,11 +13,11 @@ namespace BusLay.DTOs
         [Required]
         public string ProductName { get; set; }
 
-        public double? UnitPrice { get; set; }
+        public double UnitPrice { get; set; }
 
         [Required]
         public string Description { get; set; }
 
-        public int? CategoryID { get; set; }
+        public int CategoryID { get; set; }
     }
 }

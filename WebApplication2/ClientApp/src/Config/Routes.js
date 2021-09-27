@@ -1,5 +1,8 @@
-﻿import { Roles } from 'config';
-import { Home, Login, Logout, Register, User } from './../components';
+﻿import Roles from './Roles';
+import Home  from '../components/Home';
+import  Login  from '../components/Login';
+import  Register  from '../components/Register';
+import  User  from '../components/User';
 
 export default [
     {
@@ -19,6 +22,13 @@ export default [
     {
         component: User,
         path: '/user',
+        permissions: [
+            Roles.ADMIN
+        ], 
+    },
+    {
+        component: Admin,
+        path: '/Admin',
         permissions: [
             Roles.ADMIN
         ],
