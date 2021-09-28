@@ -9,7 +9,6 @@ const User = () => {
     const handleChangeName = useCallback(e => {
         setId(e.target.value);
     }, [setId]);
-
     const onSubmit = async (e) => {
         e.preventDefault()
         const token = localStorage.getItem('token');
@@ -19,7 +18,6 @@ const User = () => {
         }
     };
     
-
 
     return (
         <div>

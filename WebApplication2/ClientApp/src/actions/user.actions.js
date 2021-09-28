@@ -1,5 +1,5 @@
 ﻿import { userConstants } from '../constants/userConstants';
-import { userService } from '..//services/user.service';
+import { userService } from '../services/user.service';
 import { alertActions } from '../actions/alertActions';
 import { history } from '../helpers/history';
 
@@ -18,10 +18,6 @@ function getCurrentUser() {
                     dispatch(alertActions.error(error.toString()));
                 }
             );
-
-
-
-
     };
     function request() { return { type: userConstants.GET_CURRENT_USER_REQUEST } }
     function success(user) { return { type: userConstants.GET_CURRENT_USER_SUCCESS, user } }
@@ -84,11 +80,11 @@ function getById() {
                 error => dispatch(failure(error.toString()))
             );
     };
-
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
 }
+
 function _delete(id) {
     return dispatch => {
         dispatch(request(id));

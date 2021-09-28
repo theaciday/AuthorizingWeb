@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import userActions from '../../actions/user.actions';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
    

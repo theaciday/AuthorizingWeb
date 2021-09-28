@@ -5,6 +5,7 @@ import { registration } from "./registration.reducer"
 import { users } from "./users.reducer"
 import { alert } from "./alertReducer"
 import { loginReducer } from "./loginReducer"
+import { category } from "./categoryReducer"
 
 const rootReducer = combineReducers(
     {
@@ -13,6 +14,7 @@ const rootReducer = combineReducers(
         users,
         alert,
         loginReducer,
+        category,
     }
 );
 export default rootReducer;

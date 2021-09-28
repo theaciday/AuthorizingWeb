@@ -27,12 +27,19 @@ namespace WebApplication2.Api
             }
             return NoContent();
         }
-
+        
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Role.Admin)]
         public IActionResult GetCategory(int categoryId)
         {
             var category = service.GetCategory(categoryId);
+            return Ok(category);
+        }
+        
+        [HttpGet("list")]
+        public IActionResult ListCategories() 
+        {
+            var category = service.ListCategories();
             return Ok(category);
         }
         

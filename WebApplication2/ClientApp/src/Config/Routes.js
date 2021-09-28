@@ -2,7 +2,8 @@
 import Home  from '../components/Home';
 import  Login  from '../components/Login';
 import  Register  from '../components/Register';
-import  User  from '../components/User';
+import User from '../components/User';
+import Admin from '../components/Admin';
 
 export default [
     {

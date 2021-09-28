@@ -2,7 +2,7 @@ import React from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
-import logout from '../actions/user.actions';
+import userActions from '../actions/user.actions';
 import { useSelector, useDispatch } from 'react-redux';
 
 const NavMenu = () => {
@@ -10,9 +10,8 @@ const NavMenu = () => {
     const logginIn = useSelector((state) => {
         return state.authentication.loggingIn
     })
-    const handleLogout = (e) => {
-        if (e) e.preventDefault();
-        dispatch(logout());
+    const handleLogout = () => {
+        dispatch(userActions.logout());
     };
     const userRole = useSelector((state) => {
         return state.authentication.user.role
@@ -27,9 +26,10 @@ const NavMenu = () => {
                             (<NavbarBrand tag={Link} to="/">Home</NavbarBrand>)}
                         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen navbar>
                             <ul className="navbar-nav flex-grow">
-                                <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
-                                </NavItem>
+                                {!logginIn &&
+                                    (<NavItem>
+                                        <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
+                                    </NavItem>)}
                                 {isAdmin &&
                                     (< NavItem >
                                     <NavLink tag={Link} className="text-dark" to="/user">User</NavLink>
@@ -41,7 +41,12 @@ const NavMenu = () => {
                                 {logginIn &&
                                     (<NavItem>
                                     <NavLink tag={Link} onClick={handleLogout} className="text-dark" to="/">Logout</NavLink>
-                             </NavItem>)}
+                                    </NavItem>)}
+                                {isAdmin &&
+                                    (< NavItem >
+                                        <NavLink tag={Link} className="text-dark" to="/admin">Admin</NavLink>
+                                    </NavItem>)}
+
                             </ul>
                         </Collapse>
                     </Container>

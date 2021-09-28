@@ -30,10 +30,16 @@ namespace DAL.Repository
             context.SaveChanges();
             return "successeful deleted";
         }
+        public List<Category> ListCategories()
+        {
+            var categories = context.Categories.Where(w=>w.CategoryId!=0).ToList();
 
+            return categories;
+        }
         public Category GetCategory(int categoryId)
         {
             var category = context.Categories.Where(w => w.CategoryId == categoryId).FirstOrDefault();
+           
             return category;
         }
     }

@@ -33,5 +33,11 @@ namespace BusLay.Services
             var category = repository.GetCategory(categoryId);
             return category;
         }
+
+        public List<Category> ListCategories()
+        {
+            var categories = repository.ListCategories();
+            return categories;
+        }
     }
 }
