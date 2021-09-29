@@ -11,7 +11,7 @@ namespace DAL.Interfaces
     {
         public Category AddCategory(Category category);
         public Category GetCategory(int categoryId);
-        public string DeleteCategory(int id);
+        public void DeleteCategory(int id);
         public List<Category> ListCategories();
     }
 }

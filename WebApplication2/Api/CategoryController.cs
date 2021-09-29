@@ -47,8 +47,8 @@ namespace WebApplication2.Api
         [Authorize(Role.Admin)]
         public IActionResult DeleteCategory(int id)
         {
-            var deletedCategory = service.DeleteCategory(id);
-            return Ok(deletedCategory);
+             service.DeleteCategory(id);
+            return Ok();
         }
 
     }

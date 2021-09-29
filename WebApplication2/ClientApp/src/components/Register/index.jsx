@@ -10,7 +10,6 @@ const Register = () => {
     const [email ,setEmail] = useState('');
     const [firstName ,setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [token, setToken] = useState('');
 
     const handleChangeEmail =  useCallback(e => {
         setEmail(e.target.value);
@@ -42,8 +41,6 @@ const Register = () => {
                 lastName,  
             })
         });
-        const requestFetch = await request.JSON;
-       
       
         setRedirect(true);
     }
@@ -74,7 +71,6 @@ const Register = () => {
             <input value={lastName} placeholder="name" type="name"
                 onChange={handleChangeLastName} 
             />
-
 
             <button style={{ fontSize: "3rem", color: "black", backgroundColor: "rosybrown" }} onSubmit={submit}>submit</button>
         </form>

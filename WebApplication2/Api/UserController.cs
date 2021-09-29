@@ -24,7 +24,7 @@ namespace WebApplication2.Controllers
         public IActionResult UserById(int id)
         {
             var currentUser = (User)HttpContext.Items["User"];
-            if (id != currentUser.UserId && currentUser.Role != Role.Admin)
+            if (id != currentUser.Id && currentUser.Role != Role.Admin)
                 return Unauthorized(new { message = "Unauthorized" });
 
             var user = service.GetById(id);
@@ -49,8 +49,8 @@ namespace WebApplication2.Controllers
         [HttpDelete("{id:int}")]
         public IActionResult DeleteUser(int id)
         {
-            var user = service.DeletedUser(id);
-            return Ok(user);
+             service.DeletedUser(id);
+            return Ok();
         }
         
     }

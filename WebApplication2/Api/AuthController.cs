@@ -15,12 +15,10 @@ namespace WebApplication2.Api
     [Authorize]
     public class AuthController : ControllerBase
     {
-        private readonly IJwtUtils jWTService;
         private readonly IUserService service;
-        public AuthController(IUserService user, IJwtUtils jWT)
+        public AuthController(IUserService user)
         {
             service = user;
-            jWTService = jWT;
         }
         [AllowAnonymous]
         [HttpPost("register")]

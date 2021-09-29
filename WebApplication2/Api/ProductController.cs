@@ -67,8 +67,8 @@ namespace WebApplication2.Api
         [Authorize(Role.Admin)]
         public IActionResult DeleteProduct(int id) 
         {
-            var product= service.DeleteProduct(id);
-            return Ok(product);
+             service.DeleteProduct(id);
+            return Ok();
         }
     }
 }

@@ -13,10 +13,10 @@ namespace BusLay.Interfaces
         public Product CreateProduct(ProductDTO dTO);
         public Product EditProduct(Product product);
         public Product FindProduct(int productId);
-        public string DeleteProduct(int id);
+        public void DeleteProduct(int id);
         public List<Product> GetProduct(string productName,double? maxprice);
         public List<Product> GetAllProducts();
-        public List<Product> ProductsByCategory(int categoryID);
+        //public List<Product> ProductsByCategory(int categoryID);
 
     }
 }

@@ -8,12 +8,12 @@ const initialState = {
 
 export function authentication(state = initialState, action) {
     switch (action.type) {
-        case userConstants.LOGIN_REQUEST:
+        case userConstants.LOGIN_USER_REQUEST:
             return {
                 ...state,
                 loading: true
             };
-        case userConstants.LOGIN_SUCCESS:
+        case userConstants.LOGIN_USER_SUCCESS:
             return {
                 ...state,
                 loggingIn: true,

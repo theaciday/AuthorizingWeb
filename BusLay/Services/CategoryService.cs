@@ -22,10 +22,10 @@ namespace BusLay.Services
             return category;
         }
 
-        public string DeleteCategory(int id)
+        public void DeleteCategory(int id)
         {
-            var deletedCategory = repository.DeleteCategory(id);
-            return deletedCategory;
+         repository.DeleteCategory(id);
+            
         }
 
         public Category GetCategory(int categoryId)

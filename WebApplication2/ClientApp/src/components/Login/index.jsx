@@ -20,7 +20,6 @@ const Login = () => {
         e.preventDefault()
         setPassword(e.target.value);
     }, [setPassword]);
-    const url = "auth/login";
     const handleRedirect = () => {
         history.push('/Register/');
     }

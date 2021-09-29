@@ -8,7 +8,7 @@ namespace BusLay.Interfaces
         User Create(User user);
         User GetUser(string username);
         User GetUserById(int id);
-        string DeleteUser(int id);
+        void DeleteUser(int id);
         public User GetByName(string name);
     }
 }

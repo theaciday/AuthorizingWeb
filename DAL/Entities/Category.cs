@@ -7,13 +7,14 @@ namespace DAL.Entities
     public class Category
     {
         [ScaffoldColumn(false)]
-        public int CategoryId { get; set; }
+        public int Id { get; set; }
         [Required]
         public string CategoryName { get; set; }
 
         public string Description { get; set; }
 
         public  ICollection<Product> Products { get; set; }
+        public bool IsDisable { get; set; }
 
     }
 }

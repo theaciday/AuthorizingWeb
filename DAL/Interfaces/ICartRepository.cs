@@ -10,7 +10,7 @@ namespace DAL.Interfaces
     public interface ICartRepository
     {
         public List<CartItem> GetCartItems(int id);
-        public string DeleteFromCart(int id);
+        public void DeleteFromCart(int id);
         public string AddToCart(CartItem item);
     }
 }

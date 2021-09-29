@@ -20,16 +20,13 @@ function logout() {
     localStorage.removeItem('token');
 }
 function getAll() {
-    const token = localStorage.getItem(token)
-    return request(url, { 'Authorization': `${token}` });
+    return request(url);
 }
 function getById(id) {
-    const token = localStorage.getItem(token)
-    return request(urlForId, { 'Authorization': `${token}` });
+    return request(urlForId);
 }
 function getCurrentUser() {
-    const token = localStorage.getItem("token")
-    return request(urlcurrent, { 'Authorization': `${token}` });
+    return request(urlcurrent);
     
 }
 

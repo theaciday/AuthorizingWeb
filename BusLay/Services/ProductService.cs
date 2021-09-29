@@ -1,13 +1,8 @@
-﻿using BusLay.Context;
-using BusLay.DTOs;
+﻿using BusLay.DTOs;
 using BusLay.Interfaces;
 using DAL.Entities;
 using DAL.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusLay.Services
 {
@@ -23,26 +18,24 @@ namespace BusLay.Services
         {
             var product = new Product
             {
-                Description=dTO.Description,
-                Name=dTO.ProductName,
-                UnitPrice=dTO.UnitPrice,
-                CategoryId=dTO.CategoryID,
-
+                Description = dTO.Description,
+                Name = dTO.ProductName,
+                UnitPrice = dTO.UnitPrice,
+                Categories = dTO.Categories
             };
             repos.CreateProduct(product);
             return product;
         }
-        public List<Product> ProductsByCategory(int categoryID) 
-        {
-            var products = repos.ProductsByCategory(categoryID);
-            return products;
-        }
 
-        public string DeleteProduct(int id)
+        //public List<Product> ProductsByCategory(int categoryID) 
+        //{
+        //    var products = repos.ProductsByCategory(categoryID);
+        //    return products;
+        //}
+
+        public void DeleteProduct(int id)
         {
-           var product=  repos.DeleteProduct(id);
-            if (product == null) throw new KeyNotFoundException("Product not found");
-            return product;
+           repos.DeleteProduct(id);
         }
 
         public Product EditProduct(Product product)

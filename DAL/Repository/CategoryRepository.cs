@@ -22,23 +22,22 @@ namespace DAL.Repository
             context.SaveChanges();
             return category;
         }
-
-        public string DeleteCategory(int id)
+        public void DeleteCategory(int id)
         {
             var category = GetCategory(id);
-            context.Categories.Remove(category);
+            category.IsDisable = true;
             context.SaveChanges();
-            return "successeful deleted";
+            
         }
         public List<Category> ListCategories()
         {
-            var categories = context.Categories.Where(w=>w.CategoryId!=0).ToList();
+            var categories = context.Categories.Where(w => (w.Id!=0)&&(w.IsDisable==false)).ToList();
 
             return categories;
         }
         public Category GetCategory(int categoryId)
         {
-            var category = context.Categories.Where(w => w.CategoryId == categoryId).FirstOrDefault();
+            var category = context.Categories.Where(w => w.Id == categoryId).FirstOrDefault();
            
             return category;
         }

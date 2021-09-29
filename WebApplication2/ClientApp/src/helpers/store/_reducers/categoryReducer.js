@@ -36,7 +36,7 @@ export function category(state = initialState, action) {
         case categoryConstants.CREATE_CATEGORY_SUCCESS:
             return {
                 ...state,
-                category: [action.payload, ...state.category],
+                categories: [action.payload, ...state.categories],
                 isLoading: false,
                 isLoaded: true
             }
@@ -46,7 +46,27 @@ export function category(state = initialState, action) {
                 isLoading: false,
                 isLoaded: false
             }
-            
+        case categoryConstants.DELETE_CATEGORY_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                isLoaded: false
+            }
+        case categoryConstants.DELETE_CATEGORY_SUCCESS:
+            return {
+                ...state,
+                categories: state.categories
+                    .filter(category => category.id !== action.payload),
+                isLoading: false,
+                isLoaded: true
+            }
+        case categoryConstants.DELETE_CATEGORY_FAILURE:
+            return {
+                ...state,
+                isLoaded: false,
+                isLoading: false
+            }
+
         default:
             return state
     }

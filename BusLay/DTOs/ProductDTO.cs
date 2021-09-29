@@ -18,6 +18,6 @@ namespace BusLay.DTOs
         [Required]
         public string Description { get; set; }
 
-        public int CategoryID { get; set; }
+        public ICollection<Category> Categories { get; set; }
     }
 }

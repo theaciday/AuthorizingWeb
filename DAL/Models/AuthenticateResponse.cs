@@ -16,7 +16,7 @@ namespace DAL.Models
        
         public AuthenticateResponse(User user, string token)
         {
-            Id = user.UserId;
+            Id = user.Id;
             FirstName = user.FirstName;
             LastName = user.LastName;
             Username = user.Username;

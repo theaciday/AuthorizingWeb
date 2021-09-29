@@ -20,7 +20,7 @@ namespace BusLay.Services
         }
         public string AddToCart(CartItem cartItem, int id)
         {
-            CartItem cart = new CartItem
+            CartItem cart = new()
             {
                 DateCreated = DateTime.Today,
                 ProductId = cartItem.ProductId,
@@ -28,13 +28,13 @@ namespace BusLay.Services
                 UserId = id
             };
 
-            return repository.AddToCart(cartItem);
+            return repository.AddToCart(cart);
         }
 
-        public string DeleteFromCart(int id)
+        public void DeleteFromCart(int id)
         {
-            var deleted = repository.DeleteFromCart(id);
-            return deleted;
+            repository.DeleteFromCart(id);
+           
         }
 
         public List<CartItem> GetCartItems(int id)

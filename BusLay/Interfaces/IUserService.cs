@@ -12,7 +12,7 @@ namespace DAL.Interfaces
         public AuthenticateResponse LoginUser(AuthenticateRequest model);
         public User GetById(int id);
         //public IEnumerable<User> GetAll();
-        public string DeletedUser(int id);
+        public void DeletedUser(int id);
         public AuthenticateResponse GetCurrent(string token);
     }
 }

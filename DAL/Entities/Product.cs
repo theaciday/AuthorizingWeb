@@ -11,7 +11,7 @@ namespace DAL.Entities
     {
         [Key]
         [ScaffoldColumn(false)]
-        public int ProductId { get; set; }
+        public int Id { get; set; }
         
         [Required]
         public string Name { get; set; }
@@ -20,13 +20,11 @@ namespace DAL.Entities
 
         public string ImagePath { get; set; }
         
-        
         public string Description { get; set; }
 
-        
-        public Category Category { get; set; }
+        public ICollection<Category> Categories { get; set; }
 
-        public int CategoryId { get; set; }
 
+        public bool IsDisable { get; set; }
     }
 }

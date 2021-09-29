@@ -33,38 +33,33 @@ namespace DAL.Repository
 
         }
 
-        public string DeleteProduct(int? id)
+        public void DeleteProduct(int? id)
         {
-            if (id == null)
-            {
-                return "user not found";
-            }
-            context.Remove(id);
-            context.SaveChanges();
-            return $"product with id:{id} has successeful deleted";
+            FindProduct(id); 
         }
 
         public Product EditProduct(Product product)
         {
-            var produc = FindProduct(product.ProductId);
+            var produc = FindProduct(product.Id);
             produc.Name = product.Name;
             produc.ImagePath = product.ImagePath;
             produc.Description = product.Description;
             produc.UnitPrice = product.UnitPrice;
+            produc.Categories = product.Categories;
             context.SaveChanges();
             return product;
         }
 
         public Product FindProduct(int? productId)
         {
-            var product = context.Products.Where(p => p.ProductId == productId).FirstOrDefault();
+            var product = context.Products.Where(p => p.Id == productId).FirstOrDefault();
             return product;
         }
-        public List<Product> ProductsByCategory(int categoryID)
-        {
-            var products = context.Products.Where(p => p.Category.CategoryId == categoryID).ToList();
-            return products;
-        }
+        //public List<Product> ProductsByCategory(int categoryID)
+        //{
+        //    var products = context.Products.Where(p => p.Categories == categoryID).ToList();
+        //    return products;
+        //}
 
         public List<Product> GetAllProducts()
         {

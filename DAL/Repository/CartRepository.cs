@@ -21,19 +21,19 @@ namespace DAL.Repository
         {
             context.ShoppingCartItems.Add(item);
             context.SaveChanges();
-            return $"item with id: {item.ItemID} was added to your cart";
+            return $"item with id: {item.Id} was added to your cart";
         }
-        public string DeleteFromCart(int id)
+        public void DeleteFromCart(int id)
         {
-            var item = context.ShoppingCartItems.Where(s => s.ItemID == id).FirstOrDefault();
+            var item = context.ShoppingCartItems.Where(s => s.Id == id).FirstOrDefault();
             context.ShoppingCartItems.Remove(item);
             context.SaveChanges();
-            return $"item with id:{id} was successefuly deleted from your cart";
+            //return $"item with id:{id} was successefuly deleted from your cart";
         }
 
         public List<CartItem> GetCartItems(int id)
         {
-            return context.ShoppingCartItems.Where(c => c.ItemID == id).ToList();
+            return context.ShoppingCartItems.Where(c => c.Id == id).ToList();
         }
 
     }

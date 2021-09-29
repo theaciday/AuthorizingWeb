@@ -96,11 +96,10 @@ namespace BusLay.Services
             return user;
         }
 
-        public string DeletedUser(int id)
+        public void DeletedUser(int id)
         {
-            var user = _repos.DeleteUser(id);
-            if (user == null) throw new KeyNotFoundException("User not found");
-            return user;
+            _repos.DeleteUser(id);
+            //return user;
         }
 
        

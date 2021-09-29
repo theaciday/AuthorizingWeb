@@ -40,8 +40,8 @@ namespace WebApplication2.Api
         {
             if (id != null)
             {
-               var deleted = service.DeleteFromCart((int)id);
-                return Ok(deleted);
+                service.DeleteFromCart((int)id);
+                return Ok();
             }
             
             return BadRequest();

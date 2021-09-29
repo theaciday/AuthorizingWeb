@@ -14,7 +14,7 @@ export function users(state = {}, action) {
             return { items: action.user };
         case userConstants.GET_USER_FAILURE:
             return { error: action.error };
-        case userConstants.DELETE_REQUEST:
+        case userConstants.DELETE_CATEGORY_REQUEST:
             return {
                 ...state,
                 items: state.items.map(user =>
@@ -24,9 +24,9 @@ export function users(state = {}, action) {
                 )
             };
 
-        case userConstants.DELETE_SUCCESS:
+        case userConstants.DELETE_USER_SUCCESS:
             return { items: state.items.filter(user => user.id !== action.id) };
-        case userConstants.DELETE_FAILURE:
+        case userConstants.DELETE_USER_FAILURE:
             return {
                 ...state,
                 items: state.items.map(user =>

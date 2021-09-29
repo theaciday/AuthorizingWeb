@@ -37,19 +37,19 @@ namespace DAL.Repository
 
         public User GetUserById(int id)
         {
-            return context.Users.Where(u => u.UserId == id).FirstOrDefault();
+            return context.Users.Where(u => u.Id == id).FirstOrDefault();
         }
         public User GetByName(string name) 
         {
             return context.Users.Where(w => w.Username.ToLower() == name.ToLower()).FirstOrDefault();
         }
 
-        public string DeleteUser(int id)
+        public void DeleteUser(int id)
         {
-            var user = context.Users.First(u => u.UserId == id);
+            var user = context.Users.First(u => u.Id == id);
             context.Remove(user);
             context.SaveChanges();
-            return ($"User with id:{id} has successeful deleted ");
+            //return ($"User with id:{id} has successeful deleted ");
         }
 
 
