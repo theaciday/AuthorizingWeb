@@ -1,8 +1,6 @@
 ﻿import { categoryConstants } from '../constants/categoryConstants';
 import { categoryService } from '../services/category.service';
 import { alertActions } from '../actions/alertActions';
-import { category } from '../helpers/store/_reducers/categoryReducer';
-import { error } from 'jquery';
 
 
 function getListCategories() {

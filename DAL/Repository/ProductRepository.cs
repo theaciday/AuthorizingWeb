@@ -4,8 +4,6 @@ using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Repository
 {
@@ -18,8 +16,20 @@ namespace DAL.Repository
         }
 
         public Product CreateProduct(Product product)
-        {
-            context.Products.Add(product);
+        {   
+            var produc = new Product
+            {
+                Name = product.Name,
+                ImagePath = product.ImagePath,
+                Description = product.Description,
+                UnitPrice = product.UnitPrice
+            };
+            foreach (var item in product.Categories)
+            {
+                var category = context.Categories.Where(w => w.Id == item.Id).FirstOrDefault();
+                produc.Categories.Add(category);
+            }
+            context.Products.Add(produc);
             try
             {
                 context.SaveChanges();
@@ -30,22 +40,27 @@ namespace DAL.Repository
             }
             context.SaveChanges();
             return product;
-
         }
 
         public void DeleteProduct(int? id)
         {
-            FindProduct(id); 
+            FindProduct(id);
         }
-
         public Product EditProduct(Product product)
         {
+
+
             var produc = FindProduct(product.Id);
             produc.Name = product.Name;
             produc.ImagePath = product.ImagePath;
             produc.Description = product.Description;
             produc.UnitPrice = product.UnitPrice;
-            produc.Categories = product.Categories;
+            foreach (var item in product.Id.ToString())
+            {
+                var categories = context.Categories.Where(w => w.Id == item).FirstOrDefault();
+                produc.Categories.Add(categories);
+            }
+
             context.SaveChanges();
             return product;
         }
@@ -55,11 +70,6 @@ namespace DAL.Repository
             var product = context.Products.Where(p => p.Id == productId).FirstOrDefault();
             return product;
         }
-        //public List<Product> ProductsByCategory(int categoryID)
-        //{
-        //    var products = context.Products.Where(p => p.Categories == categoryID).ToList();
-        //    return products;
-        //}
 
         public List<Product> GetAllProducts()
         {
@@ -70,8 +80,8 @@ namespace DAL.Repository
 
         public List<Product> ProductByName(string productName, double? maxprice)
         {
-            return context.Products.Where(x => 
-                (productName == null || x.Name.ToLower() == productName.ToLower()) && 
+            return context.Products.Where(x =>
+                (productName == null || x.Name.ToLower() == productName.ToLower()) &&
                 (maxprice == null || x.UnitPrice <= maxprice)
             ).ToList();
         }

@@ -1,12 +1,15 @@
-﻿using BusLay.DTOs;
+﻿using BusLay.Context;
+using BusLay.DTOs;
 using BusLay.Interfaces;
 using DAL.Entities;
 using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BusLay.Services
 {
-    public class ProductService:IProductService
+    public class ProductService : IProductService
     {
         private readonly IProductRepository repos;
         public ProductService(IProductRepository product)
@@ -19,12 +22,13 @@ namespace BusLay.Services
             var product = new Product
             {
                 Description = dTO.Description,
-                Name = dTO.ProductName,
+                Name = dTO.Name,
                 UnitPrice = dTO.UnitPrice,
                 Categories = dTO.Categories
             };
-            repos.CreateProduct(product);
-            return product;
+
+            var pro= repos.CreateProduct(product);
+            return pro;
         }
 
         //public List<Product> ProductsByCategory(int categoryID) 
@@ -35,7 +39,7 @@ namespace BusLay.Services
 
         public void DeleteProduct(int id)
         {
-           repos.DeleteProduct(id);
+            repos.DeleteProduct(id);
         }
 
         public Product EditProduct(Product product)
@@ -56,9 +60,9 @@ namespace BusLay.Services
             return products;
         }
 
-        public List<Product>GetProduct(string productName,double? max)
+        public List<Product> GetProduct(string productName, double? max)
         {
-            var products = repos.ProductByName(productName,max);
+            var products = repos.ProductByName(productName, max);
             return products;
         }
 

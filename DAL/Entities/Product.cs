@@ -12,7 +12,7 @@ namespace DAL.Entities
         [Key]
         [ScaffoldColumn(false)]
         public int Id { get; set; }
-        
+            
         [Required]
         public string Name { get; set; }
         
@@ -22,9 +22,8 @@ namespace DAL.Entities
         
         public string Description { get; set; }
 
-        public ICollection<Category> Categories { get; set; }
+        public List<Category> Categories { get; set; } = new List<Category>();
 
-
-        public bool IsDisable { get; set; }
+        public bool IsDisable { get; set; } = false;
     }
 }

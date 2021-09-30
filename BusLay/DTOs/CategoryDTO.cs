@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusLay.DTOs
 {
-    class CategoryDTO
+    public class CategoryDTO
     {
         public string CategoryName { get; set; }
 
