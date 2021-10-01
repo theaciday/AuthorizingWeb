@@ -54,11 +54,6 @@ namespace BusLay.Services
             return product;
         }
 
-        public List<Product> GetAllProducts()
-        {
-            var products = repos.GetAllProducts();
-            return products;
-        }
 
         public List<Product> GetProduct(string productName, double? max)
         {
@@ -66,6 +61,9 @@ namespace BusLay.Services
             return products;
         }
 
-
+        public IQueryable<object> ProdByCategory()
+        {
+            return repos.GetAllProducts();
+        }
     }
 }

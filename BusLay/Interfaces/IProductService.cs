@@ -15,7 +15,7 @@ namespace BusLay.Interfaces
         public Product FindProduct(int productId);
         public void DeleteProduct(int id);
         public List<Product> GetProduct(string productName,double? maxprice);
-        public List<Product> GetAllProducts();
+        public IQueryable<object> ProdByCategory();
         //public List<Product> ProductsByCategory(int categoryID);
 
     }

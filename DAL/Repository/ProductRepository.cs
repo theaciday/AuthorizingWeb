@@ -1,6 +1,7 @@
 ﻿using BusLay.Context;
 using DAL.Entities;
 using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,15 +42,49 @@ namespace DAL.Repository
             context.SaveChanges();
             return product;
         }
-
         public void DeleteProduct(int? id)
         {
             FindProduct(id);
         }
+        public IQueryable<object> GetAllProducts() 
+        {
+            var products = context.Products
+                     .Select(product =>
+                     new
+                     {
+                         Id = product.Id,
+                         Name = product.Name,
+                         Categories = product.Categories.Select(category => new 
+                         {
+                             id=category.Id,
+                             categoryName=category.CategoryName,
+                             description=category.Description
+                         })
+                     });
+            return products;
+        }
+    //    var result = dbContext.Teams
+    //.Where(team => ...
+    //.select(team => new
+    //{   // select only the properties you will be using:
+    //    Name = team.Name,
+    //    ...
+    //    // Select only the Players of this team you want:
+    //    OlderPlayers = team.Players
+    //        .Where(player => player.Age > 20)
+    //        .Select(player => new
+    //        {   // select only the player properties you plan to use:
+    //            Name = player.Name,
+    //            Position = player.Position,
+    //            ...
+    //         }),
+    //});
+
+
+
+
         public Product EditProduct(Product product)
         {
-
-
             var produc = FindProduct(product.Id);
             produc.Name = product.Name;
             produc.ImagePath = product.ImagePath;
@@ -71,12 +106,6 @@ namespace DAL.Repository
             return product;
         }
 
-        public List<Product> GetAllProducts()
-        {
-            using var con = context;
-            var products = con.Products.ToList();
-            return products;
-        }
 
         public List<Product> ProductByName(string productName, double? maxprice)
         {

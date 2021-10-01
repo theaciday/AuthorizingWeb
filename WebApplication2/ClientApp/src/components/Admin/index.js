@@ -1,13 +1,13 @@
 ﻿import { useDispatch, useSelector } from "react-redux"
 import React, { useCallback, useEffect, useState } from "react";
 import categoriesactions from '../../actions/categories.Actions';
-import categoriesActions from "../../actions/categories.Actions";
-import { category } from "../../helpers/store/_reducers/categoryReducer";
-
 
 const Admin = () => {
     const dispatch = useDispatch();
     const [categoryName, setCategoryName] = useState('');
+    const [name, setName] = useState('');
+    const [unitPrice, setUnitPrice] = useState('');
+    const [desc]
     const [description, setDescription] = useState('');
     const handleChangeCatName = useCallback(e => {
         setCategoryName(e.target.value);

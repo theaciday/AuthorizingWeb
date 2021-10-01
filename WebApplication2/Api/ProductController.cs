@@ -23,14 +23,14 @@ namespace WebApplication2.Api
         public IActionResult CreateProduct(ProductDTO dTO)
         {
             var product = service.CreateProduct(dTO);
-            return Created("createproduct",product);
+            return Created("createproduct", product);
         }
         [HttpPut]
         [Authorize(Role.Admin)]
         public IActionResult EditProduct(Product dTO)
         {
             var product = service.EditProduct(dTO);
-            if (product==null)
+            if (product == null)
             {
                 return NotFound();
             }
@@ -41,33 +41,32 @@ namespace WebApplication2.Api
         public IActionResult FindProduct(int id)
         {
             var product = service.FindProduct(id);
-            if (product==null)
+            if (product == null)
             {
                 return NotFound();
             }
             return Ok(product);
         }
 
-        [HttpGet("all")]
-        [AllowAnonymous]
-        public IActionResult AllProducts()
-        {
-            var products = service.GetAllProducts();
-            return Ok(products);
-        }
         [HttpGet("search")]
         [AllowAnonymous]
-        public IActionResult ProductByName(string name,double? max)
+        public IActionResult ProductByName(string name, double? max)
         {
-            var product = service.GetProduct(name,max);
+            var product = service.GetProduct(name, max);
             return Ok(product);
+        }
+        [HttpGet]
+        [Authorize(Role.Admin)]
+        public IActionResult AllProducts()
+        {
+            return Ok(service.ProdByCategory());
         }
 
         [HttpDelete("{id:int}")]
         [Authorize(Role.Admin)]
-        public IActionResult DeleteProduct(int id) 
+        public IActionResult DeleteProduct(int id)
         {
-             service.DeleteProduct(id);
+            service.DeleteProduct(id);
             return Ok();
         }
     }

@@ -15,7 +15,7 @@ namespace DAL.Interfaces
         public Product FindProduct(int? productId);
         public void DeleteProduct(int? id);
         public List<Product>ProductByName(string productName,double? maxprice);
-        public List<Product> GetAllProducts();
+        public IQueryable<object> GetAllProducts();
         //public List<Product> ProductsByCategory(int categoryID);
 
 

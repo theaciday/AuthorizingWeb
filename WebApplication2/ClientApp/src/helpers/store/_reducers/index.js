@@ -6,6 +6,7 @@ import { users } from "./users.reducer"
 import { alert } from "./alertReducer"
 import { loginReducer } from "./loginReducer"
 import { category } from "./categoryReducer"
+import { productReducer } from './productReducer'
 
 const rootReducer = combineReducers(
     {
@@ -15,6 +16,7 @@ const rootReducer = combineReducers(
         alert,
         loginReducer,
         category,
+        productReducer
     }
 );
 export default rootReducer;

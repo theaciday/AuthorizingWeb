@@ -35,6 +35,17 @@ namespace DAL.Repository
 
             return categories;
         }
+        public IQueryable<object> CategoryByProduct(int id)
+        {
+            var products = context.Products
+                 .Where(c => c.Id == id)
+                 .Select(product => new {
+                     ProductName = product.Name,
+                     ProductList =product.Categories
+                 });
+            return products;
+
+        }
         public Category GetCategory(int categoryId)
         {
             var category = context.Categories.Where(w => w.Id == categoryId).FirstOrDefault();

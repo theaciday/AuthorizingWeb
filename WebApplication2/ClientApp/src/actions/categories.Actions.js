@@ -58,7 +58,7 @@ function deleteCategory(id) {
         function failure(error) { return { type: categoryConstants.DELETE_CATEGORY_FAILURE, error } }
     }
 }
-export default {
+export default{
     getListCategories,
     addCategory,
     deleteCategory
