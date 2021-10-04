@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
+    
     public class Product
     {
         [Key]
@@ -22,7 +24,7 @@ namespace DAL.Entities
         
         public string Description { get; set; }
 
-        public List<Category> Categories { get; set; } = new List<Category>();
+        public IList<Category> Categories { get; set; } = new List<Category>();
 
         public bool IsDisable { get; set; } = false;
     }

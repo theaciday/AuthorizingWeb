@@ -47,6 +47,8 @@ export function product(state = initialState, action) {
                 isLoaded: false,
                 isLoading: false
             }
+        default:
+            return state
 
     }
 

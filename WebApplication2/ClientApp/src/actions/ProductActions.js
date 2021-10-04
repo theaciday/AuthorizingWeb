@@ -11,8 +11,8 @@ function newProduct(name, unitPrice, description, categories) {
                     dispatch(success(product));
                 },
                 error => {
-                    dispatch(failure(error.ToString()));
-                    dispatch(alertActions.error(error.ToString()));
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
                 }
         );
         function request() { return { type: productConstants.CREATE_PRODUCT_REQUEST } }
@@ -29,7 +29,7 @@ function getAll() {
                     dispatch(success(products));
                 },
                 error => {
-                    dispatch(failure(error.ToString()));
+                    dispatch(failure(error.toString()));
                 }
         );
         function request() { return { type: productConstants.CREATE_PRODUCT_REQUEST } }

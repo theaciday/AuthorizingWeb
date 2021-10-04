@@ -1,5 +1,4 @@
 ﻿import request from '../utils/Request';
-
 const url = 'product';
 const addUrl = 'product';
 const deleteUrl = 'product';
