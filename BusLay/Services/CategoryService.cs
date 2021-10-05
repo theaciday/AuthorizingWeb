@@ -1,4 +1,5 @@
-﻿using BusLay.Interfaces;
+﻿using BusLay.DTOs;
+using BusLay.Interfaces;
 using DAL.Entities;
 using DAL.Interfaces;
 using System;
@@ -16,10 +17,11 @@ namespace BusLay.Services
         {
             this.repository = repository;
         }
-        public Category AddCategory(Category category)
+        public Category AddCategory(CategoryDTO DTO)
         {
-            repository.AddCategory(category);
-            return category;
+            var cat = new Category() { CategoryName = DTO.CategoryName,Description=DTO.Description };
+            repository.AddCategory(cat);
+            return cat;
         }
 
         public void DeleteCategory(int id)

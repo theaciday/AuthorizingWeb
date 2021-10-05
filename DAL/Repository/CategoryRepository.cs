@@ -18,9 +18,11 @@ namespace DAL.Repository
         }
         public Category AddCategory(Category category)
         {
+
             context.Categories.Add(category);
             context.SaveChanges();
-            return category;
+        
+            return new Category() {Id=category.Id,CategoryName=category.CategoryName,Description=category.Description };
         }
         public void DeleteCategory(int id)
         {

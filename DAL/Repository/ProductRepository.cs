@@ -1,7 +1,6 @@
 ﻿using BusLay.Context;
 using DAL.Entities;
 using DAL.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,28 +26,43 @@ namespace DAL.Repository
             };
             foreach (var item in product.Categories)
             {
-                var category = context.Categories.Where(w => w.Id == item.Id).FirstOrDefault();
+                var category = context.Categories
+                    .Where(w => w.Id == item.Id).FirstOrDefault();
                 produc.Categories.Add(category);
             }
             context.Products.Add(produc);
+           
+               var usad= context.SaveChanges();
+
+
+            return new Product {
+                Id = produc.Id,
+                Name = produc.Name,
+                Description = produc.Description,
+                UnitPrice = produc.UnitPrice,
+                Categories = produc.Categories
+            };
+        }
+        //private IQueryable<object> GetNewProduct(Product product)
+        //{
+        //    var product = context.Products.Where()
+        //}
+        public void DeleteProduct(int? id)
+        {
             try
             {
+                var product = FindProduct(id);
+                product.IsDisable = true;
                 context.SaveChanges();
             }
             catch (Exception)
             {
                 throw;
-            }
-            context.SaveChanges();
-            return product;
-        }
-        public void DeleteProduct(int? id)
-        {
-            FindProduct(id);
+            } 
         }
         public IQueryable<object> GetAllProducts() 
         {
-            var products = context.Products
+            var products = context.Products.Where(prod=>prod.IsDisable==false)
                      .Select(product =>
                      new
                      {

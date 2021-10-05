@@ -1,4 +1,5 @@
-﻿using DAL.Entities;
+﻿using BusLay.DTOs;
+using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BusLay.Interfaces
 {
     public interface ICategoryService
     {
-        public Category AddCategory(Category category);
+        public Category AddCategory(CategoryDTO category);
         public Category GetCategory(int categoryId);
         public void DeleteCategory(int id);
         public List<Category> ListCategories();

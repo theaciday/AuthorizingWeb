@@ -1,11 +1,15 @@
 ﻿import request from '../utils/Request';
 const url = 'product';
 const addUrl = 'product';
-const deleteUrl = 'product';
+const deleteUrl = 'product/';
 
 function listProducts()
 {
     return request(url);
+}
+function deleteProduct(id)
+{
+    return request(`${deleteUrl}${id}`, { method: "Delete" }, { id });
 }
 function addProduct(name, unitPrice, description, categories)
 {
@@ -13,5 +17,6 @@ function addProduct(name, unitPrice, description, categories)
 }
 export const productService = {    
     addProduct,
-    listProducts
+    listProducts,
+    deleteProduct
 };

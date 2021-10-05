@@ -1,4 +1,5 @@
 ﻿using BusLay.Authorize;
+using BusLay.DTOs;
 using BusLay.Interfaces;
 using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace WebApplication2.Api
         }
         [HttpPost]
         [Authorize(Role.Admin)]
-        public IActionResult AddCategory(Category category)
+        public IActionResult AddCategory(CategoryDTO category)
         {
             if (category!=null)
             {

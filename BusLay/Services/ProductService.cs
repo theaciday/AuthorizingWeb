@@ -16,9 +16,9 @@ namespace BusLay.Services
         {
             repos = product;
         }
-
         public Product CreateProduct(ProductDTO dTO)
         {
+            
             var product = new Product
             {
                 Description = dTO.Description,
