@@ -1,9 +1,13 @@
 ﻿using BusLay.Context;
 using DAL.Entities;
+using DAL.Filter;
 using DAL.Interfaces;
+using DAL.Wrappers;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DAL.Repository
 {
@@ -16,7 +20,7 @@ namespace DAL.Repository
         }
 
         public Product CreateProduct(Product product)
-        {   
+        {
             var produc = new Product
             {
                 Name = product.Name,
@@ -31,11 +35,11 @@ namespace DAL.Repository
                 produc.Categories.Add(category);
             }
             context.Products.Add(produc);
-           
-               var usad= context.SaveChanges();
+            var usad = context.SaveChanges();
 
 
-            return new Product {
+            return new Product
+            {
                 Id = produc.Id,
                 Name = produc.Name,
                 Description = produc.Description,
@@ -47,59 +51,25 @@ namespace DAL.Repository
         //{
         //    var product = context.Products.Where()
         //}
-        public void DeleteProduct(int? id)
+        public async void DeleteProduct(int? id)
         {
             try
             {
-                var product = FindProduct(id);
+                var product = await context.Products
+                    .Where(prod => prod.Id == id)
+                    .FirstOrDefaultAsync();
                 product.IsDisable = true;
                 context.SaveChanges();
             }
             catch (Exception)
             {
                 throw;
-            } 
+            }
         }
-        public IQueryable<object> GetAllProducts() 
+
+        public async Task<Product> EditProduct(Product product)
         {
-            var products = context.Products.Where(prod=>prod.IsDisable==false)
-                     .Select(product =>
-                     new
-                     {
-                         Id = product.Id,
-                         Name = product.Name,
-                         Categories = product.Categories.Select(category => new 
-                         {
-                             id=category.Id,
-                             categoryName=category.CategoryName,
-                             description=category.Description
-                         })
-                     });
-            return products;
-        }
-    //    var result = dbContext.Teams
-    //.Where(team => ...
-    //.select(team => new
-    //{   // select only the properties you will be using:
-    //    Name = team.Name,
-    //    ...
-    //    // Select only the Players of this team you want:
-    //    OlderPlayers = team.Players
-    //        .Where(player => player.Age > 20)
-    //        .Select(player => new
-    //        {   // select only the player properties you plan to use:
-    //            Name = player.Name,
-    //            Position = player.Position,
-    //            ...
-    //         }),
-    //});
-
-
-
-
-        public Product EditProduct(Product product)
-        {
-            var produc = FindProduct(product.Id);
+            var produc = await context.Products.Include(p => p.Id == product.Id).FirstOrDefaultAsync(prod => prod.Id == product.Id);
             produc.Name = product.Name;
             produc.ImagePath = product.ImagePath;
             produc.Description = product.Description;
@@ -109,18 +79,55 @@ namespace DAL.Repository
                 var categories = context.Categories.Where(w => w.Id == item).FirstOrDefault();
                 produc.Categories.Add(categories);
             }
-
             context.SaveChanges();
             return product;
         }
-
-        public Product FindProduct(int? productId)
+        public async Task<List<Product>> GetAllProducts(PaginationFilter filter)
         {
-            var product = context.Products.Where(p => p.Id == productId).FirstOrDefault();
-            return product;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var pagedData = await context.Products.Skip((validFilter.PageNumber - 1) * validFilter.PageSize).Take(validFilter.PageSize).Where(prod => prod.IsDisable == false)
+                     .Select(product =>
+                     new Product
+                     {
+                         Id = product.Id,
+                         Name = product.Name,
+                         UnitPrice = product.UnitPrice,
+                         Description = product.Description,
+                         ImagePath = product.ImagePath,
+                         Categories = product.Categories.Select(category => new Category
+                         {
+                             Id = category.Id,
+                             CategoryName = category.CategoryName,
+                             Description = category.Description
+                         }).ToList()
+                     }).ToListAsync();
+
+            return pagedData;
+        }
+        public int ProductsCount()
+        {
+            return context.Products.Count();
         }
 
+        public async Task<object> FindProduct(int? productId)
+        {
+            var product = await context.Products
+                .Where(product => product.Id == productId)
+                .Select(product => new
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Categories = product.Categories.Select(category => new
+                    {
+                        id = category.Id,
+                        categoryName = category.CategoryName,
+                        description = category.Description
+                    })
+                })
+                .FirstOrDefaultAsync();
 
+            return product;
+        }
         public List<Product> ProductByName(string productName, double? maxprice)
         {
             return context.Products.Where(x =>
@@ -128,7 +135,6 @@ namespace DAL.Repository
                 (maxprice == null || x.UnitPrice <= maxprice)
             ).ToList();
         }
-
         //public List<Product> ProductByName(string productName, double maxprice)
         //{CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS CONTAINS 
         //    var users = context.Products.Where(x => x.Name.ToLower() == productName.ToLower() && x.UnitPrice <= maxprice).ToList();

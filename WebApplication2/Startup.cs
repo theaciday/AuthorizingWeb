@@ -17,7 +17,7 @@ using BusLay.Authorize;
 using BusLay.Context;
 using DAL.Interfaces;
 using DAL.Repository;
-using DAL.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApplication2
 {
@@ -33,6 +33,14 @@ namespace WebApplication2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IUriService>(o =>
+            {
+                var accessor = o.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor.HttpContext.Request;
+                var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+                return new UriService(uri);
+            });
 
             services.AddControllersWithViews().AddNewtonsoftJson(opt =>
             opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

@@ -1,9 +1,12 @@
 ﻿using BusLay.Authorize;
 using BusLay.DTOs;
+using BusLay.Helpers;
 using BusLay.Interfaces;
 using DAL.Entities;
+using DAL.Filter;
+using DAL.Wrappers;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using System.Threading.Tasks;
 
 namespace WebApplication2.Api
 {
@@ -13,9 +16,11 @@ namespace WebApplication2.Api
     public class ProductController : ControllerBase
     {
         private readonly IProductService service;
-        public ProductController(IProductService service)
+        private readonly IUriService uriService;
+        public ProductController(IProductService service, IUriService uriService)
         {
             this.service = service;
+            this.uriService = uriService;
         }
 
         [HttpPost]
@@ -38,14 +43,14 @@ namespace WebApplication2.Api
         }
         [HttpGet("{id:int}")]
         [AllowAnonymous]
-        public IActionResult FindProduct(int id)
+        public async Task<IActionResult> FindProduct(int id)
         {
-            var product = service.FindProduct(id);
+            var product = await service.FindProduct(id);
             if (product == null)
             {
                 return NotFound();
             }
-            return Ok(product);
+            return Ok(new Response<object>(product));
         }
 
         [HttpGet("search")]
@@ -57,9 +62,14 @@ namespace WebApplication2.Api
         }
         [HttpGet]
         [Authorize(Role.Admin)]
-        public IActionResult AllProducts()
+        public async Task<IActionResult> AllProducts([FromQuery] PaginationFilter filter)
         {
-            return Ok(service.ProdByCategory());
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize); 
+            var pagedData = await service.ListProducts(validFilter);
+            var totalRecords = service.ProductsCount();
+            var pagedResponse = PaginationHelper.CreatePagedResponse(pagedData, validFilter, totalRecords, uriService, route); 
+            return  Ok(pagedResponse);
         }
 
         [HttpDelete("{id:int}")]

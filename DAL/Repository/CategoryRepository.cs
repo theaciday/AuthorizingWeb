@@ -1,6 +1,8 @@
 ﻿using BusLay.Context;
 using DAL.Entities;
+using DAL.Filter;
 using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,41 +20,75 @@ namespace DAL.Repository
         }
         public Category AddCategory(Category category)
         {
-
-            context.Categories.Add(category);
-            context.SaveChanges();
-        
-            return new Category() {Id=category.Id,CategoryName=category.CategoryName,Description=category.Description };
+            using (DataContext pop = context)
+            {
+                context.Categories.Add(category);
+                context.SaveChanges();
+                return new Category()
+                {
+                    Id = category.Id,
+                    CategoryName = category.CategoryName,
+                    Description = category.Description
+                };
+            }
         }
         public void DeleteCategory(int id)
         {
-            var category = GetCategory(id);
-            category.IsDisable = true;
-            context.SaveChanges();
-            
+            using (DataContext pop = context)
+            {
+                var category = context.Categories
+              .Where(category => category.Id == id)
+              .FirstOrDefault();
+                category.IsDisable = true;
+                context.SaveChanges();
+            }
         }
-        public List<Category> ListCategories()
+        public async Task<List<Category>> ListCategories(PaginationFilter filter)
         {
-            var categories = context.Categories.Where(w => (w.Id!=0)&&(w.IsDisable==false)).ToList();
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            using (DataContext pop = context)
+            {
+                var pagedData = await context.Categories
+                    .Skip((validFilter.PageNumber -1)*validFilter.PageSize)
+                    .Take(validFilter.PageSize)
+                    .Where(w => (w.Id != 0) && (w.IsDisable == false))
+                    .Select(category=>new Category
+                    {
+                        Id=category.Id,
+                        CategoryName=category.CategoryName,
+                        Description=category.Description
+                    }).ToListAsync();
 
-            return categories;
+                return pagedData;
+            }
         }
-        public IQueryable<object> CategoryByProduct(int id)
-        {
-            var products = context.Products
-                 .Where(c => c.Id == id)
-                 .Select(product => new {
-                     ProductName = product.Name,
-                     ProductList =product.Categories
-                 });
-            return products;
+        //public iqueryable<object> categorybyproduct(int id)
+        //{
+        //    var products = context.products
+        //         .where(c => c.id == id)
+        //         .select(product => new {
+        //             productname = product.name,
+        //             productlist =product.categories
+        //         });
+        //    return products;
 
-        }
-        public Category GetCategory(int categoryId)
+        //}
+        public async Task<object> GetCategory(int categoryId)
         {
-            var category = context.Categories.Where(w => w.Id == categoryId).FirstOrDefault();
-           
-            return category;
+            using (DataContext pop = context)
+            {
+                var category = await context.Categories
+                .Where(category => category.Id == categoryId)
+                .Select(category => new
+                {
+                    Id = category.Id,
+                    Name = category.CategoryName,
+                    Description = category.Description,
+                    //category.Products?
+                }).FirstOrDefaultAsync();
+
+                return category;
+            }
         }
     }
 }

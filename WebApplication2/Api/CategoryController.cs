@@ -2,6 +2,7 @@
 using BusLay.DTOs;
 using BusLay.Interfaces;
 using DAL.Entities;
+using DAL.Filter;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -38,9 +39,9 @@ namespace WebApplication2.Api
         }
         
         [HttpGet("list")]
-        public IActionResult ListCategories() 
+        public IActionResult ListCategories(PaginationFilter filter) 
         {
-            var category = service.ListCategories();
+            var category = service.ListCategories(filter);
             return Ok(category);
         }
         

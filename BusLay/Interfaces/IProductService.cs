@@ -1,5 +1,7 @@
 ﻿using BusLay.DTOs;
 using DAL.Entities;
+using DAL.Filter;
+using DAL.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +13,12 @@ namespace BusLay.Interfaces
     public interface IProductService
     {
         public Product CreateProduct(ProductDTO dTO);
-        public Product EditProduct(Product product);
-        public Product FindProduct(int productId);
+        public Task<Product> EditProduct(Product product);
+        public Task<object> FindProduct(int productId);
         public void DeleteProduct(int id);
         public List<Product> GetProduct(string productName,double? maxprice);
-        public IQueryable<object> ProdByCategory();
+        public Task<List<Product>> ListProducts(PaginationFilter filter);
+        public int ProductsCount();
         //public List<Product> ProductsByCategory(int categoryID);
 
     }

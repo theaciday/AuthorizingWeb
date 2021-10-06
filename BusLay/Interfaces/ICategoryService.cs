@@ -1,5 +1,6 @@
 ﻿using BusLay.DTOs;
 using DAL.Entities;
+using DAL.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace BusLay.Interfaces
     public interface ICategoryService
     {
         public Category AddCategory(CategoryDTO category);
-        public Category GetCategory(int categoryId);
+        public Task<object> GetCategory(int categoryId);
         public void DeleteCategory(int id);
-        public List<Category> ListCategories();
+        public Task<List<Category>> ListCategories(PaginationFilter filter);
     }
 }

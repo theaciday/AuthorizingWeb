@@ -1,11 +1,10 @@
-﻿using BusLay.Context;
-using BusLay.DTOs;
+﻿using BusLay.DTOs;
 using BusLay.Interfaces;
 using DAL.Entities;
+using DAL.Filter;
 using DAL.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace BusLay.Services
 {
@@ -18,7 +17,7 @@ namespace BusLay.Services
         }
         public Product CreateProduct(ProductDTO dTO)
         {
-            
+
             var product = new Product
             {
                 Description = dTO.Description,
@@ -27,7 +26,7 @@ namespace BusLay.Services
                 Categories = dTO.Categories
             };
 
-            var pro= repos.CreateProduct(product);
+            var pro = repos.CreateProduct(product);
             return pro;
         }
 
@@ -42,15 +41,15 @@ namespace BusLay.Services
             repos.DeleteProduct(id);
         }
 
-        public Product EditProduct(Product product)
+        public async Task<Product> EditProduct(Product product)
         {
-            var newproduct = repos.EditProduct(product);
+            var newproduct = await repos.EditProduct(product);
             return newproduct;
         }
 
-        public Product FindProduct(int productId)
+        public async Task<object> FindProduct(int productId)
         {
-            var product = repos.FindProduct(productId);
+            var product = await repos.FindProduct(productId);
             return product;
         }
 
@@ -61,9 +60,14 @@ namespace BusLay.Services
             return products;
         }
 
-        public IQueryable<object> ProdByCategory()
+        public async Task<List<Product>> ListProducts(PaginationFilter filter)
         {
-            return repos.GetAllProducts();
+            return await repos.GetAllProducts(filter);
+        }
+
+        public int ProductsCount()
+        {
+            return repos.ProductsCount();
         }
     }
 }
