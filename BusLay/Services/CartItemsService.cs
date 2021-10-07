@@ -1,12 +1,9 @@
-﻿using BusLay.Context;
-using BusLay.Interfaces;
+﻿using BusLay.Interfaces;
 using DAL.Entities;
+using DAL.Filter;
 using DAL.Interfaces;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BusLay.Services
@@ -27,19 +24,21 @@ namespace BusLay.Services
                 Quantity = cartItem.Quantity,
                 UserId = id
             };
-
             return repository.AddToCart(cart);
         }
 
         public void DeleteFromCart(int id)
         {
             repository.DeleteFromCart(id);
-           
+        }
+        public int ItemsCount()
+        {
+            return repository.ItemsCount();
         }
 
-        public List<CartItem> GetCartItems(int id)
+        public async Task<List<CartItem>> GetCartItems(PaginationFilter filter, int id)
         {
-            return repository.GetCartItems(id);
+            return await repository.GetCartItems(filter, id);
         }
 
 

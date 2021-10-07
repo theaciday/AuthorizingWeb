@@ -3,13 +3,13 @@ import { categoryService } from '../services/category.service';
 import { alertActions } from '../actions/alertActions';
 
 
-function getListCategories() {
+function getListCategories(pageNumber) {
     return dispatch => {
         dispatch(request());
-        categoryService.listCategories()
+        categoryService.listCategories(pageNumber)
             .then(
-                categories => {
-                    dispatch(success(categories));
+                res => {
+                    dispatch(success(res));
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -17,7 +17,7 @@ function getListCategories() {
                 }
         );
         function request() { return { type: categoryConstants.GET_CATEGORY_REQUEST } }
-        function success(categories) { return { type: categoryConstants.GET_CATEGORY_SUCCESS, payload: categories } }
+        function success(payload) { return { type: categoryConstants.GET_CATEGORY_SUCCESS, payload } }
         function failure(error) { return { type: categoryConstants.GET_CATEGORY_FAILURE, error } }
     };
 }

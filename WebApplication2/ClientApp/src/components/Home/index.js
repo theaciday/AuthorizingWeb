@@ -7,7 +7,7 @@ const Home = () => {
         return state.authentication.user})
     return (
         <div>
-            {user.firstName ? 'Welcome' + user.firstName : <div>'Hello,stranger!'
+            {user.firstName ? 'Welcome, ' + user.firstName : <div>'Hello,stranger!'
                 Please,login or register </div>}
         </div>
     );

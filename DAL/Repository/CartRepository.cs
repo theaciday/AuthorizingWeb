@@ -1,10 +1,10 @@
 ﻿using BusLay.Context;
 using DAL.Entities;
+using DAL.Filter;
 using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.Repository
@@ -30,10 +30,17 @@ namespace DAL.Repository
             context.SaveChanges();
             //return $"item with id:{id} was successefuly deleted from your cart";
         }
-
-        public List<CartItem> GetCartItems(int id)
+        public int ItemsCount()
         {
-            return context.ShoppingCartItems.Where(c => c.Id == id).ToList();
+            return context.Products.Count();
+        }
+        public async Task<List<CartItem>> GetCartItems(PaginationFilter filter, int id)
+        {
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            using DataContext pop = context;
+            var pagedData = await pop.ShoppingCartItems.Where(c => c.UserId == id).ToListAsync();
+
+            return pagedData;
         }
 
     }

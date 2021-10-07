@@ -5,9 +5,9 @@ const url = 'category/list';
 const addUrl = 'category/';
 const deleteUrl = 'category/';
 
-function listCategories()
+function listCategories(pageNumber = 1)
 {
-    return request(url);
+    return request(url, { queryParams: { pageNumber , pageSize } });
 }
 function addCategory(categoryName,description) 
 {

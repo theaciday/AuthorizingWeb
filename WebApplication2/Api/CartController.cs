@@ -1,7 +1,10 @@
 ﻿using BusLay.Authorize;
+using BusLay.Helpers;
 using BusLay.Interfaces;
 using DAL.Entities;
+using DAL.Filter;
 using DAL.Interfaces;
+using DAL.Wrappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,19 +22,33 @@ namespace WebApplication2.Api
     {
         public IJwtUtils utils;
         private readonly ICartItemsService service;
-        public CartController(ICartItemsService items,IJwtUtils utils)
+        private readonly IUriService uriService;
+        public CartController(ICartItemsService items,IJwtUtils utils, IUriService uriService)
         {
             this.utils = utils;
             service = items;
+            this.uriService = uriService;
         }
         [Authorize]
         [HttpGet]
-        public IActionResult CartItems()
+        public async Task<IActionResult> CartItems([FromQuery]PaginationFilter filter)
         {
-            var token = Request.Headers["Authorization"];
-            var userId = utils.ValidateJwtToken(token);
-            var items = service.GetCartItems((int)userId);
-            return Ok(items);
+            try
+            {
+                var token = Request.Headers["Authorization"];
+                var route = Request.Path.Value;
+                var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+                var totalRecords = service.ItemsCount();
+                var userId = utils.ValidateJwtToken(token);
+                var items = await service.GetCartItems(filter, (int)userId);
+                var PagedResponse = PaginationHelper.CreatePagedResponse<CartItem>(items, validFilter, totalRecords, uriService, route);
+                return Ok(PagedResponse);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
         }
 
         [Authorize]
@@ -43,7 +60,6 @@ namespace WebApplication2.Api
                 service.DeleteFromCart((int)id);
                 return Ok();
             }
-            
             return BadRequest();
         }
 
@@ -51,11 +67,19 @@ namespace WebApplication2.Api
         [HttpPost]
         public IActionResult  AddToCart(CartItem item)
         {
-            var token = Request.Headers["Authorization"];
-            var userId = utils.ValidateJwtToken(token);
-            var us = service.AddToCart(item, (int)userId);
-            return Created("additem",us);
+            try
+            {
+                var token = Request.Headers["Authorization"];
+                var userId = utils.ValidateJwtToken(token);
+                var us = service.AddToCart(item, (int)userId);
+                return Created("additem", us);
+            }
+            catch (Exception ex)
+            {
 
+                return BadRequest(ex);
+            }
+            
         }
 
     }

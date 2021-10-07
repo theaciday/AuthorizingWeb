@@ -11,8 +11,10 @@ namespace DAL.Interfaces
     public interface ICategoryRepository
     {
         public Category AddCategory(Category category);
-        Task<object> GetCategory(int categoryId);
+        Task<Category> GetCategory(int categoryId);
         public void DeleteCategory(int id);
         public Task<List<Category>> ListCategories(PaginationFilter filter);
+        public int CategoriesCount();
+
     }
 }

@@ -1,7 +1,10 @@
 ﻿import { categoryConstants } from "../../../constants/categoryConstants"
 
 const initialState = {
-    categories: [],
+    pageNumber: '',
+    pageSize: '',
+    totalPages: '',
+    data: [],
     isLoading: false,
     isLoaded: false
 };
@@ -70,5 +73,4 @@ export function category(state = initialState, action) {
         default:
             return state
     }
-
 }

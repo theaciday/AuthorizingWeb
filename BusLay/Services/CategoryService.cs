@@ -27,8 +27,11 @@ namespace BusLay.Services
             repository.DeleteCategory(id);
 
         }
-
-        public Task<object> GetCategory(int categoryId)
+        public int CategoriesCount()
+        {
+            return repository.CategoriesCount();
+        }
+        public Task<Category> GetCategory(int categoryId)
         {
             var category = repository.GetCategory(categoryId);
             return category;

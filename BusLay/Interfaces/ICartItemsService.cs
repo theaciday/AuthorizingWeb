@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using DAL.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,9 @@ namespace BusLay.Interfaces
 {
     public interface ICartItemsService
     {
-        public List<CartItem> GetCartItems(int id);
+        public Task<List<CartItem>> GetCartItems(PaginationFilter filter,int id);
         public void DeleteFromCart(int id);
         public string AddToCart(CartItem cartItem, int id);
+        public int ItemsCount();
     }
 }
