@@ -51,14 +51,15 @@ namespace DAL.Repository
         //{
         //    var product = context.Products.Where()
         //}
-        public async void DeleteProduct(int? id)
+        public  void DeleteProduct(int? id)
         {
             try
-            {
-                var product = await context.Products
+                {
+                bool lal = true;
+                var product =  context.Products
                     .Where(prod => prod.Id == id)
-                    .FirstOrDefaultAsync();
-                product.IsDisable = true;
+                    .FirstOrDefault();
+                product.IsDisable = lal;
                 context.SaveChanges();
             }
             catch (Exception)
@@ -85,7 +86,10 @@ namespace DAL.Repository
         public async Task<List<Product>> GetAllProducts(PaginationFilter filter)
         {
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            var pagedData = await context.Products.Skip((validFilter.PageNumber - 1) * validFilter.PageSize).Take(validFilter.PageSize).Where(prod => prod.IsDisable == false)
+            var pagedData = await context.Products
+                .Where(prod => prod.IsDisable == false)
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
                      .Select(product =>
                      new Product
                      {

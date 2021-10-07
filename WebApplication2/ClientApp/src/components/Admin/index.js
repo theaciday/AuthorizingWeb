@@ -6,6 +6,7 @@ import  CategoriesList from "./categoryList";
 import CategoryAdd from "./categoryAdd";
 import ProductAdd from "./productAdd";
 import ProductList from "./productList";
+import Pages from "./pages";
 
 const Admin = () => {
    
@@ -14,7 +15,8 @@ const Admin = () => {
     return (
         <div>
             <ProductAdd />
-            <ProductList/>
+            <ProductList />
+            <Pages/>
             <CategoryAdd/>
             <CategoriesList/>
 

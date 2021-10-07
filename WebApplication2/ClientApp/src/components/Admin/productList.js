@@ -9,17 +9,21 @@ const ProductList = () => {
     useEffect(() => {
         dispatch(productActions.getAll())
     }, []);
-    const { products } = useSelector((state) => {
-        return state.product
+    const products = useSelector((state) => {
+        return state.product.data
     });
+    
     //const onDelete = useCallback()
 
     return (
         <div>
             <h2>ListProducts</h2>
-            {products.map((product, index) =>
-                <div><ProductItem product={product} index={index} />
-                </div>)}
+            {
+                products.map((product, index) =>
+                   <div key={product.id}>
+                        <ProductItem product={product} index={index} />
+                    </div>)
+            }
                 
         </div>
     );

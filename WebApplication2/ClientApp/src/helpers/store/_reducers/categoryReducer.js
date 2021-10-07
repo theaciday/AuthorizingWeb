@@ -20,7 +20,10 @@ export function category(state = initialState, action) {
         case categoryConstants.GET_CATEGORY_SUCCESS:
             return {
                 ...state,
-                categories: action.payload,
+                pageNumber: action.payload.pageNumber,
+                pageSize: action.payload.pageSize,
+                totalPages: action.payload.totalPages,
+                data: action.payload.data,
                 isLoading: false,
                 isLoaded: true
             };
@@ -39,7 +42,7 @@ export function category(state = initialState, action) {
         case categoryConstants.CREATE_CATEGORY_SUCCESS:
             return {
                 ...state,
-                categories: [action.payload, ...state.categories],
+                data: [action.payload.data, ...state.data],
                 isLoading: false,
                 isLoaded: true
             }
@@ -58,8 +61,8 @@ export function category(state = initialState, action) {
         case categoryConstants.DELETE_CATEGORY_SUCCESS:
             return {
                 ...state,
-                categories: state.categories
-                    .filter(category => category.id !== action.payload),
+                data: state.data
+                    .filter(category => category.id !== action.payload.data.id),
                 isLoading: false,
                 isLoaded: true
             }

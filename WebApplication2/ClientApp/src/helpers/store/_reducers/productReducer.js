@@ -2,7 +2,10 @@
 
 const initialState = {
 
-    products: [],
+    pageNumber: '',
+    pageSize: '',
+    totalPages: '',
+    data: [],
     isLoading: false,
     isLoaded: false
 };
@@ -18,7 +21,7 @@ export function product(state = initialState, action) {
         case productConstants.CREATE_PRODUCT_SUCCESS:
             return {
                 ...state,
-                products: [action.payload, ...state.products],
+                data: [action.payload, ...state.data],
                 isLoaded: false,
                 isLoading: true
             }
@@ -37,7 +40,10 @@ export function product(state = initialState, action) {
         case productConstants.GETALL_PRODUCTS_SUCCESS:
             return {
                 ...state,
-                products: action.payload,
+                pageNumber: action.payload.pageNumber,
+                pageSize: action.payload.pageSize,
+                totalPages: action.payload.totalPages,
+                data: action.payload.data,
                 isLoading: false,
                 isLoaded: true
             }
@@ -56,7 +62,7 @@ export function product(state = initialState, action) {
         case productConstants.DELETE_PRODUCT_SUCCESS:
             return {
                 ...state,
-                products: state.products
+                data: state.data
                     .filter(product => product.id !== action.payload),
                 isLoading: false,
                 isLoaded: true

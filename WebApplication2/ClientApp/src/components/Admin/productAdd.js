@@ -1,5 +1,5 @@
 ﻿import { useDispatch, useSelector } from "react-redux"
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback,  useState } from "react";
 import ProductActions from "../../actions/productActions";
 
 const ProductAdd = () => {
@@ -32,8 +32,8 @@ const ProductAdd = () => {
         })
     }, [productData])
 
-    const { categories } = useSelector((state) => {
-        return state.category
+    const categories = useSelector((state) => {
+        return state.category.data
     });
     const productSubmit = async (e) => {
         e.preventDefault()

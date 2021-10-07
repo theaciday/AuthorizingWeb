@@ -49,9 +49,9 @@ namespace DAL.Repository
         {
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
             var pagedData = await context.Categories
+                .Where(w => (w.Id != 0) && (w.IsDisable == false))
                 .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize)
-                .Where(w => (w.Id != 0) && (w.IsDisable == false))
                 .Select(category => new Category
                 { 
                     Id = category.Id,

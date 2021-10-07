@@ -1,6 +1,5 @@
 ﻿import { categoryConstants } from '../constants/categoryConstants';
 import { categoryService } from '../services/category.service';
-import { alertActions } from '../actions/alertActions';
 
 
 function getListCategories(pageNumber) {
@@ -8,12 +7,11 @@ function getListCategories(pageNumber) {
         dispatch(request());
         categoryService.listCategories(pageNumber)
             .then(
-                res => {
-                    dispatch(success(res));
+                response => {
+                    dispatch(success(response));
                 },
                 error => {
                     dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
                 }
         );
         function request() { return { type: categoryConstants.GET_CATEGORY_REQUEST } }
@@ -27,12 +25,11 @@ function addCategory(categoryName, description) {
         dispatch(request());
         categoryService.addCategory(categoryName, description)
             .then(
-                category => {
-                    dispatch(success(category));
+                response => {
+                    dispatch(success(response));
                 },
                 error => {
                     dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
                 }
         );
         function request() { return { type: categoryConstants.CREATE_CATEGORY_REQUEST } }

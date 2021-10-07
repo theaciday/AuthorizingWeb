@@ -1,6 +1,8 @@
 ﻿const request = async (url, params = {}, body) => {
     const urll = new URL(`https://localhost:44317/api/${url}`)
-    Object.keys(params.queryParams).forEach(key => urll.searchParams.append(key, params[key]))
+    if (params.queryParams) {
+        Object.keys(params.queryParams).forEach(key => urll.searchParams.append(key, params.queryParams[key]))
+    }
     const token = localStorage.getItem('token')
     const response = await fetch(urll, {
         headers: { 'Content-type': 'application/json', ...(token && { 'Authorization': token }) },

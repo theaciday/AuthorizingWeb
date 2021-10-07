@@ -1,15 +1,16 @@
 ﻿import { useDispatch, useSelector } from "react-redux"
 import categoriesactions from '../../actions/categories.Actions';
 import React, { useCallback, useEffect } from "react";
+import Pages from "./pages";
 
 const CategoriesList = () => {
     const dispatch = useDispatch();
-
+    const receiveValue=(value)
     useEffect(() => {
         dispatch(categoriesactions.getListCategories())
     }, []);
-    const { categories } = useSelector((state) => {
-        return state.category
+    const categories = useSelector((state) => {
+        return state.category.data
     });
     const onDelete = useCallback((categoryId) => {
         dispatch(categoriesactions.deleteCategory(categoryId))
@@ -24,6 +25,7 @@ const CategoriesList = () => {
                         Delete
                     </button>
                     <span>{category.description}</span></div>)}
+                <Pages receiveValue={receiveValue} />
             </div>
         </div>
         );
