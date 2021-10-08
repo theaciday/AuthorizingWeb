@@ -23,14 +23,14 @@ export default [
     {
         component: User,
         path: '/user',
-        permissions: [
+        roles: [
             Roles.ADMIN
         ], 
     },
     {
         component: Admin,
         path: '/Admin',
-        permissions: [
+        roles: [
             Roles.ADMIN
         ],
     },

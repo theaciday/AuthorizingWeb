@@ -1,5 +1,4 @@
 ﻿import { productService } from '../services/productService';
-import { alertActions } from '../actions/alertActions';
 import { productConstants } from '../constants/productConstants';
 
 
@@ -13,7 +12,6 @@ function newProduct(name, unitPrice, description, categories) {
                 },
                 error => {
                     dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
                 }
         );
         function request() { return { type: productConstants.CREATE_PRODUCT_REQUEST } }
@@ -39,20 +37,20 @@ function deleteProduct(id) {
     }
 
 }
-function getAll() {
+function getAll(pageNumber) {
     return dispatch => {
         dispatch(request());
-        productService.listProducts()
+        productService.listProducts(pageNumber)
             .then(
-                products => {
-                    dispatch(success(products));
+                response => {
+                    dispatch(success(response));
                 },
                 error => {
                     dispatch(failure(error.toString()));
                 }
         );
         function request() { return { type: productConstants.GETALL_PRODUCTS_REQUEST } }
-        function success(products) { return { type: productConstants.GETALL_PRODUCTS_SUCCESS, payload: products } }
+        function success(payload) { return { type: productConstants.GETALL_PRODUCTS_SUCCESS, payload } }
         function failure(error) { return { type: productConstants.GETALL_PRODUCTS_FAILURE, error } }
     }
 

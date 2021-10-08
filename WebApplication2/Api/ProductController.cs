@@ -27,6 +27,9 @@ namespace WebApplication2.Api
         [Authorize(Role.Admin)]
         public IActionResult CreateProduct(ProductDTO dTO)
         {
+            var currentUser = (User)HttpContext.Items["User"];
+            if (currentUser.Role != Role.Admin)
+                return StatusCode(403, new { message = "Forbidden" });
             var product = service.CreateProduct(dTO);
             return Created("createproduct", product);
         }
@@ -34,6 +37,9 @@ namespace WebApplication2.Api
         [Authorize(Role.Admin)]
         public IActionResult EditProduct(Product dTO)
         {
+            var currentUser = (User)HttpContext.Items["User"];
+            if (currentUser.Role != Role.Admin)
+                return StatusCode(403, new { message = "Forbidden" });
             var product = service.EditProduct(dTO);
             if (product == null)
             {
@@ -64,6 +70,9 @@ namespace WebApplication2.Api
         [Authorize(Role.Admin)]
         public async Task<IActionResult> AllProducts([FromQuery] PaginationFilter filter)
         {
+            var currentUser = (User)HttpContext.Items["User"];
+            if (currentUser.Role != Role.Admin)
+                return StatusCode(403, new { message = "Forbidden" });
             var route = Request.Path.Value;
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize); 
             var pagedData = await service.ListProducts(validFilter);
@@ -76,6 +85,9 @@ namespace WebApplication2.Api
         [Authorize(Role.Admin)]
         public IActionResult DeleteProduct(int id)
         {
+            var currentUser = (User)HttpContext.Items["User"];
+            if (currentUser.Role != Role.Admin)
+                return StatusCode(403, new { message = "Forbidden" });
             service.DeleteProduct(id);
             return Ok();
         }

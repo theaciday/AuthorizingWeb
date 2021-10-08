@@ -3,6 +3,7 @@
 const initialState = {
     loggingIn: false,
     loading: false,
+    loaded: false,
     user: {},
 };
 
@@ -17,15 +18,20 @@ export function authentication(state = initialState, action) {
             return {
                 ...state,
                 loggingIn: true,
-                user: action.user
+                user: action.user,
+                loading: false,
+                loaded: true,
             };
         case userConstants.LOGIN_FAILURE:
-            return initialState;
+            return initialState
+        case userConstants.GET_CURRENT_USER_FAILURE:
+            return { ...initialState, loaded: true };
         case userConstants.GET_CURRENT_USER_SUCCESS:
             return {
                 loggingIn: true,
                 user: action.user,
-                loading: false
+                loading: false,
+                loaded: true,
             };
         case userConstants.LOGOUT:
             return initialState;

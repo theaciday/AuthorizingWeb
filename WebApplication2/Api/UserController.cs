@@ -25,7 +25,7 @@ namespace WebApplication2.Controllers
         {
             var currentUser = (User)HttpContext.Items["User"];
             if (id != currentUser.Id && currentUser.Role != Role.Admin)
-                return Unauthorized(new { message = "Unauthorized" });
+                return StatusCode(403,new { message = "Forbidden" });
 
             var user = service.GetById(id);
             return Ok(user);
@@ -42,6 +42,10 @@ namespace WebApplication2.Controllers
         [Authorize(Role.Admin)]
         public IActionResult NewUser(RegisterDto dto)
         {
+            var currentUser = (User)HttpContext.Items["User"];
+            if (currentUser.Role != Role.Admin)
+                return StatusCode(403, new { message = "Forbidden" });
+
             return Created("Success", service.CreateUser(dto));
         }
 

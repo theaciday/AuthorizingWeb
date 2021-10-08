@@ -35,7 +35,7 @@ namespace BusLay.Services
                 Email = dto.Email,
                 LastName = dto.LastName,
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-                Role = Role.Admin
+                Role = Role.User
             };
             _repos.Create(user);
             return user;

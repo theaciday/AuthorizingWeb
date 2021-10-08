@@ -39,11 +39,15 @@ namespace WebApplication2.Api
         [Authorize(Role.Admin)]
         public async Task<IActionResult> GetCategory(int categoryId)
         {
+            var currentUser = (User)HttpContext.Items["User"];
+            if (currentUser.Role != Role.Admin)
+                return StatusCode(403, new { message = "Forbidden" });
             var category = await service.GetCategory(categoryId);
             return Ok(new Response<Category>(category));
         }
 
         [HttpGet("list")]
+        [AllowAnonymous]
         public async Task<IActionResult> ListCategories([FromQuery] PaginationFilter filter)
         {
             try
@@ -64,6 +68,9 @@ namespace WebApplication2.Api
         [Authorize(Role.Admin)]
         public IActionResult DeleteCategory(int id)
         {
+            var currentUser = (User)HttpContext.Items["User"];
+            if (currentUser.Role != Role.Admin)
+                return StatusCode(403, new { message = "Forbidden" });
             service.DeleteCategory(id);
             return Ok();
         }
