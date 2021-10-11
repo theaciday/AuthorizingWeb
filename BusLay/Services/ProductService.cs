@@ -22,6 +22,7 @@ namespace BusLay.Services
             {
                 Description = dTO.Description,
                 Name = dTO.Name,
+                Image=dTO.Image,
                 UnitPrice = dTO.UnitPrice,
                 Categories = dTO.Categories
             };

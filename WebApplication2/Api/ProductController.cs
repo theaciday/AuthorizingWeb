@@ -5,6 +5,7 @@ using BusLay.Interfaces;
 using DAL.Entities;
 using DAL.Filter;
 using DAL.Wrappers;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace WebApplication2.Api
     [ApiController]
     public class ProductController : ControllerBase
     {
+        public static IWebHostEnvironment environment;
         private readonly IProductService service;
         private readonly IUriService uriService;
         public ProductController(IProductService service, IUriService uriService)

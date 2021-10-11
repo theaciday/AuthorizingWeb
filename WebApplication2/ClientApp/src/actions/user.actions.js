@@ -3,6 +3,8 @@ import { userService } from '../services/user.service';
 import { alertActions } from '../actions/alertActions';
 import { history } from '../helpers/history';
 
+function getCurrentUserFailure(error) { return { type: userConstants.GET_CURRENT_USER_FAILURE, error } }
+
 function getCurrentUser() {
     return dispatch => {
         dispatch(request());
@@ -14,15 +16,14 @@ function getCurrentUser() {
                     localStorage.setItem('token', token);
                 },
                 error => {
-                    dispatch(failure(error.toString()));
+                    dispatch(getCurrentUserFailure(error.toString()));
                 }
             );
     };
     function request() { return { type: userConstants.GET_CURRENT_USER_REQUEST } }
     function success(user) { return { type: userConstants.GET_CURRENT_USER_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.GET_CURRENT_USER_FAILURE, error } }
-
 }
+
 function login(username, password) {
     return dispatch => {
         dispatch(request());
@@ -104,5 +105,6 @@ export default {
     login,
     logout,
     register,
-    delete: _delete
+    delete: _delete,
+    getCurrentUserFailure,
 };

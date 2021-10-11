@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +15,8 @@ namespace BusLay.DTOs
         public double UnitPrice { get; set; } = 0;
 
         public string Description { get; set; } = "";
+
+        public IFormFile Image { get; set; }
         public List<Category> Categories { get; set; } = new List<Category>();
     }
 }   

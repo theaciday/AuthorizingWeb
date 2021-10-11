@@ -22,6 +22,12 @@ export function authentication(state = initialState, action) {
                 loading: false,
                 loaded: true,
             };
+        case userConstants.GET_CURRENT_USER_FAILURE:
+            return {
+                ...state,
+                loaded: true,
+                loading: false,
+            };
         case userConstants.LOGIN_FAILURE:
             return initialState
         case userConstants.GET_CURRENT_USER_FAILURE:

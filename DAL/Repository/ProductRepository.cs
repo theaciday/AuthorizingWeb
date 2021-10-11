@@ -8,12 +8,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+
 
 namespace DAL.Repository
 {
     public class ProductRepository : IProductRepository
     {
         private readonly DataContext context;
+        public static IWebHostEnvironment environment;
         public ProductRepository(DataContext _context)
         {
             context = _context;
@@ -21,10 +24,11 @@ namespace DAL.Repository
 
         public Product CreateProduct(Product product)
         {
+
             var produc = new Product
             {
                 Name = product.Name,
-                ImagePath = product.ImagePath,
+                Image = product.Image,
                 Description = product.Description,
                 UnitPrice = product.UnitPrice
             };
@@ -72,7 +76,7 @@ namespace DAL.Repository
         {
             var produc = await context.Products.Include(p => p.Id == product.Id).FirstOrDefaultAsync(prod => prod.Id == product.Id);
             produc.Name = product.Name;
-            produc.ImagePath = product.ImagePath;
+            produc.Image = product.Image;
             produc.Description = product.Description;
             produc.UnitPrice = product.UnitPrice;
             foreach (var item in product.Id.ToString())
@@ -97,7 +101,7 @@ namespace DAL.Repository
                          Name = product.Name,
                          UnitPrice = product.UnitPrice,
                          Description = product.Description,
-                         ImagePath = product.ImagePath,
+                         Image = product.Image,
                          Categories = product.Categories.Select(category => new Category
                          {
                              Id = category.Id,

@@ -11,7 +11,7 @@ const Pages = (props) => {
     return (
         <div>
             <button type="button" onClick={() => props.onClick(props.page - 1)}
-                disabled={props.page === 1}>←</button>
+                disabled={props.page <= 1}>←</button>
             {
                 Array.from({ length: totalPages }, (val, index) =>
                     <button type="button"

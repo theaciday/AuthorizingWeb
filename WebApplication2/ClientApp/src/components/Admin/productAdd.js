@@ -8,7 +8,9 @@ const ProductAdd = () => {
     const [productData, setProductData] = useState({
         productName: '',
         unitPrice: '',
-        productDescription: ''
+        productDescription: '',
+        imageFile: null,
+        imageSrc:''
     });
 
 
@@ -53,7 +55,7 @@ const ProductAdd = () => {
                 <input name="productName" value={productData.productName} placeholder="Product Name" type="text" onChange={onChangeProductData} required />
 
                 <input name="productDescription" value={productData.productDescription} placeholder="Description" type="text" onChange={onChangeProductData} />
-
+                <input type="file" accept="image/*" ></input>
                 <input name="unitPrice" value={productData.unitPrice} placeholder="Price" type="number" step="0.01" onChange={onChangeProductData} />
                 <h5>Categories</h5>
                 {categories.map((category) =>

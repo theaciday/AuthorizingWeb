@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,7 +21,7 @@ namespace DAL.Entities
         
         public double? UnitPrice { get; set; }
 
-        public string ImagePath { get; set; }
+        public IFormFile Image { get; set; }
         
         public string Description { get; set; }
 
