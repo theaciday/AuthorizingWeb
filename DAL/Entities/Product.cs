@@ -1,27 +1,27 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
-    
+
     public class Product
     {
         [Key]
         [ScaffoldColumn(false)]
         public int Id { get; set; }
-            
+
         [Required]
         public string Name { get; set; }
-        
+
         public double? UnitPrice { get; set; }
 
-        public IFormFile Image { get; set; }
+        public string ImageName { get; set; }
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
         
         public string Description { get; set; }
 

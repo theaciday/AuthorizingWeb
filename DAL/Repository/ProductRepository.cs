@@ -2,13 +2,11 @@
 using DAL.Entities;
 using DAL.Filter;
 using DAL.Interfaces;
-using DAL.Wrappers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 
 
 namespace DAL.Repository
@@ -16,7 +14,6 @@ namespace DAL.Repository
     public class ProductRepository : IProductRepository
     {
         private readonly DataContext context;
-        public static IWebHostEnvironment environment;
         public ProductRepository(DataContext _context)
         {
             context = _context;
@@ -28,7 +25,6 @@ namespace DAL.Repository
             var produc = new Product
             {
                 Name = product.Name,
-                Image = product.Image,
                 Description = product.Description,
                 UnitPrice = product.UnitPrice
             };
@@ -55,12 +51,12 @@ namespace DAL.Repository
         //{
         //    var product = context.Products.Where()
         //}
-        public  void DeleteProduct(int? id)
+        public void DeleteProduct(int? id)
         {
             try
-                {
+            {
                 bool lal = true;
-                var product =  context.Products
+                var product = context.Products
                     .Where(prod => prod.Id == id)
                     .FirstOrDefault();
                 product.IsDisable = lal;
@@ -76,7 +72,6 @@ namespace DAL.Repository
         {
             var produc = await context.Products.Include(p => p.Id == product.Id).FirstOrDefaultAsync(prod => prod.Id == product.Id);
             produc.Name = product.Name;
-            produc.Image = product.Image;
             produc.Description = product.Description;
             produc.UnitPrice = product.UnitPrice;
             foreach (var item in product.Id.ToString())
@@ -101,7 +96,6 @@ namespace DAL.Repository
                          Name = product.Name,
                          UnitPrice = product.UnitPrice,
                          Description = product.Description,
-                         Image = product.Image,
                          Categories = product.Categories.Select(category => new Category
                          {
                              Id = category.Id,

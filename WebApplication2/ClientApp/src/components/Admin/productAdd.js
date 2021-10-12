@@ -5,12 +5,14 @@ import ProductActions from "../../actions/productActions";
 const ProductAdd = () => {
     const dispatch = useDispatch();
     const [propCategories, setPropCategories] = useState([]);
+    const defaultImageSrc = '../../../image/review_avatar.png';
     const [productData, setProductData] = useState({
         productName: '',
         unitPrice: '',
         productDescription: '',
+        imageName:'',
         imageFile: null,
-        imageSrc:''
+        imageSrc: defaultImageSrc
     });
 
 
@@ -53,10 +55,10 @@ const ProductAdd = () => {
             <div>
                 <h1>Add Product</h1>
                 <input name="productName" value={productData.productName} placeholder="Product Name" type="text" onChange={onChangeProductData} required />
-
                 <input name="productDescription" value={productData.productDescription} placeholder="Description" type="text" onChange={onChangeProductData} />
-                <input type="file" accept="image/*" ></input>
+                <input type="file" accept="image/*"/>
                 <input name="unitPrice" value={productData.unitPrice} placeholder="Price" type="number" step="0.01" onChange={onChangeProductData} />
+                <img src={productData.imageSrc}/>
                 <h5>Categories</h5>
                 {categories.map((category) =>
                     <div key={category.id}>

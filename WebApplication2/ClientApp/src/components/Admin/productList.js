@@ -1,5 +1,5 @@
 ﻿import { useDispatch, useSelector } from "react-redux"
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import productActions from "../../actions/productActions";
 import ProductItem from "./Map/productItem";
 import Pages from "./pages";
@@ -29,7 +29,7 @@ const ProductList = () => {
             <h2>ListProducts</h2>
             {
                 products.map((product, index) =>
-                   <div key={product.id}>
+                    <div key={product.id}>
                         <ProductItem product={product}
                             index={index} />
                     </div>)

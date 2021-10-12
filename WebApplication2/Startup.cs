@@ -18,6 +18,8 @@ using BusLay.Context;
 using DAL.Interfaces;
 using DAL.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace WebApplication2
 {
@@ -90,7 +92,11 @@ namespace WebApplication2
 
             app.UseRouting();
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "wwwroot")),
+                RequestPath = "/wwwroot"
+            });
             app.UseSpaStaticFiles();
 
             app.UseAuthentication();
