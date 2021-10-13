@@ -14,13 +14,12 @@ const ProductItem = (props) => {
                 {props.index + 1}) {name}
                 <span>{description}</span>
                 <span>   Category:</span>
+                <img src={imageSrc}  />
                 {categories.map((category) =>
                     <div key={category.id}>
                         {category.categoryName}
-                        <img src={imageSrc} />
                     </div>
                 )}
-
             </div>
             <DeleteProduct productId={id} />
         </div>

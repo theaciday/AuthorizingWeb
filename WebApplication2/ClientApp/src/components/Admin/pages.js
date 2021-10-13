@@ -14,7 +14,7 @@ const Pages = (props) => {
                 disabled={props.page <= 1}>←</button>
             {
                 Array.from({ length: totalPages }, (val, index) =>
-                    <button type="button"
+                    <button key={index} type="button"
                         className={props.page === 1+index ? "btn-clicked" : ""}
                         onClick={() => props.onClick(index + 1)}>
                         {index + 1}

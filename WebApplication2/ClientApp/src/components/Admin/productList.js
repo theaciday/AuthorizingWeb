@@ -31,7 +31,7 @@ const ProductList = () => {
                 products.map((product, index) =>
                     <div key={product.id}>
                         <ProductItem product={product}
-                            index={index} />
+                            index={index}/>
                     </div>)
             }
             <Pages total={totalPages}

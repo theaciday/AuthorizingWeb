@@ -21,12 +21,12 @@ namespace DAL.Repository
 
         public Product CreateProduct(Product product)
         {
-
             var produc = new Product
             {
-                Name = product.Name,
+                ProductName = product.ProductName,
                 Description = product.Description,
-                UnitPrice = product.UnitPrice
+                UnitPrice = product.UnitPrice,
+                ImageName=product.ImageName
             };
             foreach (var item in product.Categories)
             {
@@ -35,16 +35,15 @@ namespace DAL.Repository
                 produc.Categories.Add(category);
             }
             context.Products.Add(produc);
-            var usad = context.SaveChanges();
-
-
+            context.SaveChanges();
             return new Product
             {
                 Id = produc.Id,
-                Name = produc.Name,
+                ProductName = produc.ProductName,
                 Description = produc.Description,
                 UnitPrice = produc.UnitPrice,
-                Categories = produc.Categories
+                Categories = produc.Categories,
+                ImageName=produc.ImageName
             };
         }
         //private IQueryable<object> GetNewProduct(Product product)
@@ -71,7 +70,7 @@ namespace DAL.Repository
         public async Task<Product> EditProduct(Product product)
         {
             var produc = await context.Products.Include(p => p.Id == product.Id).FirstOrDefaultAsync(prod => prod.Id == product.Id);
-            produc.Name = product.Name;
+            produc.ProductName = product.ProductName;
             produc.Description = product.Description;
             produc.UnitPrice = product.UnitPrice;
             foreach (var item in product.Id.ToString())
@@ -93,9 +92,10 @@ namespace DAL.Repository
                      new Product
                      {
                          Id = product.Id,
-                         Name = product.Name,
+                         ProductName = product.ProductName,
                          UnitPrice = product.UnitPrice,
                          Description = product.Description,
+                         ImageName=product.ImageName,
                          Categories = product.Categories.Select(category => new Category
                          {
                              Id = category.Id,
@@ -118,7 +118,7 @@ namespace DAL.Repository
                 .Select(product => new
                 {
                     Id = product.Id,
-                    Name = product.Name,
+                    Name = product.ProductName,
                     Categories = product.Categories.Select(category => new
                     {
                         id = category.Id,
@@ -133,7 +133,7 @@ namespace DAL.Repository
         public List<Product> ProductByName(string productName, double? maxprice)
         {
             return context.Products.Where(x =>
-                (productName == null || x.Name.ToLower() == productName.ToLower()) &&
+                (productName == null || x.ProductName.ToLower() == productName.ToLower()) &&
                 (maxprice == null || x.UnitPrice <= maxprice)
             ).ToList();
         }

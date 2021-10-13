@@ -1,19 +1,24 @@
 ﻿import { useDispatch, useSelector } from "react-redux"
 import React, { useCallback,  useState } from "react";
 import ProductActions from "../../actions/productActions";
+import { product } from "../../helpers/store/_reducers/productReducer";
 
 const ProductAdd = () => {
     const dispatch = useDispatch();
-    const [propCategories, setPropCategories] = useState([]);
     const defaultImageSrc = '../../../image/review_avatar.png';
+    const [imageData, setImageData] = useState({
+        imageFile:'',
+        imageSrc: defaultImageSrc
+    });
+    const [propCategories, setPropCategories] = useState([]);
     const [productData, setProductData] = useState({
         productName: '',
         unitPrice: '',
         productDescription: '',
-        imageName:'',
-        imageFile: null,
-        imageSrc: defaultImageSrc
+        imageFile: null
     });
+    
+
 
 
     const onChangeProductCategory = useCallback(event => {
@@ -36,6 +41,29 @@ const ProductAdd = () => {
         })
     }, [productData])
 
+    const showPreview = e => {
+        if (e.target.files && e.target.files[0]) {
+            let imageFile = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = x => {
+                setImageData
+                ({
+                    ...setImageData,
+                    imageFile,
+                    imageSrc: x.target.result
+                })
+            }
+            reader.readAsDataURL(imageFile)
+        }
+        else {
+            setImageData({
+                ...setImageData,
+                imageFile: null,
+                imageSrc: defaultImageSrc
+            })  
+        }
+    }
+
     const categories = useSelector((state) => {
         return state.category.data
     });
@@ -48,6 +76,7 @@ const ProductAdd = () => {
                     productData.unitPrice,
                     productData.productDescription,
                     propCategories.map(categoryId => ({ id: categoryId })),
+                    imageData.imageFile,
                 ))
     }
     return (
@@ -56,8 +85,10 @@ const ProductAdd = () => {
                 <h1>Add Product</h1>
                 <input name="productName" value={productData.productName} placeholder="Product Name" type="text" onChange={onChangeProductData} required />
                 <input name="productDescription" value={productData.productDescription} placeholder="Description" type="text" onChange={onChangeProductData} />
-                <input type="file" accept="image/*"/>
                 <input name="unitPrice" value={productData.unitPrice} placeholder="Price" type="number" step="0.01" onChange={onChangeProductData} />
+                <input type="file" name="image"
+                    onChange={showPreview}
+                    accept="image/*" />
                 <img src={productData.imageSrc}/>
                 <h5>Categories</h5>
                 {categories.map((category) =>
@@ -74,7 +105,7 @@ const ProductAdd = () => {
                     </div>
                 )}
 
-                <button disabled={!productData.productName} type="submit">Create Product</button>
+                <button disabled={!productData.productName && productData.imageFile} type="submit">Create Product</button>
             </div>
         </form>
         )

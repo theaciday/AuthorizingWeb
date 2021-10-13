@@ -14,7 +14,7 @@ namespace DAL.Entities
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string ProductName { get; set; }
 
         public double? UnitPrice { get; set; }
 
@@ -22,7 +22,9 @@ namespace DAL.Entities
 
         [NotMapped]
         public IFormFile ImageFile { get; set; }
-        
+        [NotMapped]
+        public string ImageSrc { get; set; }
+
         public string Description { get; set; }
 
         public IList<Category> Categories { get; set; } = new List<Category>();

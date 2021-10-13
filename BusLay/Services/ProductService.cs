@@ -17,25 +17,23 @@ namespace BusLay.Services
         }
         public Product CreateProduct(ProductDTO dTO)
         {
-
             var product = new Product
             {
                 Description = dTO.Description,
-                Name = dTO.Name,
+                ProductName = dTO.Name,
                 UnitPrice = dTO.UnitPrice,
-                Categories = dTO.Categories
+                Categories = dTO.Categories,
+                ImageName=dTO.ImageName,
             };
 
             var pro = repos.CreateProduct(product);
             return pro;
         }
-
         //public List<Product> ProductsByCategory(int categoryID) 
         //{
         //    var products = repos.ProductsByCategory(categoryID);
         //    return products;
         //}
-
         public void DeleteProduct(int id)
         {
             repos.DeleteProduct(id);

@@ -2,10 +2,10 @@
 import { productConstants } from '../constants/productConstants';
 
 
-function newProduct(name, unitPrice, description, categories) {
+function newProduct(name, unitPrice, description, categories, imageFile) {
     return dispatch => {
         dispatch(request());
-        productService.addProduct(name, unitPrice, description, categories)
+        productService.addProduct(name, unitPrice, description, categories, imageFile)
             .then(
                 product => {
                     dispatch(success(product));
