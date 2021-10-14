@@ -5,7 +5,7 @@ const ProductItem = (props) => {
     const {
         index,
         product: {
-            id, name, description, categories, imageSrc
+            id, name, description, categories, images
         },
     } = props
     return (
@@ -14,7 +14,9 @@ const ProductItem = (props) => {
                 {props.index + 1}) {name}
                 <span>{description}</span>
                 <span>   Category:</span>
-                <img src={imageSrc}  />
+                {images.map((image) =>
+                    <img src={image.imageSrc}/>
+                    )}
                 {categories.map((category) =>
                     <div key={category.id}>
                         {category.categoryName}

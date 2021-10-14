@@ -26,7 +26,6 @@ namespace DAL.Repository
                 ProductName = product.ProductName,
                 Description = product.Description,
                 UnitPrice = product.UnitPrice,
-                ImageName=product.ImageName
             };
             foreach (var item in product.Categories)
             {
@@ -43,7 +42,6 @@ namespace DAL.Repository
                 Description = produc.Description,
                 UnitPrice = produc.UnitPrice,
                 Categories = produc.Categories,
-                ImageName=produc.ImageName
             };
         }
         //private IQueryable<object> GetNewProduct(Product product)
@@ -95,13 +93,17 @@ namespace DAL.Repository
                          ProductName = product.ProductName,
                          UnitPrice = product.UnitPrice,
                          Description = product.Description,
-                         ImageName=product.ImageName,
                          Categories = product.Categories.Select(category => new Category
                          {
                              Id = category.Id,
                              CategoryName = category.CategoryName,
                              Description = category.Description
-                         }).ToList()
+                         }).ToList(),
+                         Images=product.Images.Select(image=>new Image 
+                         {
+                             Id=image.Id,
+                             ImageSrc=image.ImageSrc
+                         }).ToList(),
                      }).ToListAsync();
 
             return pagedData;

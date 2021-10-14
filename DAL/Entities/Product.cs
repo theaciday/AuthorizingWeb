@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
@@ -18,14 +16,9 @@ namespace DAL.Entities
 
         public double? UnitPrice { get; set; }
 
-        public string ImageName { get; set; }
-
-        [NotMapped]
-        public IFormFile ImageFile { get; set; }
-        [NotMapped]
-        public string ImageSrc { get; set; }
-
         public string Description { get; set; }
+
+        public List<Image> Images { get; set; } = new List<Image>();
 
         public IList<Category> Categories { get; set; } = new List<Category>();
         [JsonIgnore]

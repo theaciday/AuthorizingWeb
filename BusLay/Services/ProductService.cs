@@ -23,7 +23,6 @@ namespace BusLay.Services
                 ProductName = dTO.Name,
                 UnitPrice = dTO.UnitPrice,
                 Categories = dTO.Categories,
-                ImageName=dTO.ImageName,
             };
 
             var pro = repos.CreateProduct(product);

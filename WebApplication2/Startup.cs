@@ -57,7 +57,8 @@ namespace WebApplication2
                 x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
             services.Configure<Setting>(Configuration.GetSection("Setting"));
-          
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<IProductRepository,ProductRepository>();
             services.AddScoped<ICategoryRepository,CategoryRepository>();
@@ -67,8 +68,6 @@ namespace WebApplication2
             services.AddScoped<ICartItemsService, CartItemsService>();
             services.AddScoped<ICategoryService,CategoryService>();
             services.AddScoped<IJwtUtils, JwtUtils>();
-
-            
 
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName)

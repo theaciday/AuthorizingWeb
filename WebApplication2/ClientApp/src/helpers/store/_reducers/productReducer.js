@@ -1,4 +1,5 @@
-﻿import { productConstants } from '../../../constants/productConstants'
+﻿import { data } from 'jquery';
+import { productConstants } from '../../../constants/productConstants'
 
 const initialState = {
 
@@ -30,6 +31,34 @@ export function product(state = initialState, action) {
                 ...state,
                 isLoading: false,
                 isLoaded: false
+            }
+        case productConstants.ADD_PRODUCT_IMAGE_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                isLoaded: false
+            }
+        case productConstants.ADD_PRODUCT_IMAGE_SUCCESS:
+            return {
+                ...state,
+                data: data.map(product => product.id === action.payload.productId
+                    ? {
+                        ...product,
+                        images: [
+                            ...product.images,
+                            { id: action.payload.id, imageSrc: action.payload.imageSrc }
+                        ],
+                    }
+                    : product
+                ),
+                isLoading: false,
+                isLoaded: true
+            }
+        case productConstants.ADD_PRODUCT_IMAGE_FAILURE:
+            return {
+                ...state,
+                isLoaded: false,
+                isLoading: false
             }
         case productConstants.GETALL_PRODUCTS_REQUEST:
             return {

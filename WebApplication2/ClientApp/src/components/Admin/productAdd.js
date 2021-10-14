@@ -1,13 +1,12 @@
 ﻿import { useDispatch, useSelector } from "react-redux"
-import React, { useCallback,  useState } from "react";
+import React, { useCallback, useState } from "react";
 import ProductActions from "../../actions/productActions";
-import { product } from "../../helpers/store/_reducers/productReducer";
 
 const ProductAdd = () => {
     const dispatch = useDispatch();
     const defaultImageSrc = '../../../image/review_avatar.png';
     const [imageData, setImageData] = useState({
-        imageFile:'',
+        imageFile: null,
         imageSrc: defaultImageSrc
     });
     const [propCategories, setPropCategories] = useState([]);
@@ -15,10 +14,7 @@ const ProductAdd = () => {
         productName: '',
         unitPrice: '',
         productDescription: '',
-        imageFile: null
     });
-    
-
 
 
     const onChangeProductCategory = useCallback(event => {
@@ -47,11 +43,11 @@ const ProductAdd = () => {
             const reader = new FileReader();
             reader.onload = x => {
                 setImageData
-                ({
-                    ...setImageData,
-                    imageFile,
-                    imageSrc: x.target.result
-                })
+                    ({
+                        ...setImageData,
+                        imageFile,
+                        imageSrc: x.target.result
+                    })
             }
             reader.readAsDataURL(imageFile)
         }
@@ -60,7 +56,7 @@ const ProductAdd = () => {
                 ...setImageData,
                 imageFile: null,
                 imageSrc: defaultImageSrc
-            })  
+            })
         }
     }
 
@@ -89,7 +85,7 @@ const ProductAdd = () => {
                 <input type="file" name="image"
                     onChange={showPreview}
                     accept="image/*" />
-                <img src={productData.imageSrc}/>
+                <img src={productData.imageSrc} />
                 <h5>Categories</h5>
                 {categories.map((category) =>
                     <div key={category.id}>
@@ -104,11 +100,10 @@ const ProductAdd = () => {
                         </label>
                     </div>
                 )}
-
                 <button disabled={!productData.productName && productData.imageFile} type="submit">Create Product</button>
             </div>
         </form>
-        )
+    )
 
 }
 export default ProductAdd;

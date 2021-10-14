@@ -11,12 +11,14 @@ namespace BusLay.Context
         public DbSet<Category> Categories{ get; set; }
         public DbSet<CartItem> ShoppingCartItems { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Password).IsUnique(); });
             modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Username).IsUnique(); });
             modelBuilder.Entity<Product>().HasMany(x => x.Categories).WithMany(x => x.Products);
+            modelBuilder.Entity<Product>().HasMany(x => x.Images).WithOne(x => x.Product);
         }
 
 
