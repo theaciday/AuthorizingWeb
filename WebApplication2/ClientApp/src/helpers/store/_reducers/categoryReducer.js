@@ -62,7 +62,7 @@ export function category(state = initialState, action) {
             return {
                 ...state,
                 data: state.data
-                    .filter(category => category.id !== action.payload.data.id),
+                    .filter(category => category.id !== action.payload),
                 isLoading: false,
                 isLoaded: true
             }

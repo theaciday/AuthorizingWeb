@@ -18,9 +18,9 @@ namespace DAL.Entities
 
         public string Description { get; set; }
 
-        public List<Image> Images { get; set; } = new List<Image>();
+        public List<ProductImage> Images { get; set; } = new List<ProductImage>();
 
-        public IList<Category> Categories { get; set; } = new List<Category>();
+        public List<Category> Categories { get; set; } = new List<Category>();
         [JsonIgnore]
         public bool IsDisable { get; set; } = false;
     }

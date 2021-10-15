@@ -9,9 +9,8 @@ namespace BusLay.DTOs
 {
     public class CategoryDTO
     {
-        [Required]
+        public int Id { get; set; }
         public string CategoryName { get; set; }
-        [Required]
         public string Description { get; set; }
 
     }

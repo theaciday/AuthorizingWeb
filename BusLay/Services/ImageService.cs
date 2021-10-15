@@ -1,11 +1,7 @@
-﻿using BusLay.Interfaces;
+﻿using BusLay.DTOs;
+using BusLay.Interfaces;
 using DAL.Entities;
 using DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusLay.Services
 {
@@ -16,10 +12,16 @@ namespace BusLay.Services
         {
             this.repository = repository;
         }
-        public object CreateImage(Image images)
+        public ProductImageDTO CreateImage(ProductImage images,int id)
         {
-            return repository.CreateImages(images);
+            var image = repository.CreateImage(images,id);
+            return new ProductImageDTO
+            {
+                ProductId = image.ProductId,
+                ImageSrc=image.ImageSrc,
+                ImageId = image.ImageId,
+            };
         }
-      
+
     }
 }

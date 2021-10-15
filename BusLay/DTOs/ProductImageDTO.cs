@@ -1,14 +1,14 @@
 ﻿using DAL.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Interfaces
+namespace BusLay.DTOs
 {
-    public interface IImageRepository
+    public class ProductImageDTO:ProductImage
     {
-        public ProductImage CreateImage(ProductImage images,int id);
     }
 }

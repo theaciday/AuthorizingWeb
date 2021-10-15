@@ -1,20 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace DAL.Entities
 {
     public class Image
     {
+        [Key]
         public int Id { get; set; }
         [NotMapped]
-        [JsonIgnore]
         public IFormFile ImageFile { get; set; }
         public string ImageSrc { get; set; }
-        [JsonIgnore]
         public string ImageName { get; set; }
-        [JsonIgnore]
-        public Product Product { get; set; }
-        public int ProductId { get; set; }
+        public ProductImage ImgEntity { get; set; }
     }
 }

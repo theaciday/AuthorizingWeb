@@ -4,6 +4,7 @@ using DAL.Entities;
 using DAL.Filter;
 using DAL.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BusLay.Services
@@ -15,17 +16,9 @@ namespace BusLay.Services
         {
             repos = product;
         }
-        public Product CreateProduct(ProductDTO dTO)
+        public Product CreateProduct(Product dTO)
         {
-            var product = new Product
-            {
-                Description = dTO.Description,
-                ProductName = dTO.Name,
-                UnitPrice = dTO.UnitPrice,
-                Categories = dTO.Categories,
-            };
-
-            var pro = repos.CreateProduct(product);
+            var pro = repos.CreateProduct(dTO);
             return pro;
         }
         //public List<Product> ProductsByCategory(int categoryID) 
@@ -57,9 +50,29 @@ namespace BusLay.Services
             return products;
         }
 
-        public async Task<List<Product>> ListProducts(PaginationFilter filter)
+        public async Task<List<ProductDTO>> ListProducts(PaginationFilter filter)
         {
-            return await repos.GetAllProducts(filter);
+            var product = await repos.GetAllProducts(filter);
+            var dTO = product.Select(product => new ProductDTO
+            {
+                Id= product.Id,
+                Name = product.ProductName,
+                Description = product.Description,
+                UnitPrice = (double)product.UnitPrice,
+                Categories = product.Categories.Select(category => new CategoryDTO
+                {
+                    Id=category.Id,
+                    CategoryName = category.CategoryName,
+                    Description = category.Description
+                }).ToList(),
+                Images = product.Images.Select(image => new ProductImageDTO
+                {
+                    ImageSrc=image.ImageSrc,
+                    ImageId = image.ImageId,
+                    ProductId=image.ProductId
+                }).ToList()
+            }).ToList();
+            return dTO;
         }
 
         public int ProductsCount()

@@ -12,12 +12,12 @@ namespace BusLay.Interfaces
 {
     public interface IProductService
     {
-        public Product CreateProduct(ProductDTO dTO);
+        public Product CreateProduct(Product dTO);
         public Task<Product> EditProduct(Product product);
         public Task<object> FindProduct(int productId);
         public void DeleteProduct(int id);
         public List<Product> GetProduct(string productName,double? maxprice);
-        public Task<List<Product>> ListProducts(PaginationFilter filter);
+        public Task<List<ProductDTO>> ListProducts(PaginationFilter filter);
         public int ProductsCount();
         //public List<Product> ProductsByCategory(int categoryID);
 

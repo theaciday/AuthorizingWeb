@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace BusLay.DTOs
 {
-    public class ProductDTO
-    {   [Required]
+    public class ProductDTO 
+    {
+        public int Id { get; set; }
         public string Name { get; set; }
         public double UnitPrice { get; set; } = 0;
         public string Description { get; set; } = "";
-        public List<ImageDTO> Images { get; set; }
-        public List<Category> Categories { get; set; } = new List<Category>();
+        public List<ProductImageDTO> Images { get; set; }
+        public List<CategoryDTO> Categories { get; set; } = new List<CategoryDTO>();
     }
 }   

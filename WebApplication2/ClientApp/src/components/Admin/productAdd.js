@@ -44,16 +44,13 @@ const ProductAdd = () => {
             reader.onload = x => {
                 setImageData
                     ({
-                        ...setImageData,
                         imageFile,
                         imageSrc: x.target.result
                     })
             }
-            reader.readAsDataURL(imageFile)
         }
         else {
             setImageData({
-                ...setImageData,
                 imageFile: null,
                 imageSrc: defaultImageSrc
             })
@@ -65,15 +62,15 @@ const ProductAdd = () => {
     });
     const productSubmit = async (e) => {
         e.preventDefault()
-        dispatch(
+        const createdProduct = await dispatch(
             ProductActions
                 .newProduct(
                     productData.productName,
                     productData.unitPrice,
                     productData.productDescription,
                     propCategories.map(categoryId => ({ id: categoryId })),
-                    imageData.imageFile,
-                ))
+            ))
+        ProductActions.addImage()
     }
     return (
         <form id="categories" onSubmit={productSubmit}>

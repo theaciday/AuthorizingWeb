@@ -24,9 +24,9 @@ namespace WebApplication2.Api
             this.environment = environment;
             this.service = service;
         }
-        [HttpPost]
+        [HttpPost("{productId}")]
         [Authorize(Role.Admin)]
-        public async Task<IActionResult> CreateImageUrl([FromForm] Image images)
+        public async Task<IActionResult> CreateImageUrl([FromForm] Image images, int productId)
         {
             images.ImageName = await SaveImage(images.ImageFile);
             images.ImageSrc = String
@@ -35,7 +35,14 @@ namespace WebApplication2.Api
                Request.Host,
                Request.PathBase,
                images.ImageName);
-            service.CreateImage(images);
+            service.CreateImage(new ProductImage
+            {
+                ImageFile = images.ImageFile,
+                ImageSrc = images.ImageSrc,
+                ImageName = images.ImageName,
+                ProductId = productId,
+            },
+            productId);
             return Created("create", images);
         }
         [NonAction]

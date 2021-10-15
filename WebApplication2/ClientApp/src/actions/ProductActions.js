@@ -45,7 +45,7 @@ function deleteProduct(id) {
         productService.deleteProduct(id)
             .then(
                 product => {
-                    dispatch(success(product));
+                    dispatch(success(id));
                 },
                 error => {
                     dispatch(failure(error.toString()));

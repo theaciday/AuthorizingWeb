@@ -32,12 +32,12 @@ namespace WebApplication2.Api
 
         [HttpPost]
         [Authorize(Role.Admin)]
-        public IActionResult CreateProduct(ProductDTO dTO)
+        public IActionResult CreateProduct(Product product)
         {
             var currentUser = (User)HttpContext.Items["User"];
             if (currentUser.Role != Role.Admin)
                 return  StatusCode(403, new { message = "Forbidden" });
-            var product = service.CreateProduct(dTO);
+            var returnedProduct = service.CreateProduct(product);
             return Created("createproduct", product);
         }
         

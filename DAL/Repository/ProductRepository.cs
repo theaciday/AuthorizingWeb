@@ -99,9 +99,9 @@ namespace DAL.Repository
                              CategoryName = category.CategoryName,
                              Description = category.Description
                          }).ToList(),
-                         Images=product.Images.Select(image=>new Image 
+                         Images=product.Images.Select(image=>new ProductImage 
                          {
-                             Id=image.Id,
+                             ImageId = image.ImageId,
                              ImageSrc=image.ImageSrc
                          }).ToList(),
                      }).ToListAsync();

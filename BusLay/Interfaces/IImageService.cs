@@ -1,4 +1,5 @@
-﻿using DAL.Entities;
+﻿using BusLay.DTOs;
+using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace BusLay.Interfaces
 {
     public interface IImageService
     {
-        public object CreateImage(Image image);
+        public ProductImageDTO CreateImage(ProductImage image,int id);
     }
 }
