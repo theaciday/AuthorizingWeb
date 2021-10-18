@@ -55,22 +55,18 @@ namespace BusLay.Services
             var product = await repos.GetAllProducts(filter);
             var dTO = product.Select(product => new ProductDTO
             {
-                Id= product.Id,
+                Id = product.Id,
                 Name = product.ProductName,
                 Description = product.Description,
                 UnitPrice = (double)product.UnitPrice,
+                Images=product.Images,
                 Categories = product.Categories.Select(category => new CategoryDTO
                 {
-                    Id=category.Id,
+                    Id = category.Id,
                     CategoryName = category.CategoryName,
                     Description = category.Description
-                }).ToList(),
-                Images = product.Images.Select(image => new ProductImageDTO
-                {
-                    ImageSrc=image.ImageSrc,
-                    ImageId = image.ImageId,
-                    ProductId=image.ProductId
-                }).ToList()
+                }
+                ).ToList()
             }).ToList();
             return dTO;
         }

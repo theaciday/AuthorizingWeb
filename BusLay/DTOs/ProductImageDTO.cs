@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace BusLay.DTOs
 {
-    public class ProductImageDTO:ProductImage
+    public class ProductImageDTO
     {
+        public int Id { get; set; }
+        public string ImageSrc { get; set; }
+
     }
 }

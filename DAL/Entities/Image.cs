@@ -14,5 +14,6 @@ namespace DAL.Entities
         public string ImageSrc { get; set; }
         public string ImageName { get; set; }
         public ProductImage ImgEntity { get; set; }
+
     }
 }

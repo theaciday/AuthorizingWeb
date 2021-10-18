@@ -11,7 +11,7 @@ namespace BusLay.Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<CartItem> ShoppingCartItems { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductImage> Images { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Image> Image { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,12 +19,8 @@ namespace BusLay.Context
             modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Username).IsUnique(); });
             modelBuilder.Entity<Product>().HasMany(x => x.Categories).WithMany(x => x.Products);
             modelBuilder.Entity<Product>().HasMany(x => x.Images).WithOne(x => x.Product);
-            modelBuilder.Entity<Image>()
-                .HasOne(x => x.ImgEntity)
-                .WithOne(y => y.ProductImgEntity).HasForeignKey<ProductImage>(p => p.ImageId);
+            modelBuilder.Entity<ProductImage>().HasOne(x => x.ProductImgEntity).WithOne(x => x.ImgEntity);
         }
-
-
 
     }
 }

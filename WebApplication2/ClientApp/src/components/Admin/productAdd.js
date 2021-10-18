@@ -1,11 +1,13 @@
 ﻿import { useDispatch, useSelector } from "react-redux"
 import React, { useCallback, useState } from "react";
 import ProductActions from "../../actions/productActions";
+import productActions from "../../actions/productActions";
 
 const ProductAdd = () => {
     const dispatch = useDispatch();
-    const defaultImageSrc = '../../../image/review_avatar.png';
+    const defaultImageSrc = '../../image/review_avatar.png';
     const [imageData, setImageData] = useState({
+        imageName:'',
         imageFile: null,
         imageSrc: defaultImageSrc
     });
@@ -48,6 +50,8 @@ const ProductAdd = () => {
                         imageSrc: x.target.result
                     })
             }
+            reader.readAsDataURL(imageFile)
+
         }
         else {
             setImageData({
@@ -60,6 +64,7 @@ const ProductAdd = () => {
     const categories = useSelector((state) => {
         return state.category.data
     });
+    
     const productSubmit = async (e) => {
         e.preventDefault()
         const createdProduct = await dispatch(
@@ -70,7 +75,17 @@ const ProductAdd = () => {
                     productData.productDescription,
                     propCategories.map(categoryId => ({ id: categoryId })),
             ))
-        ProductActions.addImage()
+        const productId = createdProduct.payload.id;
+        let data = new FormData();
+        data.append('imageFile', imageData.imageFile);
+        const createdImage = await dispatch(
+            productActions
+                .addImage(
+                    data,
+                    productId
+                )
+        )
+
     }
     return (
         <form id="categories" onSubmit={productSubmit}>
@@ -82,7 +97,7 @@ const ProductAdd = () => {
                 <input type="file" name="image"
                     onChange={showPreview}
                     accept="image/*" />
-                <img src={productData.imageSrc} />
+                <img src={imageData.imageSrc} />
                 <h5>Categories</h5>
                 {categories.map((category) =>
                     <div key={category.id}>

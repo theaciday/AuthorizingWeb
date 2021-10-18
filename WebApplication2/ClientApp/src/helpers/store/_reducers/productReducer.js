@@ -41,7 +41,7 @@ export function product(state = initialState, action) {
         case productConstants.ADD_PRODUCT_IMAGE_SUCCESS:
             return {
                 ...state,
-                data: data.map(product => product.id === action.payload.productId
+                data: state.data.map(product => product.id === action.payload.productId
                     ? {
                         ...product,
                         images: [

@@ -9,6 +9,7 @@ namespace DAL.Interfaces
 {
     public interface IImageRepository
     {
-        public ProductImage CreateImage(ProductImage images,int id);
+        public ProductImage CreateProductImage(int productId, int imageId);
+        public Image CreateImage(Image image);
     }
 }

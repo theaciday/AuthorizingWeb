@@ -14,18 +14,22 @@ namespace DAL.Repository
         {
             this.context = context;
         }
-        public ProductImage CreateImage(ProductImage images,int id)
+        public Image CreateImage(Image image)
         {
-            var image= new ProductImage
-            {
-                ImageId = images.ImageId,
-                ImageSrc = images.ImageSrc,
-                ImageName = images.ImageName,
-                ProductId = id
-            };
-            context.Images.Add(image);
+            context.Image.Add(image);
             context.SaveChanges();
             return image;
+        }
+        public ProductImage CreateProductImage(int productId, int imageId)
+        {
+            var imag = new ProductImage
+            {
+                ImageId = imageId,
+                ProductId = productId
+            };
+            context.ProductImages.Add(imag);
+            context.SaveChanges();
+            return imag;
         }
     }
 }

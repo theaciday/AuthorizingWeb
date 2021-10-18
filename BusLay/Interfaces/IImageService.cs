@@ -10,6 +10,8 @@ namespace BusLay.Interfaces
 {
     public interface IImageService
     {
-        public ProductImageDTO CreateImage(ProductImage image,int id);
+        public ProductImageDTO CreateProductImage(int productId, int imageId);
+        public Image CreateImage(Image image);
+
     }
 }

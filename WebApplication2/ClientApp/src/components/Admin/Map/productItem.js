@@ -14,9 +14,9 @@ const ProductItem = (props) => {
                 {props.index + 1}) {name}
                 <span>{description}</span>
                 <span>   Category:</span>
-                {images.map((image) =>
-                    <img src={image.imageSrc}/>
-                    )}
+                {/*{images.map((image) =>*/}
+                {/*    <img src={image.imageSrc}/>*/}
+                {/*    )}*/}
                 {categories.map((category) =>
                     <div key={category.id}>
                         {category.categoryName}

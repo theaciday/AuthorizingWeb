@@ -12,14 +12,15 @@ namespace BusLay.Services
         {
             this.repository = repository;
         }
-        public ProductImageDTO CreateImage(ProductImage images,int id)
+        public Image CreateImage(Image image) 
         {
-            var image = repository.CreateImage(images,id);
+           return repository.CreateImage(image);
+        }
+        public ProductImageDTO CreateProductImage(int productId,int imageId)
+        {
+            var image = repository.CreateProductImage(productId,imageId);
             return new ProductImageDTO
             {
-                ProductId = image.ProductId,
-                ImageSrc=image.ImageSrc,
-                ImageId = image.ImageId,
             };
         }
 

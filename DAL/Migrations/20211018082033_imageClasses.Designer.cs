@@ -4,14 +4,16 @@ using BusLay.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211018082033_imageClasses")]
+    partial class imageClasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,6 +92,10 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
@@ -99,6 +105,8 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Image");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Image");
                 });
 
             modelBuilder.Entity("DAL.Entities.Product", b =>
@@ -124,29 +132,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("DAL.Entities.ProductImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ImageId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImageId")
-                        .IsUnique();
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("DAL.Entities.User", b =>
@@ -189,6 +174,25 @@ namespace DAL.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("DAL.Entities.ProductImage", b =>
+                {
+                    b.HasBaseType("DAL.Entities.Image");
+
+                    b.Property<int>("MainId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("MainId")
+                        .IsUnique()
+                        .HasFilter("[MainId] IS NOT NULL");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasDiscriminator().HasValue("ProductImage");
+                });
+
             modelBuilder.Entity("CategoryProduct", b =>
                 {
                     b.HasOne("DAL.Entities.Category", null)
@@ -227,8 +231,8 @@ namespace DAL.Migrations
                 {
                     b.HasOne("DAL.Entities.Image", "ProductImgEntity")
                         .WithOne("ImgEntity")
-                        .HasForeignKey("DAL.Entities.ProductImage", "ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("DAL.Entities.ProductImage", "MainId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DAL.Entities.Product", "Product")
