@@ -1,8 +1,4 @@
-﻿import { Button } from "bootstrap";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux"
-import categoriesActions from "../../actions/categories.Actions";
-import productActions from "../../actions/productActions";
+﻿import React from "react";
 import '../../styles/StyleSheet.scss'
 
 const Pages = (props) => {

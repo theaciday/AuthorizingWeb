@@ -1,5 +1,5 @@
 ﻿import { useDispatch, useSelector } from "react-redux"
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import productActions from "../../actions/productActions";
 import ProductItem from "./Map/productItem";
 import Pages from "./pages";
@@ -10,6 +10,9 @@ const ProductList = () => {
     useEffect(() => {
         dispatch(productActions.getAll())
     }, []);
+    const deleteImage = useCallback((id) => {
+        dispatch(productActions.deleteImage(id))
+    });
     const products = useSelector((state) => {
         return state.product.data
     });
@@ -22,7 +25,6 @@ const ProductList = () => {
     const changePage = (index) => {
         dispatch(productActions.getAll(index))
     }
-    //const onDelete = useCallback()
 
     return (
         <div>
@@ -31,10 +33,10 @@ const ProductList = () => {
                 products.map((product, index) =>
                     <div key={product.id}>
                         <ProductItem product={product}
-                            index={index}/>
+                            onClick={deleteImage} index={index} />
                     </div>)
             }
-            <Pages total={totalPages}
+            <Pages total={totalPages - 1}
                 page={pageNumber}
                 onClick={changePage} />
         </div>

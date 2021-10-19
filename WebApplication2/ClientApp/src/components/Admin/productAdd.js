@@ -1,13 +1,13 @@
 ﻿import { useDispatch, useSelector } from "react-redux"
 import React, { useCallback, useState } from "react";
-import ProductActions from "../../actions/productActions";
 import productActions from "../../actions/productActions";
+import defaultImage from '../../image/review_avatar.png'
 
 const ProductAdd = () => {
     const dispatch = useDispatch();
-    const defaultImageSrc = '../../image/review_avatar.png';
+    const defaultImageSrc = defaultImage;
     const [imageData, setImageData] = useState({
-        imageName:'',
+        imageName: '',
         imageFile: null,
         imageSrc: defaultImageSrc
     });
@@ -17,7 +17,6 @@ const ProductAdd = () => {
         unitPrice: '',
         productDescription: '',
     });
-
 
     const onChangeProductCategory = useCallback(event => {
         const { target: { value, checked } } = event
@@ -51,7 +50,6 @@ const ProductAdd = () => {
                     })
             }
             reader.readAsDataURL(imageFile)
-
         }
         else {
             setImageData({
@@ -64,27 +62,30 @@ const ProductAdd = () => {
     const categories = useSelector((state) => {
         return state.category.data
     });
-    
+
     const productSubmit = async (e) => {
         e.preventDefault()
         const createdProduct = await dispatch(
-            ProductActions
+            productActions
                 .newProduct(
                     productData.productName,
                     productData.unitPrice,
                     productData.productDescription,
                     propCategories.map(categoryId => ({ id: categoryId })),
-            ))
+                ))
         const productId = createdProduct.payload.id;
         let data = new FormData();
-        data.append('imageFile', imageData.imageFile);
-        const createdImage = await dispatch(
-            productActions
-                .addImage(
-                    data,
-                    productId
-                )
-        )
+        if (imageData.imageFile) {
+            data.append('imageFile', imageData.imageFile);
+            await dispatch(
+                productActions
+                    .addImage(
+                        data,
+                        productId
+                    )
+            )
+        }
+
 
     }
     return (

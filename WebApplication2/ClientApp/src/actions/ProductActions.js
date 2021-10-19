@@ -90,11 +90,28 @@ function getAll(pageNumber) {
         function failure(error) { return { type: productConstants.GETALL_PRODUCTS_FAILURE, error } }
     }
 }
-
+function deleteImage(id) {
+    return dispatch => {
+        dispatch(request());
+        productService.deleteImage(id)
+            .then(
+                response => {
+                    dispatch(success(response));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+        );
+        function request() { return { type: productConstants.DELETE_PRODUCT_IMAGE_REQUEST } }
+        function success(payload) { return { type: productConstants.DELETE_PRODUCT_IMAGE_SUCCESS, payload } }
+        function failure(error) { return { type: productConstants.DELETE_PRODUCT_IMAGE_FAILURE, error } }
+    } 
+}
 export default {
     newProduct,
     getAll,
     deleteProduct,
     addImage,
-    getImage
+    getImage,
+    deleteImage
 };

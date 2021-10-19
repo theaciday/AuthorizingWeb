@@ -92,11 +92,36 @@ export function product(state = initialState, action) {
             return {
                 ...state,
                 data: state.data
-                    .filter(product => product.id !== action.payload),
+                    .map(product => product.id === action.payload.productId ? {
+                        ...product,
+                        images: images.filter(image => image.id !== action.payload.imageId)
+                    }
+                        : product
+                    ),
                 isLoading: false,
                 isLoaded: true
             }
         case productConstants.DELETE_PRODUCT_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isLoaded: false
+            }
+        case productConstants.DELETE_PRODUCT_IMAGE_REQUEST:
+            return {
+                ...state,
+                isLoaded: false,
+                isLoading: true
+            }
+        case productConstants.DELETE_PRODUCT_IMAGE_SUCCESS:
+            return {
+                ...state,
+                data: state.data
+                    .map(product => product.id === action.payload.productId),
+                isLoading: false,
+                isLoaded: true
+            }
+        case productConstants.DELETE_PRODUCT_IMAGE_FAILURE:
             return {
                 ...state,
                 isLoading: false,

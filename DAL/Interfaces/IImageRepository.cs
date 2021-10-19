@@ -1,9 +1,4 @@
 ﻿using DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
@@ -11,5 +6,6 @@ namespace DAL.Interfaces
     {
         public ProductImage CreateProductImage(int productId, int imageId);
         public Image CreateImage(Image image);
+        public ProductImage DeleteImage(int id);
     }
 }

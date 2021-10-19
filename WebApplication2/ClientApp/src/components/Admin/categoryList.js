@@ -34,7 +34,7 @@ const CategoriesList = () => {
                     </button>
                     <span>{category.description}</span></div>)}
             </div>
-            <Pages total={totalPages} page={pageNumber}  onClick={changePage} />
+            <Pages total={totalPages-1} page={pageNumber}  onClick={changePage} />
         </div>
         );
 }

@@ -4,6 +4,7 @@ const addUrl = 'product';
 const deleteUrl = 'product/';
 const addImageUrl = 'product/';
 const getImageUrl = 'image/';
+const deleteImageUrl = 'product/image/';
 
 function listProducts(pageNumber=1,pageSize=10) {
     return request(url, { queryParams: { pageNumber, pageSize } });
@@ -17,6 +18,9 @@ function addProduct(productName, unitPrice, description, categories) {
 function addImage(imageFile,id) {
     return request(`${addImageUrl}${id}/image/`, { method: "Post", contentType: 'multipart/form-data' }, imageFile);
 }
+function deleteImage(id) {
+    return request(`${deleteImageUrl}${id}`, { method: "Delete" });
+} 
 function getImage(id) {
     return request(getImageUrl, {}, {id})
 }
@@ -25,5 +29,6 @@ export const productService = {
     listProducts,
     deleteProduct,
     addImage,
-    getImage
+    getImage,
+    deleteImage
 };

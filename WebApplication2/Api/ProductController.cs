@@ -57,6 +57,14 @@ namespace WebApplication2.Api
             var productImage = imageService.CreateProductImage(productId, newImage.Id);
             return Created("create", new ProductImageDTO { ImageSrc = images.ImageSrc, Id = productImage.Id });
         }
+        [HttpDelete]
+        [Route("image/{id}")]
+        [Authorize(Role.Admin)] 
+        public IActionResult RemoveImage(int id)
+        {
+            var result = imageService.RemoveImage(id);
+            return StatusCode(200, result);
+        }
 
         [NonAction]
         public async Task<string> SaveImage(IFormFile imageFile)
@@ -85,6 +93,7 @@ namespace WebApplication2.Api
             }
             return Ok(product);
         }
+
         [HttpGet("{id:int}")]
         [AllowAnonymous]
         public async Task<IActionResult> FindProduct(int id)

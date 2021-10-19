@@ -15,7 +15,7 @@ namespace BusLay.DTOs
         public string Name { get; set; }
         public double UnitPrice { get; set; } = 0;
         public string Description { get; set; } = "";
-        public List<ProductImage> Images { get; set; }
+        public List<ProductImageDTO> Images { get; set; }
         public List<CategoryDTO> Categories { get; set; } = new List<CategoryDTO>();
     }
 }   

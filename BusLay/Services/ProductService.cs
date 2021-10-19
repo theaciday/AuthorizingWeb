@@ -59,14 +59,17 @@ namespace BusLay.Services
                 Name = product.ProductName,
                 Description = product.Description,
                 UnitPrice = (double)product.UnitPrice,
-                Images=product.Images,
+                Images = product.Images.Select(image => new ProductImageDTO
+                {
+                    Id = image.ProductImgEntity.Id,
+                    ImageSrc = image.ProductImgEntity.ImageSrc,
+                }).ToList(),
                 Categories = product.Categories.Select(category => new CategoryDTO
                 {
                     Id = category.Id,
                     CategoryName = category.CategoryName,
                     Description = category.Description
-                }
-                ).ToList()
+                }).ToList(),
             }).ToList();
             return dTO;
         }

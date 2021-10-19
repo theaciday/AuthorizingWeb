@@ -20,6 +20,17 @@ namespace DAL.Repository
             context.SaveChanges();
             return image;
         }
+        public ProductImage DeleteImage(int id)
+        {
+            var prodImage = context.ProductImages.Where(w => w.ImageId == id).FirstOrDefault();
+            if (prodImage == null)
+            {
+                return null;
+            }
+            context.ProductImages.Remove(prodImage);
+            context.SaveChanges();
+            return prodImage;
+        }
         public ProductImage CreateProductImage(int productId, int imageId)
         {
             var imag = new ProductImage

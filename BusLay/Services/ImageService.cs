@@ -19,9 +19,13 @@ namespace BusLay.Services
         public ProductImageDTO CreateProductImage(int productId,int imageId)
         {
             var image = repository.CreateProductImage(productId,imageId);
-            return new ProductImageDTO
-            {
-            };
+            return new ProductImageDTO{};
+        }
+        public ImageDTO RemoveImage(int id) 
+        {
+            var result= repository.DeleteImage(id);
+            var newResult = new ImageDTO() { ImageId = result.ImageId ,ProductId=result.ProductId};
+            return newResult;
         }
 
     }
