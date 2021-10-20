@@ -7,5 +7,6 @@ namespace BusLay.DTOs
         public string ImageSrc { get; set; }
         public int Id { get; set; }
         public Image ProductImageEntity { get; set; }
+  
     }
 }

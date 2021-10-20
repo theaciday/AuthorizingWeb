@@ -14,7 +14,7 @@ namespace BusLay.Helpers
         public static PagedResponse<List<T>> CreatePagedResponse<T>(List<T> pagedData,PaginationFilter filter,int totalRecords,IUriService service,string route) 
         {
             var response = new PagedResponse<List<T>>(pagedData, filter.PageNumber, filter.PageSize);
-            var totalPages = ((double)totalRecords / (double)filter.PageSize);
+            double totalPages = totalRecords / (double)filter.PageSize;
             int roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));
             response.NextPage =
                 filter.PageNumber >= 1 && filter.PageNumber < roundedTotalPages

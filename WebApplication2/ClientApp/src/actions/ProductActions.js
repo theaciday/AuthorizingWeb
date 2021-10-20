@@ -18,18 +18,17 @@ function newProduct(productName, unitPrice, description, categories) {
             );
     }
 }
-function addImage(imageFile, id) {
+function addImage(imageFile, productId) {
     return dispatch => {
         dispatch(request());
-        productService.addImage(imageFile, id)
+        productService.addImage(imageFile, productId)
             .then(
                 response => {
-                    return dispatch(success(response));
+                    return dispatch(success({ ...response, productId }));
                 },
                 error => {
                     return dispatch(failure(error.toString()));
                 }
-
             );
         function request() { return { type: productConstants.ADD_PRODUCT_IMAGE_REQUEST } }
         function success(payload) { return { type: productConstants.ADD_PRODUCT_IMAGE_SUCCESS, payload } }
@@ -90,22 +89,25 @@ function getAll(pageNumber) {
         function failure(error) { return { type: productConstants.GETALL_PRODUCTS_FAILURE, error } }
     }
 }
-function deleteImage(id) {
+function deleteImage(id, productId) {
     return dispatch => {
         dispatch(request());
         productService.deleteImage(id)
             .then(
                 response => {
-                    dispatch(success(response));
+                    dispatch(success({
+                        id,
+                        productId
+                    }));
                 },
                 error => {
                     dispatch(failure(error.toString()));
                 }
-        );
+            );
         function request() { return { type: productConstants.DELETE_PRODUCT_IMAGE_REQUEST } }
         function success(payload) { return { type: productConstants.DELETE_PRODUCT_IMAGE_SUCCESS, payload } }
         function failure(error) { return { type: productConstants.DELETE_PRODUCT_IMAGE_FAILURE, error } }
-    } 
+    }
 }
 export default {
     newProduct,

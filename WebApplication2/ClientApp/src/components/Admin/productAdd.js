@@ -92,9 +92,25 @@ const ProductAdd = () => {
         <form id="categories" onSubmit={productSubmit}>
             <div>
                 <h1>Add Product</h1>
-                <input name="productName" value={productData.productName} placeholder="Product Name" type="text" onChange={onChangeProductData} required />
-                <input name="productDescription" value={productData.productDescription} placeholder="Description" type="text" onChange={onChangeProductData} />
-                <input name="unitPrice" value={productData.unitPrice} placeholder="Price" type="number" step="0.01" onChange={onChangeProductData} />
+                <input
+                    name="productName"
+                    value={productData.productName}
+                    placeholder="Product Name"
+                    type="text"
+                    onChange={onChangeProductData} required />
+                <input
+                    name="productDescription"
+                    value={productData.productDescription}
+                    placeholder="Description"
+                    type="text"
+                    onChange={onChangeProductData} />
+                <input
+                    name="unitPrice"
+                    value={productData.unitPrice}
+                    placeholder="Price"
+                    ype="number"
+                    step="0.01"
+                    onChange={onChangeProductData} />
                 <input type="file" name="image"
                     onChange={showPreview}
                     accept="image/*" />

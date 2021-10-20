@@ -10,8 +10,8 @@ const ProductList = () => {
     useEffect(() => {
         dispatch(productActions.getAll())
     }, []);
-    const deleteImage = useCallback((id) => {
-        dispatch(productActions.deleteImage(id))
+    const deleteImage = useCallback((id, imageId) => {
+        dispatch(productActions.deleteImage(imageId,id))
     });
     const products = useSelector((state) => {
         return state.product.data

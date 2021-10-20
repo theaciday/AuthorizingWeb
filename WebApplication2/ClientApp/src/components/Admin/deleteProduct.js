@@ -1,6 +1,5 @@
 ﻿import { useDispatch, useSelector } from "react-redux"
 import React, { useCallback, useEffect, useState } from "react";
-import categoriesactions from '../../actions/categories.Actions';
 import productActions from "../../actions/productActions";
 
 const DeleteProduct = (props) => {

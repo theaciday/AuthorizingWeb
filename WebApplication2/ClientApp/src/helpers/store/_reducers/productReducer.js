@@ -1,5 +1,4 @@
-﻿import { data } from 'jquery';
-import { productConstants } from '../../../constants/productConstants'
+﻿import { productConstants } from '../../../constants/productConstants'
 
 const initialState = {
 
@@ -92,12 +91,7 @@ export function product(state = initialState, action) {
             return {
                 ...state,
                 data: state.data
-                    .map(product => product.id === action.payload.productId ? {
-                        ...product,
-                        images: images.filter(image => image.id !== action.payload.imageId)
-                    }
-                        : product
-                    ),
+                    .filter(product => product.id !== action.payload.id),
                 isLoading: false,
                 isLoaded: true
             }
@@ -117,7 +111,15 @@ export function product(state = initialState, action) {
             return {
                 ...state,
                 data: state.data
-                    .map(product => product.id === action.payload.productId),
+                    .map(product => product.id === action.payload.productId
+                        ? {
+                            ...product,
+                            images: [
+                                product.images.filter(image => image.id !== action.payload.id)
+                            ],
+                        }
+                        : product
+                    ),
                 isLoading: false,
                 isLoaded: true
             }

@@ -33,7 +33,7 @@ namespace DAL.Repository
         }
         public int CategoriesCount()
         {
-            return context.Categories.Count();
+            return context.Categories.Where(w=>w.IsDisable==false).Count();
         }
         public void DeleteCategory(int id)
         {

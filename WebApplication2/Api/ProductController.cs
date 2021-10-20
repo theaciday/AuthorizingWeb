@@ -54,16 +54,17 @@ namespace WebApplication2.Api
                Request.PathBase,
                images.ImageName);
             var newImage = imageService.CreateImage(images);
-            var productImage = imageService.CreateProductImage(productId, newImage.Id);
-            return Created("create", new ProductImageDTO { ImageSrc = images.ImageSrc, Id = productImage.Id });
+            var productImageId = imageService.CreateProductImage(productId, newImage.Id);
+            return Created("create", new ProductImageDTO { ImageSrc = images.ImageSrc, Id = productImageId });
         }
+        //record id on delete 
         [HttpDelete]
         [Route("image/{id}")]
-        [Authorize(Role.Admin)] 
-        public IActionResult RemoveImage(int id)
+        [Authorize(Role.Admin)]
+        public IActionResult RemoveImage(int id)//<- record id in table image(imageId)/product(productId)
         {
-            var result = imageService.RemoveImage(id);
-            return StatusCode(200, result);
+            imageService.RemoveImage(id);
+            return NoContent();
         }
 
         [NonAction]

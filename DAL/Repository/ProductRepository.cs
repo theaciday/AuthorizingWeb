@@ -102,8 +102,6 @@ namespace DAL.Repository
                          Images = product.Images.Select(image => new ProductImage
                          {
                              Id = image.Id,
-                             ImageId = image.ImageId,
-                             ProductId = image.ProductId,
                              ProductImgEntity = image.ProductImgEntity
                          }).ToList(),
                      }).ToListAsync();
@@ -112,7 +110,7 @@ namespace DAL.Repository
         }
         public int ProductsCount()
         {
-            return context.Products.Count();
+            return context.Products.Where(w => w.IsDisable == false).Count();
         }
 
         public async Task<object> FindProduct(int? productId)

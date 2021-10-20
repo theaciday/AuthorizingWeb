@@ -61,7 +61,7 @@ namespace BusLay.Services
                 UnitPrice = (double)product.UnitPrice,
                 Images = product.Images.Select(image => new ProductImageDTO
                 {
-                    Id = image.ProductImgEntity.Id,
+                    Id = image.Id,
                     ImageSrc = image.ProductImgEntity.ImageSrc,
                 }).ToList(),
                 Categories = product.Categories.Select(category => new CategoryDTO

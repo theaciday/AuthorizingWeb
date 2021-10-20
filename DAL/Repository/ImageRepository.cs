@@ -20,18 +20,17 @@ namespace DAL.Repository
             context.SaveChanges();
             return image;
         }
-        public ProductImage DeleteImage(int id)
+        public void DeleteImage(int imageId)
         {
-            var prodImage = context.ProductImages.Where(w => w.ImageId == id).FirstOrDefault();
+            var prodImage = context.ProductImages.Where(w => w.Id == imageId).FirstOrDefault();
             if (prodImage == null)
             {
-                return null;
+                throw new System.Exception().InnerException;
             }
             context.ProductImages.Remove(prodImage);
             context.SaveChanges();
-            return prodImage;
         }
-        public ProductImage CreateProductImage(int productId, int imageId)
+        public int CreateProductImage(int productId, int imageId)
         {
             var imag = new ProductImage
             {
@@ -40,7 +39,8 @@ namespace DAL.Repository
             };
             context.ProductImages.Add(imag);
             context.SaveChanges();
-            return imag;
+            int id = imag.Id;
+            return id;
         }
     }
 }
