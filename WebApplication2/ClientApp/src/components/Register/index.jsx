@@ -1,6 +1,6 @@
 ﻿import React, { useState, useCallback } from "react";
 import { Redirect } from "react-router-dom";
-import request from "../../utils/Request";
+import MyInput from "../../utils/TextInput";
 
 
 const Register = () => {
@@ -30,7 +30,7 @@ const Register = () => {
 
     const submit = async (e) => {
         e.preventDefault();
-        await fetch('https://localhost:44317/api/auth/register', {
+        await fetch('https://localhost:5001/api/auth/register', {
             method: "POST",
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({
@@ -52,23 +52,23 @@ const Register = () => {
         <form onSubmit={submit}>
             <h1>Registration</h1>
             <h4>Username</h4>
-            <input value={userName} placeholder="Username" type="text"
-                onChange={handleChangeUserName} required
+            <MyInput value={userName} placeholder={"Username"} type={"text"}
+                onChange={handleChangeUserName} required={true}
             />
             <h4>Email</h4>
-            <input value={email} placeholder="Email" type="email"
-                onChange={handleChangeEmail} required
+            <MyInput value={email} placeholder={"Email"} type={"email"}
+                onChange={handleChangeEmail} required={true}
             />
             <h4>Password</h4>
-            <input value={password} placeholder="Password" type="password"
-                onChange={handleChangePassword} required
+            <MyInput value={password} placeholder={"Password"} type={"password"}
+                onChange={handleChangePassword} required={true}
             />
             <h4>Fist Name</h4>
-            <input value={firstName} placeholder="name" type="name"
-                onChange={handleChangeFirstName} required
+            <MyInput value={firstName} placeholder={"name"} type={"name"}
+                onChange={handleChangeFirstName} required={true}
             />
             <h4>Last Name</h4>
-            <input value={lastName} placeholder="name" type="name"
+            <MyInput value={lastName} placeholder="name" type="name"
                 onChange={handleChangeLastName} 
             />
 

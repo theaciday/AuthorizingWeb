@@ -42,7 +42,7 @@ export function category(state = initialState, action) {
         case categoryConstants.CREATE_CATEGORY_SUCCESS:
             return {
                 ...state,
-                data: [action.payload.data, ...state.data],
+                data: [action.payload, ...state.data],
                 isLoading: false,
                 isLoaded: true
             }

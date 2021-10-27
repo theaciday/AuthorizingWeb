@@ -2,9 +2,23 @@
 import React, { useCallback, useState } from "react";
 import productActions from "../../actions/productActions";
 import defaultImage from '../../image/review_avatar.png'
+import Pages from "./pages";
+import categoriesActions from "../../actions/categories.Actions";
+import MyInput from "../../utils/TextInput";
+import ImgInput from "../../utils/imgInput";
+import CheckBoxInput from "../../utils/checkBoxInput";
 
 const ProductAdd = () => {
     const dispatch = useDispatch();
+    const totalPages = useSelector((state) => {
+        return state.category.totalPages
+    });
+    const pageNumber = useSelector((state) => {
+        return state.category.pageNumber
+    });
+    const changePage = (index) => {
+        dispatch(categoriesActions.getListCategories(index))
+    }
     const defaultImageSrc = defaultImage;
     const [imageData, setImageData] = useState({
         imageName: '',
@@ -71,7 +85,8 @@ const ProductAdd = () => {
                     productData.productName,
                     productData.unitPrice,
                     productData.productDescription,
-                    propCategories.map(categoryId => ({ id: categoryId })),
+                    propCategories.map(categoryId =>
+                        ({ id: categoryId })),
                 ))
         const productId = createdProduct.payload.id;
         let data = new FormData();
@@ -92,35 +107,33 @@ const ProductAdd = () => {
         <form id="categories" onSubmit={productSubmit}>
             <div>
                 <h1>Add Product</h1>
-                <input
-                    name="productName"
+                <MyInput
+                    name={"productName"}
                     value={productData.productName}
-                    placeholder="Product Name"
-                    type="text"
-                    onChange={onChangeProductData} required />
-                <input
-                    name="productDescription"
+                    placeholder={"Product Name"}
+                    type={"text"}
+                    onChange={onChangeProductData} required={true} />
+                <MyInput
+                    name={"productDescription"}
                     value={productData.productDescription}
-                    placeholder="Description"
-                    type="text"
+                    placeholder={"Description"}
+                    type={"text"}
                     onChange={onChangeProductData} />
-                <input
-                    name="unitPrice"
+                <MyInput name={"unitPrice"}
                     value={productData.unitPrice}
-                    placeholder="Price"
-                    ype="number"
-                    step="0.01"
+                    placeholder={"Price"}
+                    type={"number"}
+                    step={"0.01"}
                     onChange={onChangeProductData} />
-                <input type="file" name="image"
+                <ImgInput  name={"image"}
                     onChange={showPreview}
-                    accept="image/*" />
+                    accept={"image/*"}/>
                 <img src={imageData.imageSrc} />
                 <h5>Categories</h5>
                 {categories.map((category) =>
                     <div key={category.id}>
-                        <input
+                        <CheckBoxInput
                             onChange={onChangeProductCategory}
-                            type="checkbox"
                             checked={propCategories.some(c => c === category.id)}
                             value={category.id}
                             id={category.id} />
@@ -129,6 +142,9 @@ const ProductAdd = () => {
                         </label>
                     </div>
                 )}
+                <Pages total={totalPages}
+                    page={pageNumber}
+                    onClick={changePage} />
                 <button disabled={!productData.productName && productData.imageFile} type="submit">Create Product</button>
             </div>
         </form>

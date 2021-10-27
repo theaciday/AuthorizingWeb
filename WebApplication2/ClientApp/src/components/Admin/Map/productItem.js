@@ -1,7 +1,7 @@
 ﻿import React, { useState } from "react";
+import ImgInput from "../../../utils/imgInput";
 import AddImage from "../addImage";
 import DeleteProduct from "../deleteProduct";
-
 const ProductItem = (props) => {
     const {
         index,
@@ -44,8 +44,10 @@ const ProductItem = (props) => {
                     Category:
                 </span>
                 {categories.map((category) =>
-                    <div style={{ color: "red" }} key={category.id}>
+
+                    <div><div style={{ color: "red" }} key={category.id}>
                         {category.categoryName}
+                    </div>
                     </div>
                 )}
                 Description:
@@ -61,7 +63,10 @@ const ProductItem = (props) => {
                     </div>
                 )}
             </div>
-            <input type="file" accept="image/*" src={imageData.imageSrc} onChange={preview} />
+            <ImgInput
+                accept={"image/*"}
+                src={imageData.imageSrc}
+                onChange={preview} />
             <AddImage productId={id} imageFile={imageData.imageFile} />
             <DeleteProduct productId={id} />
         </div>

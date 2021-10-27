@@ -34,6 +34,9 @@ const NavMenu = () => {
                                     (< NavItem >
                                     <NavLink tag={Link} className="text-dark" to="/user">User</NavLink>
                                     </NavItem>)}
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/cart">Cart</NavLink>
+                                </NavItem>
                                 {logginIn && 
                                 (<NavItem>
                                     <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>

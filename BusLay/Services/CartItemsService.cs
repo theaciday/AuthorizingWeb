@@ -1,4 +1,5 @@
-﻿using BusLay.Interfaces;
+﻿using BusLay.DTOs;
+using BusLay.Interfaces;
 using DAL.Entities;
 using DAL.Filter;
 using DAL.Interfaces;
@@ -15,7 +16,7 @@ namespace BusLay.Services
         {
             this.repository = repository;
         }
-        public string AddToCart(CartItem cartItem, int id)
+        public string AddToCart(CartDTO cartItem, int id)
         {
             CartItem cart = new()
             {
