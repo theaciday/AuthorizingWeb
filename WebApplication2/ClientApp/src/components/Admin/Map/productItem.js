@@ -1,6 +1,9 @@
 ﻿import React, { useState } from "react";
+import { useCallback } from "react";
 import ImgInput from "../../../utils/imgInput";
+import MyInput from "../../../utils/TextInput";
 import AddImage from "../addImage";
+import AddtoCart from "../addToCart";
 import DeleteProduct from "../deleteProduct";
 const ProductItem = (props) => {
     const {
@@ -14,6 +17,10 @@ const ProductItem = (props) => {
         imageFile: null,
         imageSrc: null
     });
+    const [quantity, setQuantity] = useState('');
+    const onChangeQuantity = useCallback(e => {
+        setQuantity(e.target.value)
+    })
     const preview = e => {
         if (e.target.files && e.target.files[0]) {
             let imageFile = e.target.files[0];
@@ -36,7 +43,7 @@ const ProductItem = (props) => {
     return (
         <div>
             <div key={id}>
-                {props.index + 1}) {name}.___.
+                {index + 1}){name}.___.
                 <span style={{ color: "seagreen" }}>
                     Price:{unitPrice}$
                 </span>
@@ -57,7 +64,7 @@ const ProductItem = (props) => {
                 {images.map((image) =>
                     <div key={index}>
                         <button onClick={
-                            () => props.onClick(id,image.id)}>
+                            () => props.onClick(id, image.id)}>
                             delete Image</button>
                         <img src={image.imageSrc} />
                     </div>
@@ -69,6 +76,8 @@ const ProductItem = (props) => {
                 onChange={preview} />
             <AddImage productId={id} imageFile={imageData.imageFile} />
             <DeleteProduct productId={id} />
+            <MyInput type={"number"} step={1} placeholder={"Quantity"} onChange={onChangeQuantity}>Quantity</MyInput>
+            <AddtoCart productId={id} quantity={quantity}/>
         </div>
     )
 }

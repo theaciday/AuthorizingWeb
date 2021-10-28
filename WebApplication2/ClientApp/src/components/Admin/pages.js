@@ -19,7 +19,7 @@ const Pages = (props) => {
                     </button>)
             }
             <button type="button" onClick={()=> props.onClick(props.page + 1)}
-                disabled={props.page === totalPages}>→</button>
+                disabled={props.page >= totalPages}>→</button>
         </div>
     )
 }

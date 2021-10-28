@@ -5,6 +5,7 @@ using DAL.Filter;
 using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BusLay.Services
@@ -12,7 +13,8 @@ namespace BusLay.Services
     public class CartItemsService : ICartItemsService
     {
         private readonly ICartRepository repository;
-        public CartItemsService(ICartRepository repository)
+        private readonly IProductRepository prodRep;
+        public CartItemsService(ICartRepository repository, IProductRepository prodRep)
         {
             this.repository = repository;
         }
@@ -37,9 +39,24 @@ namespace BusLay.Services
             return repository.ItemsCount();
         }
 
-        public async Task<List<CartItem>> GetCartItems(PaginationFilter filter, int id)
+        public async Task<List<CartItemDTO>> GetCartItems(PaginationFilter filter, int id)
         {
-            return await repository.GetCartItems(filter, id);
+            var result = await repository.GetCartItems(filter, id);
+            foreach (var item in result)
+            {
+                var productId = item.ProductId;
+                var product = prodRep.FindProduct(id);
+            }
+           
+            var dto = result.Select(item => new CartItemDTO
+            {
+                Id=item.Id,
+                DateCreated=item.DateCreated,
+                Product=product,
+                Quantity=item.Quantity,
+                UserId=item.UserId
+            }).ToList();
+            return dto;
         }
 
 

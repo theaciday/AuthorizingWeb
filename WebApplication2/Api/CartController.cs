@@ -43,7 +43,6 @@ namespace WebApplication2.Api
             {
                 return BadRequest(ex);
             }
-
         }
 
         [Authorize]

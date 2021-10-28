@@ -132,6 +132,10 @@ namespace DAL.Repository
 
             return product;
         }
+        public Product FindProduct(int productId)
+        {
+            return context.Products.Where(product => product.Id == productId).FirstOrDefault();
+        }
         public List<Product> ProductByName(string productName, double? maxprice)
         {
             return context.Products.Where(x =>

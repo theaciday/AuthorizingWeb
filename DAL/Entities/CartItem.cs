@@ -14,7 +14,7 @@ namespace DAL.Entities
 
         public DateTime DateCreated { get; set; }
 
-        public Product Products { get; set; }
+        public Product Product { get; set; }
 
         public int ProductId { get; set; }
 

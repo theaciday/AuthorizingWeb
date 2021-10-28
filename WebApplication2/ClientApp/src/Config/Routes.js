@@ -20,8 +20,12 @@ export default [
     },
     {
         component: Cart,
-        isAuth: true,
         path: '/cart',
+        exact: true,
+        roles: [
+            Roles.ADMIN,
+            Roles.USER
+        ],
     },
     {
         component: Register,

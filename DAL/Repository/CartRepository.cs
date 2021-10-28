@@ -32,15 +32,14 @@ namespace DAL.Repository
         }
         public int ItemsCount()
         {
-            return context.Products.Count();
+            return context.ShoppingCartItems.Count();
         }
-        public async Task<List<CartItem>> GetCartItems(PaginationFilter filter, int id)
+        public async Task<List<CartItem>> GetCartItems(PaginationFilter filter, int userId)
         {
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
             using DataContext pop = context;
-            var pagedData = await pop.ShoppingCartItems.Where(c => c.UserId == id).ToListAsync();
+            var cartItems = 
 
-            return pagedData;
         }
 
     }

@@ -10,8 +10,7 @@ const CheckBoxInput = (props) => {
                 onChange={onChange}
                 style={style}
                 value={value}
-                checked={cheked}
-                style={style} />
+                checked={cheked} />
         </div>
     )
 }

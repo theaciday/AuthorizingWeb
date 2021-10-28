@@ -37,12 +37,12 @@ namespace BusLay.Services
             return newproduct;
         }
 
-        public async Task<object> FindProduct(int productId)
+        public async Task<object> FindProduct(int? productId)
         {
             var product = await repos.FindProduct(productId);
             return product;
         }
-
+     
 
         public List<Product> GetProduct(string productName, double? max)
         {
