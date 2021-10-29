@@ -24,8 +24,7 @@ namespace WebApplication2.Api
             this.uriService = uriService;
         }
         [Authorize]
-        [Route("listitems")]
-        [HttpGet]
+        [HttpGet("listitems")]
         public async Task<IActionResult> CartItems([FromQuery] PaginationFilter filter)
         {
             try

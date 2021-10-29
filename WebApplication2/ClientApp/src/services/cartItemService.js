@@ -6,11 +6,11 @@ const getUrl = 'cart/listitems'
 function listCartItems(pageNumber = 1, pageSize = 10) {
     return request(getUrl, { queryParams: { pageNumber, pageSize } });
 }
-function addToCart(productId, quantity) {
-    return request(addUrl, {method:"Post"},{productId, quantity } );
+function addToCart(productId) {
+    return request(addUrl, {method:"Post"},{productId } );
 }
 function deleteCartItem(itemId) {
-    return request(`${itemId}/${deleteUrl}`, { method: "Delete" });
+    return request(`cart/${itemId}/removeitem`, { method: "Delete" }, { itemId });
 }
 export const cartService = {
     deleteCartItem,

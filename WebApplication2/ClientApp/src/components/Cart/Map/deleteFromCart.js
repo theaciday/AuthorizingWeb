@@ -8,7 +8,7 @@ const DeleteFromCart = props =>
 {
     const dispatch = useDispatch();
     const onDelete = useCallback(() => {
-        dispatch(cartActions.DeleteFromCart(props.id))
+        dispatch(cartActions.deleteCartItem(props.id))
     }, [props.id,dispatch]);
     return (
 

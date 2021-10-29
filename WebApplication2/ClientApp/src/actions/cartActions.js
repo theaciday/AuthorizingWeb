@@ -22,7 +22,7 @@ function getCartListItems(pageNumber) {
 function deleteCartItem(itemId) {
     return dispatch => {
         dispatch(request());
-        cartService.listCartItems(itemId)
+        cartService.deleteCartItem(itemId)
             .then(
                 () => {
                     dispatch(success(itemId));
@@ -37,10 +37,10 @@ function deleteCartItem(itemId) {
     };
 }
 
-function addCartItem(productId, quantity) {
+function addCartItem(productId) {
     return dispatch => {
         dispatch(request());
-        cartService.addToCart(productId, quantity)
+        cartService.addToCart(productId)
             .then(
                 response => {
                     dispatch(success(response));

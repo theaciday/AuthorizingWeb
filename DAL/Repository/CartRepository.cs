@@ -12,6 +12,7 @@ namespace DAL.Repository
     public class CartRepository : ICartRepository
     {
         private readonly DataContext context;
+        
         public CartRepository(DataContext _context)
         {
             context = _context;
@@ -37,10 +38,17 @@ namespace DAL.Repository
         public async Task<List<CartItem>> GetCartItems(PaginationFilter filter, int userId)
         {
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            using DataContext pop = context;
-            var cartItems = 
-
+            var cartItems = await context.ShoppingCartItems
+                .Where(item => item.UserId == userId)
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .Include(d => d.Product)
+                .ThenInclude(d => d.Images)
+                .ThenInclude(s=>s.ProductImgEntity)
+                .Include(d=>d.Product)
+                .ThenInclude(d=>d.Categories)
+                .ToListAsync();
+            return cartItems;
         }
-
     }
 }

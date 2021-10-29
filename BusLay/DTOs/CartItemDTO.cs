@@ -11,8 +11,10 @@ namespace BusLay.DTOs
     {
         public int Id { get; set; }
         public int Quantity { get; set; }
+        public string ProductName { get; set; }
         public DateTime DateCreated { get; set; }
-        public Product Product { get; set; }
-        public int UserId { get; set; }
+        public List<string> ImageSrc{ get; set; }
+        public double Price { get; set; }
+
     }
 }

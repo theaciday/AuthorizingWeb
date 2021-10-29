@@ -5,7 +5,7 @@ const CartItem = props => {
     const {
         index,
         item: {
-            id, quantity, dateCreated, product
+            id, quantity, dateCreated, productName,price,imageSrc
         },
     } = props
 
@@ -13,34 +13,19 @@ const CartItem = props => {
     return (
         <div>
             <div key={id}>
-                {index + 1}){product.name}.
+                {index + 1}){productName}.
                 <span style={{ color: "seashell" }}>
-                    Price:{product.unitPrice}$
-                </span>
-                <span>
-                    Categories:
-                    {product.categories.map((category) =>
-                        <div>
-                            <div style={{ color: 'skyblue' }} key={category.id}>
-                                {category.categoryName}
-                            </div>
-                            Category description:
-                            <div>
-                                {category.description}
-                            </div>
-                        </div>
-                    )}
+                    Price:{price}$
                 </span>
                 <div>
                     Date Added:
                     {dateCreated}
                 </div>
-                Description:
-                <span>{product.description}</span>
+                
                 <span style={{ fontStyle: 'italic', color: "azure" }}>{quantity} pcs.</span>
-                <div>{product.images.map((image, index) =>
+                <div>{imageSrc.map((image, index) =>
                     <div key={index + 1}>
-                        <img src={image.imageSrc} />
+                        <img src={image} />
                     </div>
                 )}
                 </div>

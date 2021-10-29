@@ -16,6 +16,7 @@ namespace BusLay.Services
         private readonly IProductRepository prodRep;
         public CartItemsService(ICartRepository repository, IProductRepository prodRep)
         {
+            this.prodRep = prodRep;
             this.repository = repository;
         }
         public string AddToCart(CartDTO cartItem, int id)
@@ -24,7 +25,7 @@ namespace BusLay.Services
             {
                 DateCreated = DateTime.Today,
                 ProductId = cartItem.ProductId,
-                Quantity = cartItem.Quantity,
+                Quantity = 1,
                 UserId = id
             };
             return repository.AddToCart(cart);
@@ -42,23 +43,16 @@ namespace BusLay.Services
         public async Task<List<CartItemDTO>> GetCartItems(PaginationFilter filter, int id)
         {
             var result = await repository.GetCartItems(filter, id);
-            foreach (var item in result)
+            List<CartItemDTO> cartItemDTO = result.Select(item => new CartItemDTO
             {
-                var productId = item.ProductId;
-                var product = prodRep.FindProduct(id);
-            }
-           
-            var dto = result.Select(item => new CartItemDTO
-            {
-                Id=item.Id,
+                Price= (double)item.Product.UnitPrice,
+                ProductName=item.Product.ProductName,
+                ImageSrc = item.Product.Images.Select(o => o.ProductImgEntity.ImageSrc).ToList(),
                 DateCreated=item.DateCreated,
-                Product=product,
+                Id=item.Id,
                 Quantity=item.Quantity,
-                UserId=item.UserId
             }).ToList();
-            return dto;
+            return cartItemDTO;
         }
-
-
     }
 }

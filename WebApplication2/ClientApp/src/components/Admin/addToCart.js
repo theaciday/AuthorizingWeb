@@ -5,9 +5,9 @@ import { cartActions } from "../../actions/cartActions";
 
 const AddtoCart = (props) => {
     const dispatch = useDispatch();
-    const { productId, quantity } = props;
+    const { productId } = props;
     const onAdd = useCallback(() => {
-        dispatch(cartActions.addCartItem(productId,quantity))
+        dispatch(cartActions.addCartItem(productId))
     })
 
     return (

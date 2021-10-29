@@ -76,8 +76,7 @@ const ProductItem = (props) => {
                 onChange={preview} />
             <AddImage productId={id} imageFile={imageData.imageFile} />
             <DeleteProduct productId={id} />
-            <MyInput type={"number"} step={1} placeholder={"Quantity"} onChange={onChangeQuantity}>Quantity</MyInput>
-            <AddtoCart productId={id} quantity={quantity}/>
+            <AddtoCart productId={id} />
         </div>
     )
 }

@@ -121,12 +121,17 @@ namespace DAL.Repository
                 {
                     Id = product.Id,
                     Name = product.ProductName,
+                    Image=product.Images.Select(image=>new ProductImage
+                    {
+                        
+                    }),
                     Categories = product.Categories.Select(category => new
                     {
                         id = category.Id,
                         categoryName = category.CategoryName,
                         description = category.Description
                     })
+                    
                 })
                 .FirstOrDefaultAsync();
 
@@ -134,7 +139,16 @@ namespace DAL.Repository
         }
         public Product FindProduct(int productId)
         {
-            return context.Products.Where(product => product.Id == productId).FirstOrDefault();
+            return context.Products.Where(product => product.Id == productId).Select(prod => new Product
+            {
+                Categories = prod.Categories,
+                Id = prod.Id,
+                Images = prod.Images.Select(image => new ProductImage
+                {
+                    Id = image.Id,
+                    ProductImgEntity = image.ProductImgEntity
+                }).ToList()
+            }).FirstOrDefault();
         }
         public List<Product> ProductByName(string productName, double? maxprice)
         {
