@@ -206,7 +206,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.CartItem", b =>
                 {
-                    b.HasOne("DAL.Entities.Product", "Products")
+                    b.HasOne("DAL.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -218,7 +218,7 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Products");
+                    b.Navigation("Product");
 
                     b.Navigation("User");
                 });

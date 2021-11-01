@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from "react-router-dom";
 import './Login.module.css';
 import userActions from '../../actions/user.actions'
+import MyInput from '../../utils/TextInput';
 
 
 
@@ -32,8 +33,8 @@ const Login = () => {
 
         <form onSubmit={submit}>
             <h1>Login</h1>
-            <input placeholder="Username" value={userName} onChange={handleChangeUserName} type="text" name="UserName" required />
-            <input placeholder="Password" value={password} onChange={handleChangePassword} type="password" name="Password" required />
+            <MyInput placeholder={"Username"} value={userName} onChange={handleChangeUserName} type={"text"} name={"UserName"} required={true} />
+            <MyInput placeholder={"Password"} value={password} onChange={handleChangePassword} type={"password"} name={"Password"} required={true} />
             <button name="button" type="submit">Submit</button>
             <div>________</div>
             <div>______</div>

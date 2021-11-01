@@ -4,6 +4,7 @@ import Login from '../components/Login';
 import Register from '../components/Register';
 import User from '../components/User';
 import Admin from '../components/Admin';
+import Cart from '../components/Cart';
 
 export default [
     {
@@ -16,6 +17,15 @@ export default [
         isAuth: true,
         path: '/login',
         exact: true,
+    },
+    {
+        component: Cart,
+        path: '/cart',
+        exact: true,
+        roles: [
+            Roles.ADMIN,
+            Roles.USER
+        ],
     },
     {
         component: Register,

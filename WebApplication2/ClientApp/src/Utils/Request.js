@@ -1,8 +1,5 @@
-﻿
-
-
-const request = async (url, params = { }, body) => {
-    const urll = new URL(`https://localhost:44317/api/${url}`)
+﻿const request = async (url, params = {}, body) => {
+    const urll = new URL(`https://localhost:5001/api/${url}`)
     if (params.queryParams) {
         Object.keys(params.queryParams).forEach(key => urll.searchParams.append(key, params.queryParams[key]))
     }
@@ -14,10 +11,10 @@ const request = async (url, params = { }, body) => {
         },
         ...params.method && { method: params.method },
         ...body && { body: params.contentType ? body : JSON.stringify(body), },
-        })
+    })
 
     //'Content-type': 'application/json',
-    
+
     const text = await response.text();
 
     const data = text && JSON.parse(text)
@@ -35,5 +32,3 @@ const request = async (url, params = { }, body) => {
     return data;
 }
 export default request;
-
-/*request('adsfasfd', { method: 'POST' }, {bla: '123213'})*/ 

@@ -1,5 +1,6 @@
 ﻿using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace BusLay.Context
 {
@@ -20,6 +21,7 @@ namespace BusLay.Context
             modelBuilder.Entity<Product>().HasMany(x => x.Categories).WithMany(x => x.Products);
             modelBuilder.Entity<Product>().HasMany(x => x.Images).WithOne(x => x.Product);
             modelBuilder.Entity<ProductImage>().HasOne(x => x.ProductImgEntity).WithOne(x => x.ImgEntity);
+            modelBuilder.Entity<CartItem>().HasOne(x => x.Product);
         }
 
     }

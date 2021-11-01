@@ -7,7 +7,7 @@ import { alert } from "./alertReducer"
 import { loginReducer } from "./loginReducer"
 import { category } from "./categoryReducer"
 import { product } from './productReducer'
-
+import { cart } from './cartReducer'
 
 const rootReducer = combineReducers(
     {
@@ -17,7 +17,8 @@ const rootReducer = combineReducers(
         alert,
         loginReducer,
         category,
-        product
+        product,
+        cart
     }
 );
 export default rootReducer;

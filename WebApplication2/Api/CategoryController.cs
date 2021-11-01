@@ -29,10 +29,10 @@ namespace WebApplication2.Api
         {
             if (category != null)
             {
-                service.AddCategory(category);
-                return Created("category", category);
+               var result= service.AddCategory(category);
+                return Created("category", result);
             }
-            return NoContent();
+            return BadRequest();
         }
 
         [HttpGet("{id:int}")]

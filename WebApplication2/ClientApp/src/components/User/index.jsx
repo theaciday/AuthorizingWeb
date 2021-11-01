@@ -1,6 +1,6 @@
 ﻿import React, { useState, useCallback } from "react";
 import request from "../../utils/Request.js";
-
+import MyInput from "../../utils/TextInput.js";
 
 
 const User = () => {
@@ -24,8 +24,8 @@ const User = () => {
             <form onSubmit={onSubmit}>  
                 <h1>Get User</h1>
 
-                <input value={id} placeholder="Id" type="text"
-                    onChange={handleChangeName} required
+                <MyInput value={id} placeholder={"Id"} type={"text"}
+                    onChange={handleChangeName} required={true}
                 />
                 <button type="submit">submit</button>
             </form>

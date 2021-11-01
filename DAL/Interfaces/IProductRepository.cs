@@ -15,6 +15,7 @@ namespace DAL.Interfaces
         public Product CreateProduct(Product product);
         public Task<Product> EditProduct(Product product);
         public Task<object> FindProduct(int? productId);
+        public Product FindProduct(int productId);
         public void DeleteProduct(int? id);
         public List<Product>ProductByName(string productName,double? maxprice);
         public Task<List<Product>> GetAllProducts(PaginationFilter filter);

@@ -9,10 +9,14 @@ namespace DAL.Entities
     {
         [Key]
         public int Id { get; set; }
+
         [NotMapped]
         public IFormFile ImageFile { get; set; }
+
         public string ImageSrc { get; set; }
+
         public string ImageName { get; set; }
+
         public ProductImage ImgEntity { get; set; }
 
     }

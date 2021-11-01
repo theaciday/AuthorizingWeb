@@ -18,8 +18,8 @@ namespace BusLay.Services
         public Category AddCategory(CategoryDTO DTO)
         {
             var cat = new Category() { CategoryName = DTO.CategoryName, Description = DTO.Description };
-            repository.AddCategory(cat);
-            return cat;
+            var result = repository.AddCategory(cat);
+            return result;
         }
 
         public void DeleteCategory(int id)
