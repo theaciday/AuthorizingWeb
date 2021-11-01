@@ -114,9 +114,7 @@ export function product(state = initialState, action) {
                     .map(product => product.id === action.payload.productId
                         ? {
                             ...product,
-                            images: [
-                                product.images.filter(image => image.id !== action.payload.id)
-                            ],
+                            images: product.images.filter(image => image.id !== action.payload.id),
                         }
                         : product
                     ),
