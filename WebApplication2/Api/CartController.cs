@@ -43,6 +43,14 @@ namespace WebApplication2.Api
                 return BadRequest(ex);
             }
         }
+        [Authorize]
+        [HttpPut]
+        [Route("changecount")]
+        public IActionResult ChangeItemCount(CartItemDTO dTO)
+        {
+            service.ChangeItemCount(dTO.Id, dTO.Count);
+            return Ok();
+        }
 
         [Authorize]
         [HttpDelete]

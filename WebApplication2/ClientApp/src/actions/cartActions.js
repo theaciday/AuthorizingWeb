@@ -25,10 +25,10 @@ function deleteCartItem(itemId) {
         cartService.deleteCartItem(itemId)
             .then(
                 () => {
-                    dispatch(success(itemId));
+                    return dispatch(success(itemId));
                 },
                 error => {
-                    dispatch(failure(error.toString()));
+                    return dispatch(failure(error.toString()));
                 }
             );
         function request() { return { type: cartConstants.DELETE_CART_ITEM_REQUEST } }
@@ -54,10 +54,28 @@ function addCartItem(productId) {
         function failure(error) { return { type: cartConstants.ADD_CART_ITEM_FAILURE, error } }
     };
 }
+function changeItemCount(itemId, count) {
+    return dispatch => {
+        dispatch(request());
+        cartService.changeCount(itemId, count)
+            .then(
+                () => {
+                    dispatch(success({ itemId, count }));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                }
+            );
+        function request() { return { type: cartConstants.CHANGE_CART_ITEM_REQUEST } }
+        function success(payload) {return { type: cartConstants.CHANGE_CART_ITEM_SUCCESS, payload} }
+        function failure(error) { return { type: cartConstants.CHANGE_CART_ITEM_FAILURE,error } }
+    }
+};
 
-export const cartActions=
+export const cartActions =
 {
     addCartItem,
-        deleteCartItem,
-        getCartListItems
+    deleteCartItem,
+    getCartListItems,
+    changeItemCount
 }

@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { cartActions } from "../../actions/cartActions";
 import CartItem from "./Map/cartItem";
 import Pages from "../Admin/pages";
+import { useCallback } from "react";
 
 const CartProductList = () => {
     const dispatch = useDispatch();
@@ -21,12 +22,17 @@ const CartProductList = () => {
     const changePage = (index) => {
         dispatch(cartActions.getCartListItems(index))
     }
+    const onLostFocus = (id, count) => {
+        dispatch(cartActions.changeItemCount(id, count));
+    }
+        
+
     return (
         <div>
             {
                 items.map((item, index) =>
                     <div key={item.id}>
-                        <CartItem item={item} index={index} />
+                        <CartItem item={item} index={index} onBlur={onLostFocus} />
                     </div>)
             }
             <Pages total={totalPages}

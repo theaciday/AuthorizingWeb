@@ -1,5 +1,5 @@
 ﻿const request = async (url, params = {}, body) => {
-    const urll = new URL(`https://localhost:5001/api/${url}`)
+    const urll = new URL(`https://localhost:44317/api/${url}`)
     if (params.queryParams) {
         Object.keys(params.queryParams).forEach(key => urll.searchParams.append(key, params.queryParams[key]))
     }

@@ -3,7 +3,7 @@
 const MyInput = (props) => {
     const { type, placeholder,
         style, onChange,
-        value, name, step, required } = props;
+        value, name, step, required, onBlur, min } = props;
 
     return (
         <div>
@@ -12,9 +12,11 @@ const MyInput = (props) => {
                 style={style}
                 onChange={onChange}
                 value={value}
+                min={min}
                 name={name}
+                onBlur={onBlur}
                 required={required ? required : null}
-                step={type==="number"?step:null}
+                step={type === "number" ? step : null}
              />
         </div>
     )

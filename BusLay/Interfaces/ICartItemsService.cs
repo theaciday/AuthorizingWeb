@@ -12,5 +12,6 @@ namespace BusLay.Interfaces
         public void DeleteFromCart(int id);
         public string AddToCart(CartDTO cartItem, int id);
         public int ItemsCount();
+        public CartItem ChangeItemCount(int itemId, int count);
     }
 }

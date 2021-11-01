@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './NavMenu.css';
 import userActions from '../actions/user.actions';
 import { useSelector, useDispatch } from 'react-redux';
+import MyNavbar from './sidebar';
 
 const NavMenu = () => {
     const dispatch = useDispatch();
@@ -54,6 +55,7 @@ const NavMenu = () => {
                         </Collapse>
                     </Container>
                 </Navbar>
+                <MyNavbar/>
             </header>
         );
 }

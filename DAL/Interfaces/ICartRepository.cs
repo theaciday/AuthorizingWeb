@@ -14,5 +14,7 @@ namespace DAL.Interfaces
         public void DeleteFromCart(int id);
         public string AddToCart(CartItem item);
         public int ItemsCount();
+        public CartItem ChangeItemCount(int itemId, int count);
+
     }
 }

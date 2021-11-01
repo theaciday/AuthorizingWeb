@@ -20,9 +20,31 @@ namespace DAL.Repository
 
         public string AddToCart(CartItem item)
         {
-            context.ShoppingCartItems.Add(item);
+            var result=context.ShoppingCartItems.Where(w=>w.ProductId==item.ProductId).FirstOrDefault();
+            if (result==null)
+            {
+                context.ShoppingCartItems.Add(item);
+            }
+            else
+            {
+                result.Quantity += 1;
+            }
             context.SaveChanges();
             return $"item with id: {item.Id} was added to your cart";
+        }
+        public CartItem ChangeItemCount(int itemId,int count) 
+        {
+            var item = context.ShoppingCartItems.Where(w => w.Id == itemId).FirstOrDefault();
+            if (count==0)
+            {
+                context.ShoppingCartItems.Remove(item);
+            }
+            else
+            {
+                item.Quantity = count;
+            }
+            context.SaveChanges();
+            return item;
         }
         public void DeleteFromCart(int id)
         {

@@ -30,7 +30,7 @@ const Register = () => {
 
     const submit = async (e) => {
         e.preventDefault();
-        await fetch('https://localhost:5001/api/auth/register', {
+        await fetch('https://localhost:44317/api/auth/register', {
             method: "POST",
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({

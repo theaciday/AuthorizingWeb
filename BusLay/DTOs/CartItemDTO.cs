@@ -15,6 +15,7 @@ namespace BusLay.DTOs
         public DateTime DateCreated { get; set; }
         public List<string> ImageSrc{ get; set; }
         public double Price { get; set; }
+        public int Count { get; set; }
 
     }
 }

@@ -71,6 +71,33 @@ export function cart(state = initialState, action) {
                 isLoading: false,
                 isLoaded: false
             };
+        case cartConstants.CHANGE_CART_ITEM_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                isLoaded: false
+            }
+        case cartConstants.CHANGE_CART_ITEM_SUCCESS:
+            return {
+                ...state,
+                data: action.payload.count === 0
+                    ? state.data.filter(item => item.id !== action.payload.itemId)
+                    : state.data.map(item => item.id === action.payload.itemId ?
+                        {
+                            ...item,
+                            quantity: action.payload.count
+                        }
+                        : item
+                    ),
+                isLoaded: true,
+                isLoading: false
+            }
+        case cartConstants.CHANGE_CART_ITEM_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isLoaded: false
+            }
         default:
             return state
     }

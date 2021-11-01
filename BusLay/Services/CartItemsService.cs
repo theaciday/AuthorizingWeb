@@ -13,10 +13,8 @@ namespace BusLay.Services
     public class CartItemsService : ICartItemsService
     {
         private readonly ICartRepository repository;
-        private readonly IProductRepository prodRep;
-        public CartItemsService(ICartRepository repository, IProductRepository prodRep)
+        public CartItemsService(ICartRepository repository)
         {
-            this.prodRep = prodRep;
             this.repository = repository;
         }
         public string AddToCart(CartDTO cartItem, int id)
@@ -53,6 +51,11 @@ namespace BusLay.Services
                 Quantity=item.Quantity,
             }).ToList();
             return cartItemDTO;
+        }
+
+        public CartItem ChangeItemCount(int itemId, int count)
+        {
+           return repository.ChangeItemCount(itemId,count);
         }
     }
 }
